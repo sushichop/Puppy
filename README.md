@@ -1,10 +1,12 @@
 # Puppy 🐶
 
+[![release](https://img.shields.io/github/v/release/sushichop/Puppy.svg?color=blue)](https://github.com/sushichop/Puppy/releases)
 ![CI](https://github.com/sushichop/Puppy/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/sushichop/Puppy/branch/master/graph/badge.svg)](https://codecov.io/gh/sushichop/Puppy)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sushichop/Puppy/blob/master/LICENSE)
 
 ![Swift5.0+](https://img.shields.io/badge/Swift-5.0%2B-orange.svg?style=flat)
+[![CocoaPods](https://img.shields.io/cocoapods/v/Puppy.svg?style=flat)](https://cocoapods.org/pods/Puppy)
 [![Carthage](https://img.shields.io/badge/Carhage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ![SwiftPM](https://img.shields.io/badge/SwiftPM-compatible-4BC51D.svg?style=flat)
 ![platforms](https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat)
