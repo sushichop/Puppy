@@ -2,7 +2,7 @@
 
 [![release](https://img.shields.io/github/v/release/sushichop/Puppy.svg?color=blue)](https://github.com/sushichop/Puppy/releases)
 ![CI](https://github.com/sushichop/Puppy/workflows/CI/badge.svg)
-[![codecov](https://codecov.io/gh/sushichop/Puppy/branch/master/graph/badge.svg)](https://codecov.io/gh/sushichop/Puppy)
+[![codecov](https://codecov.io/gh/sushichop/Puppy/branch/main/graph/badge.svg)](https://codecov.io/gh/sushichop/Puppy)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sushichop/Puppy/blob/master/LICENSE)
 
 ![Swift5.0+](https://img.shields.io/badge/Swift-5.0%2B-orange.svg?style=flat)
