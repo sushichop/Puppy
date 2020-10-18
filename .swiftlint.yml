@@ -1,0 +1,20 @@
+disabled_rules:
+  - function_parameter_count
+
+included:
+  - Sources
+  - Tests
+  - Package.swift
+  - Dangerfile.swift
+
+trailing_comma:
+  mandatory_comma: true
+
+line_length:
+  warning: 210
+  error: 240
+  ignores_comments: true
+
+identifier_name:
+  excluded:
+    - at

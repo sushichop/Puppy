@@ -1,0 +1,54 @@
+name: Danger
+
+on:
+  pull_request:
+    branches:
+      - '**'
+  issue_comment:
+    types:
+      - created
+  
+jobs:
+  danger-for-internal:
+    name: Danger for internal
+    if: |
+      github.event_name == 'pull_request'
+      && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: macos-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Clone the source for the event
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Danger
+        run: |
+          bundle install
+          bundle exec danger
+
+  danger-for-external:
+    name: Danger for external
+    if: |
+      github.event_name == 'issue_comment' && github.event.action == 'created'
+      && github.event.issue.pull_request != null
+      && startsWith(github.event.comment.body, '/danger')
+    runs-on: macos-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Check repository permission for user
+        uses: sushichop/action-repository-permission@v1
+        with:
+          required-permission: write
+          reaction-permitted: rocket
+          comment-not-permitted: Sorry, you don't have enough permission to execute `/danger`...
+      - name: Clone the PR source
+        uses: actions/checkout@v2
+        with:
+          ref: refs/pull/${{ github.event.issue.number }}/head
+          fetch-depth: 0
+      - name: Danger
+        run: |
+          bundle install
+          bundle exec danger

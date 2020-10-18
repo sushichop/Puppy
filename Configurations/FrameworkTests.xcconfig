@@ -1,0 +1,5 @@
+#include "Common.xcconfig"
+
+PRODUCT_NAME = $(PROJECT_NAME)Tests
+PRODUCT_BUNDLE_IDENTIFIER = $(SCP_PRODUCT_BUNDLE_IDENTIFIER_PREFIX).$(PRODUCT_NAME:rfc1034identifier)
+INFOPLIST_FILE = $(SRCROOT)/Tests/SupportingFiles/Info.plist

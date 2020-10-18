@@ -1,0 +1,633 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		C78B9219252DCFBD0026B9B1 /* SwiftLint */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = C78B921C252DCFBD0026B9B1 /* Build configuration list for PBXAggregateTarget "SwiftLint" */;
+			buildPhases = (
+				C78B9220252DCFEC0026B9B1 /* SwiftLint */,
+			);
+			dependencies = (
+			);
+			name = SwiftLint;
+			productName = SwiftLint;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		C7695BB42533303900E0CA22 /* MockLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7695BB32533303900E0CA22 /* MockLogger.swift */; };
+		C7695BC2253332DF00E0CA22 /* BaseLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7695BC1253332DF00E0CA22 /* BaseLoggerTests.swift */; };
+		C7ED71A8252DBEC70065B955 /* Puppy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ED719E252DBEC70065B955 /* Puppy.framework */; };
+		C7ED71FC252DC0C50065B955 /* FileRotationLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F0252DC0C50065B955 /* FileRotationLogger.swift */; };
+		C7ED71FD252DC0C50065B955 /* SystemLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F1252DC0C50065B955 /* SystemLogger.swift */; };
+		C7ED71FE252DC0C50065B955 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F2252DC0C50065B955 /* Formatter.swift */; };
+		C7ED71FF252DC0C50065B955 /* BaseLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F3252DC0C50065B955 /* BaseLogger.swift */; };
+		C7ED7200252DC0C50065B955 /* PuppyLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F4252DC0C50065B955 /* PuppyLogHandler.swift */; };
+		C7ED7201252DC0C50065B955 /* LogColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F5252DC0C50065B955 /* LogColor.swift */; };
+		C7ED7202252DC0C50065B955 /* Puppy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F6252DC0C50065B955 /* Puppy.swift */; };
+		C7ED7203252DC0C50065B955 /* FileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F7252DC0C50065B955 /* FileError.swift */; };
+		C7ED7204252DC0C50065B955 /* ConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F8252DC0C50065B955 /* ConsoleLogger.swift */; };
+		C7ED7205252DC0C50065B955 /* FileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F9252DC0C50065B955 /* FileLogger.swift */; };
+		C7ED7206252DC0C50065B955 /* OSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71FA252DC0C50065B955 /* OSLogger.swift */; };
+		C7ED7207252DC0C50065B955 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71FB252DC0C50065B955 /* LogLevel.swift */; };
+		C7ED7219252DC1590065B955 /* PuppyLogHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7210252DC1590065B955 /* PuppyLogHandlerTests.swift */; };
+		C7ED721A252DC1590065B955 /* FormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7211252DC1590065B955 /* FormatterTests.swift */; };
+		C7ED721B252DC1590065B955 /* OSLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7212252DC1590065B955 /* OSLoggerTests.swift */; };
+		C7ED721C252DC1590065B955 /* FileLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7213252DC1590065B955 /* FileLoggerTests.swift */; };
+		C7ED721D252DC1590065B955 /* SystemLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7214252DC1590065B955 /* SystemLoggerTests.swift */; };
+		C7ED721E252DC1590065B955 /* PuppyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7215252DC1590065B955 /* PuppyTests.swift */; };
+		C7ED721F252DC1590065B955 /* FileRotationLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7216252DC1590065B955 /* FileRotationLoggerTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C7ED71A9252DBEC70065B955 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C7ED7195252DBEC70065B955 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C7ED719D252DBEC70065B955;
+			remoteInfo = Puppy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C7695BB32533303900E0CA22 /* MockLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLogger.swift; sourceTree = "<group>"; };
+		C7695BC1253332DF00E0CA22 /* BaseLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLoggerTests.swift; sourceTree = "<group>"; };
+		C78B9212252DCA3E0026B9B1 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		C7ED719E252DBEC70065B955 /* Puppy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Puppy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7ED71A2252DBEC70065B955 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C7ED71A7252DBEC70065B955 /* PuppyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PuppyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7ED71AE252DBEC70065B955 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C7ED71F0252DC0C50065B955 /* FileRotationLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileRotationLogger.swift; sourceTree = "<group>"; };
+		C7ED71F1252DC0C50065B955 /* SystemLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemLogger.swift; sourceTree = "<group>"; };
+		C7ED71F2252DC0C50065B955 /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		C7ED71F3252DC0C50065B955 /* BaseLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLogger.swift; sourceTree = "<group>"; };
+		C7ED71F4252DC0C50065B955 /* PuppyLogHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuppyLogHandler.swift; sourceTree = "<group>"; };
+		C7ED71F5252DC0C50065B955 /* LogColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogColor.swift; sourceTree = "<group>"; };
+		C7ED71F6252DC0C50065B955 /* Puppy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Puppy.swift; sourceTree = "<group>"; };
+		C7ED71F7252DC0C50065B955 /* FileError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileError.swift; sourceTree = "<group>"; };
+		C7ED71F8252DC0C50065B955 /* ConsoleLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleLogger.swift; sourceTree = "<group>"; };
+		C7ED71F9252DC0C50065B955 /* FileLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileLogger.swift; sourceTree = "<group>"; };
+		C7ED71FA252DC0C50065B955 /* OSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogger.swift; sourceTree = "<group>"; };
+		C7ED71FB252DC0C50065B955 /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
+		C7ED720C252DC0FB0065B955 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		C7ED720D252DC1120065B955 /* cpuppy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cpuppy.h; sourceTree = "<group>"; };
+		C7ED7210252DC1590065B955 /* PuppyLogHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuppyLogHandlerTests.swift; sourceTree = "<group>"; };
+		C7ED7211252DC1590065B955 /* FormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatterTests.swift; sourceTree = "<group>"; };
+		C7ED7212252DC1590065B955 /* OSLoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLoggerTests.swift; sourceTree = "<group>"; };
+		C7ED7213252DC1590065B955 /* FileLoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileLoggerTests.swift; sourceTree = "<group>"; };
+		C7ED7214252DC1590065B955 /* SystemLoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemLoggerTests.swift; sourceTree = "<group>"; };
+		C7ED7215252DC1590065B955 /* PuppyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuppyTests.swift; sourceTree = "<group>"; };
+		C7ED7216252DC1590065B955 /* FileRotationLoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileRotationLoggerTests.swift; sourceTree = "<group>"; };
+		C7ED7230252DC2F60065B955 /* FrameworkTests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = FrameworkTests.xcconfig; sourceTree = "<group>"; };
+		C7ED7231252DC2F60065B955 /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
+		C7ED7232252DC2F60065B955 /* Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.xcconfig; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C7ED719B252DBEC70065B955 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7ED71A4252DBEC70065B955 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7ED71A8252DBEC70065B955 /* Puppy.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C7ED7194252DBEC70065B955 = {
+			isa = PBXGroup;
+			children = (
+				C78B9212252DCA3E0026B9B1 /* Package.swift */,
+				C7ED722F252DC2F60065B955 /* Configurations */,
+				C7ED719F252DBEC70065B955 /* Products */,
+				C7ED71C0252DC0530065B955 /* Sources */,
+				C7ED720E252DC1590065B955 /* Tests */,
+			);
+			sourceTree = "<group>";
+		};
+		C7ED719F252DBEC70065B955 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C7ED719E252DBEC70065B955 /* Puppy.framework */,
+				C7ED71A7252DBEC70065B955 /* PuppyTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C7ED71C0252DC0530065B955 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C7ED71C1252DC0530065B955 /* CPuppy */,
+				C7ED71C5252DC0530065B955 /* Puppy */,
+				C7ED71D2252DC0530065B955 /* SupportingFiles */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		C7ED71C1252DC0530065B955 /* CPuppy */ = {
+			isa = PBXGroup;
+			children = (
+				C7ED71C2252DC0530065B955 /* include */,
+				C7ED720C252DC0FB0065B955 /* module.modulemap */,
+			);
+			path = CPuppy;
+			sourceTree = "<group>";
+		};
+		C7ED71C2252DC0530065B955 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				C7ED720D252DC1120065B955 /* cpuppy.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		C7ED71C5252DC0530065B955 /* Puppy */ = {
+			isa = PBXGroup;
+			children = (
+				C7ED71F3252DC0C50065B955 /* BaseLogger.swift */,
+				C7ED71F8252DC0C50065B955 /* ConsoleLogger.swift */,
+				C7ED71F7252DC0C50065B955 /* FileError.swift */,
+				C7ED71F9252DC0C50065B955 /* FileLogger.swift */,
+				C7ED71F0252DC0C50065B955 /* FileRotationLogger.swift */,
+				C7ED71F2252DC0C50065B955 /* Formatter.swift */,
+				C7ED71F5252DC0C50065B955 /* LogColor.swift */,
+				C7ED71FB252DC0C50065B955 /* LogLevel.swift */,
+				C7ED71FA252DC0C50065B955 /* OSLogger.swift */,
+				C7ED71F6252DC0C50065B955 /* Puppy.swift */,
+				C7ED71F4252DC0C50065B955 /* PuppyLogHandler.swift */,
+				C7ED71F1252DC0C50065B955 /* SystemLogger.swift */,
+			);
+			path = Puppy;
+			sourceTree = "<group>";
+		};
+		C7ED71D2252DC0530065B955 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				C7ED71A2252DBEC70065B955 /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		C7ED720E252DC1590065B955 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C7ED720F252DC1590065B955 /* PuppyTests */,
+				C7ED7217252DC1590065B955 /* SupportingFiles */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		C7ED720F252DC1590065B955 /* PuppyTests */ = {
+			isa = PBXGroup;
+			children = (
+				C7695BC1253332DF00E0CA22 /* BaseLoggerTests.swift */,
+				C7ED7213252DC1590065B955 /* FileLoggerTests.swift */,
+				C7ED7216252DC1590065B955 /* FileRotationLoggerTests.swift */,
+				C7ED7211252DC1590065B955 /* FormatterTests.swift */,
+				C7695BB32533303900E0CA22 /* MockLogger.swift */,
+				C7ED7212252DC1590065B955 /* OSLoggerTests.swift */,
+				C7ED7210252DC1590065B955 /* PuppyLogHandlerTests.swift */,
+				C7ED7215252DC1590065B955 /* PuppyTests.swift */,
+				C7ED7214252DC1590065B955 /* SystemLoggerTests.swift */,
+			);
+			path = PuppyTests;
+			sourceTree = "<group>";
+		};
+		C7ED7217252DC1590065B955 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				C7ED71AE252DBEC70065B955 /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		C7ED722F252DC2F60065B955 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				C7ED7231252DC2F60065B955 /* Common.xcconfig */,
+				C7ED7232252DC2F60065B955 /* Framework.xcconfig */,
+				C7ED7230252DC2F60065B955 /* FrameworkTests.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		C7ED7199252DBEC70065B955 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		C7ED719D252DBEC70065B955 /* Puppy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C7ED71B2252DBEC70065B955 /* Build configuration list for PBXNativeTarget "Puppy" */;
+			buildPhases = (
+				C7ED7199252DBEC70065B955 /* Headers */,
+				C7ED719A252DBEC70065B955 /* Sources */,
+				C7ED719B252DBEC70065B955 /* Frameworks */,
+				C7ED719C252DBEC70065B955 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Puppy;
+			packageProductDependencies = (
+			);
+			productName = Puppy;
+			productReference = C7ED719E252DBEC70065B955 /* Puppy.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C7ED71A6252DBEC70065B955 /* PuppyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C7ED71B5252DBEC70065B955 /* Build configuration list for PBXNativeTarget "PuppyTests" */;
+			buildPhases = (
+				C7ED71A3252DBEC70065B955 /* Sources */,
+				C7ED71A4252DBEC70065B955 /* Frameworks */,
+				C7ED71A5252DBEC70065B955 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C7ED71AA252DBEC70065B955 /* PBXTargetDependency */,
+			);
+			name = PuppyTests;
+			productName = PuppyTests;
+			productReference = C7ED71A7252DBEC70065B955 /* PuppyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C7ED7195252DBEC70065B955 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
+				TargetAttributes = {
+					C78B9219252DCFBD0026B9B1 = {
+						CreatedOnToolsVersion = 12.0.1;
+					};
+					C7ED719D252DBEC70065B955 = {
+						CreatedOnToolsVersion = 12.0.1;
+						LastSwiftMigration = 1200;
+					};
+					C7ED71A6252DBEC70065B955 = {
+						CreatedOnToolsVersion = 12.0.1;
+					};
+				};
+			};
+			buildConfigurationList = C7ED7198252DBEC70065B955 /* Build configuration list for PBXProject "Puppy" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C7ED7194252DBEC70065B955;
+			packageReferences = (
+			);
+			productRefGroup = C7ED719F252DBEC70065B955 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C7ED719D252DBEC70065B955 /* Puppy */,
+				C7ED71A6252DBEC70065B955 /* PuppyTests */,
+				C78B9219252DCFBD0026B9B1 /* SwiftLint */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C7ED719C252DBEC70065B955 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7ED71A5252DBEC70065B955 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C78B9220252DCFEC0026B9B1 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint autocorrect --format\n    swiftlint\nelse\necho\n    \"SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C7ED719A252DBEC70065B955 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7ED71FE252DC0C50065B955 /* Formatter.swift in Sources */,
+				C7ED71FD252DC0C50065B955 /* SystemLogger.swift in Sources */,
+				C7ED7201252DC0C50065B955 /* LogColor.swift in Sources */,
+				C7ED7205252DC0C50065B955 /* FileLogger.swift in Sources */,
+				C7ED71FF252DC0C50065B955 /* BaseLogger.swift in Sources */,
+				C7ED7203252DC0C50065B955 /* FileError.swift in Sources */,
+				C7ED71FC252DC0C50065B955 /* FileRotationLogger.swift in Sources */,
+				C7ED7207252DC0C50065B955 /* LogLevel.swift in Sources */,
+				C7ED7204252DC0C50065B955 /* ConsoleLogger.swift in Sources */,
+				C7ED7202252DC0C50065B955 /* Puppy.swift in Sources */,
+				C7ED7200252DC0C50065B955 /* PuppyLogHandler.swift in Sources */,
+				C7ED7206252DC0C50065B955 /* OSLogger.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7ED71A3252DBEC70065B955 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7ED721A252DC1590065B955 /* FormatterTests.swift in Sources */,
+				C7ED721C252DC1590065B955 /* FileLoggerTests.swift in Sources */,
+				C7ED721D252DC1590065B955 /* SystemLoggerTests.swift in Sources */,
+				C7ED721F252DC1590065B955 /* FileRotationLoggerTests.swift in Sources */,
+				C7ED7219252DC1590065B955 /* PuppyLogHandlerTests.swift in Sources */,
+				C7695BC2253332DF00E0CA22 /* BaseLoggerTests.swift in Sources */,
+				C7695BB42533303900E0CA22 /* MockLogger.swift in Sources */,
+				C7ED721B252DC1590065B955 /* OSLoggerTests.swift in Sources */,
+				C7ED721E252DC1590065B955 /* PuppyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C7ED71AA252DBEC70065B955 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C7ED719D252DBEC70065B955 /* Puppy */;
+			targetProxy = C7ED71A9252DBEC70065B955 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C78B921A252DCFBD0026B9B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C78B921B252DCFBD0026B9B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		C7ED71B0252DBEC70065B955 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C7ED71B1252DBEC70065B955 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C7ED71B3252DBEC70065B955 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7ED7232252DC2F60065B955 /* Framework.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C7ED71B4252DBEC70065B955 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7ED7232252DC2F60065B955 /* Framework.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		C7ED71B6252DBEC70065B955 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7ED7230252DC2F60065B955 /* FrameworkTests.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+			};
+			name = Debug;
+		};
+		C7ED71B7252DBEC70065B955 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7ED7230252DC2F60065B955 /* FrameworkTests.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C78B921C252DCFBD0026B9B1 /* Build configuration list for PBXAggregateTarget "SwiftLint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C78B921A252DCFBD0026B9B1 /* Debug */,
+				C78B921B252DCFBD0026B9B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C7ED7198252DBEC70065B955 /* Build configuration list for PBXProject "Puppy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7ED71B0252DBEC70065B955 /* Debug */,
+				C7ED71B1252DBEC70065B955 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C7ED71B2252DBEC70065B955 /* Build configuration list for PBXNativeTarget "Puppy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7ED71B3252DBEC70065B955 /* Debug */,
+				C7ED71B4252DBEC70065B955 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C7ED71B5252DBEC70065B955 /* Build configuration list for PBXNativeTarget "PuppyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7ED71B6252DBEC70065B955 /* Debug */,
+				C7ED71B7252DBEC70065B955 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C7ED7195252DBEC70065B955 /* Project object */;
+}

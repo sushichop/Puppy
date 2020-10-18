@@ -1,0 +1,4 @@
+module CPuppy {
+    header "include/cpuppy.h"
+    export *
+}

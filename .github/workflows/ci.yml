@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    name: ${{ matrix.make-tatget }} - Xcode ${{ matrix.xcode }}
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        make-tatget: [xcode-build, carthage-build-workaround, pod-lib-lint]
+        xcode: [12]
+      fail-fast: false
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
+    steps:
+      - uses: actions/checkout@v2
+      - run: make ${{ matrix.make-tatget }}
+
+  xcode-test:
+    name: xcode-test - Xcode ${{ matrix.xcode }}
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        xcode: [12]
+      fail-fast: false
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
+    steps:
+      - uses: actions/checkout@v2
+      - name: lint
+        run: make swiftlint
+      - name: test
+        run: make xcode-test
+
+  swift-test:
+    name: swift-test - Xcode ${{ matrix.xcode }}
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        xcode: [12]
+      fail-fast: false
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          swift --version
+          make swift-test
+
+  swift-test-linux:
+    name: swift-test-linux - Swift ${{ matrix.swift-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        swift-version: [5.3]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - run: make swift-test-linux SWIFT_VERSION=${{ matrix.swift-version }}
