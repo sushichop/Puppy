@@ -86,4 +86,5 @@ jobs:
         if: success()
         uses: codecov/codecov-action@v1
         with:
+          file: info.lcov
           token: ${{ secrets.CODECOV_TOKEN }}
