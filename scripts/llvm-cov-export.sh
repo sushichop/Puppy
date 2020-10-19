@@ -3,6 +3,8 @@
 echo "Deleting coverage.lcov..."
 rm -f coverage.lcov
 
+swift test --enable-test-discovery --enable-code-coverage
+
 BIN_PATH="$(swift build --show-bin-path)"
 XCTEST_PATH="$(find ${BIN_PATH} -name '*.xctest')"
 

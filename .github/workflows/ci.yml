@@ -80,13 +80,10 @@ jobs:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
     steps:
       - uses: actions/checkout@v2
-      - name: test
+      - name: export-codecov
         run: |
           swift --version
-          swift test --enable-test-discovery
-      - name: export coverage
-        if: success()
-        run: make export-codecov
+          make export-codecov
       - name: codecov
         uses: codecov/codecov-action@v1
         with:
