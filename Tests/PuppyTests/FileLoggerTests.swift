@@ -59,18 +59,17 @@ class FileLoggerTests: XCTestCase {
         }
     }
 
-    #if os(macOS)
+    #if !os(Linux)
     func testCreatingError() throws {
-        let fileURLNotAbleToCreateDirectory = URL(fileURLWithPath: "../../foo/bar.log").absoluteURL     // file:///foo/bar.log
-        let directoryURLNotAbleToCreateDirectory = URL(fileURLWithPath: "../../").absoluteURL
-            .appendingPathComponent("foo", isDirectory: true)   // file:///file/foo/
+        let fileURLNotAbleToCreateDirectory = URL(fileURLWithPath: "/foo/bar.log").absoluteURL  // file:///foo/bar.log
+        let directoryURLNotAbleToCreateDirectory = URL(fileURLWithPath: "/foo/").absoluteURL    // file:///foo
         XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.notcreatedirectory",
                                             fileURL: fileURLNotAbleToCreateDirectory)) { error in
             let error = error as? FileError
             XCTAssertEqual(error, FileError.creatingDirectoryFailed(at: directoryURLNotAbleToCreateDirectory))
         }
 
-        let fileURLNotAbleToCreateFile = URL(fileURLWithPath: "../foo.log").absoluteURL     // file:///private/foo.log
+        let fileURLNotAbleToCreateFile = URL(fileURLWithPath: "/foo.log").absoluteURL   // file:///foo.log
         XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.notcreatefile",
                                             fileURL: fileURLNotAbleToCreateFile)) { error in
             let error = error as? FileError

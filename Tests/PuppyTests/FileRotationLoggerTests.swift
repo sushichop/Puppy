@@ -57,18 +57,17 @@ class FileRotationLoggerTests: XCTestCase, FileRotationLoggerDeletate {
         }
     }
 
-    #if os(macOS)
+    #if !os(Linux)
     func testCreatingError() throws {
-        let fileURLNotAbleToCreateDirectory = URL(fileURLWithPath: "../../foo-rotation/bar-rotation.log").absoluteURL // file:///foo-rotation/bar-rotation.log
-        let directoryURLNotAbleToCreateDirectory = URL(fileURLWithPath: "../../").absoluteURL
-            .appendingPathComponent("foo-rotation", isDirectory: true)   // file:///file/foo-rotation/
+        let fileURLNotAbleToCreateDirectory = URL(fileURLWithPath: "/foo-rotation/bar-rotation.log").absoluteURL    // file:///foo-rotation/bar-rotation.log
+        let directoryURLNotAbleToCreateDirectory = URL(fileURLWithPath: "/foo-rotation/").absoluteURL               // file:///foo-rotation/
         XCTAssertThrowsError(try FileRotationLogger("com.example.yourapp.filerotationlogger.notcreatedirectory",
                                                     fileURL: fileURLNotAbleToCreateDirectory)) { error in
             let error = error as? FileError
             XCTAssertEqual(error, FileError.creatingDirectoryFailed(at: directoryURLNotAbleToCreateDirectory))
         }
 
-        let fileURLNotAbleToCreateFile = URL(fileURLWithPath: "../foo-rotation.log").absoluteURL     // file:///private/foo-rotation.log
+        let fileURLNotAbleToCreateFile = URL(fileURLWithPath: "/foo-rotation.log").absoluteURL  // file:///foo-rotation.log
         XCTAssertThrowsError(try FileRotationLogger("com.example.yourapp.filerotationlogger.notcreatefile",
                                                     fileURL: fileURLNotAbleToCreateFile)) { error in
             let error = error as? FileError
