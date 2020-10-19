@@ -1,7 +1,7 @@
 #!/bin/sh
 
-echo "Deleting info.lcov..."
-rm -f info.lcov
+echo "Deleting coverage.lcov..."
+rm -f coverage.lcov
 
 swift test --enable-test-discovery --enable-code-coverage
 
@@ -24,4 +24,4 @@ esac
 $LLVM_COV export -format="lcov" "${COV_BIN}" \
     -instr-profile=.build/debug/codecov/default.profdata \
     -ignore-filename-regex=".build|Tests" \
-    > info.lcov
+    > coverage.lcov

@@ -18,13 +18,13 @@
 
 - Written in Swift.
 - Supports console, file, syslog, and oslog as loggers.
-- Support automatic log roration about file logger.
+- Supports automatic log roration about file logger.
 - Supports both Darwin and Linux.
 - Supports apple/swift-log.
 
 ## Examples
 
-**Logging to console and file and use file log rotation feature.**
+**Logging to console and file using file log rotation feature.**
 
 You can basically use CocoaPods, Carthage, and Swift Package Manager for integration.
 
