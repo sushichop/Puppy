@@ -43,7 +43,7 @@ public class BaseLogger: Loggerable {
     public var label: String
     public var queue: DispatchQueue? { return nil }
 
-    init(_ label: String) {
+    public init(_ label: String) {
         self.label = label
     }
 

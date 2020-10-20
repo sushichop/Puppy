@@ -13,7 +13,7 @@ public class OSLogger: BaseLogger {
 
     private let osLog: OSLog
 
-    init(_ label: String, category: String = "Puppy") {
+    public init(_ label: String, category: String = "Puppy") {
         self.osLog = OSLog(subsystem: label, category: category)
         super.init(label)
     }

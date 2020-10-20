@@ -19,7 +19,7 @@ public struct PuppyLogHandler: LogHandler {
     private let label: String
     private let puppy: Puppy
 
-    init(label: String, puppy: Puppy, metadata: Logger.Metadata = [:]) {
+    public init(label: String, puppy: Puppy, metadata: Logger.Metadata = [:]) {
         self.label = label
         self.puppy = puppy
         self.metadata = metadata

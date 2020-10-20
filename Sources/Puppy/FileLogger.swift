@@ -13,7 +13,7 @@ public class FileLogger: BaseLogger {
     private var fileHandle: FileHandle!
     private let fileURL: URL
 
-    init(_ label: String, fileURL: URL) throws {
+    public init(_ label: String, fileURL: URL) throws {
         self.fileURL = fileURL
         debug("fileURL is \(fileURL)")
         super.init(label)

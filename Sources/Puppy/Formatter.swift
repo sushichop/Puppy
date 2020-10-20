@@ -5,12 +5,12 @@ public protocol LogFormattable {
 }
 
 extension LogFormattable {
-    func shortFileName(_ file: String) -> String {
+    public func shortFileName(_ file: String) -> String {
         return URL(fileURLWithPath: file).lastPathComponent
     }
 }
 
-func dateFormatter(_ date: Date, locale: String = "en_US_POSIX", dateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", timeZone: String = "") -> String {
+public func dateFormatter(_ date: Date, locale: String = "en_US_POSIX", dateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", timeZone: String = "") -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: locale)
     dateFormatter.dateFormat = dateFormat
