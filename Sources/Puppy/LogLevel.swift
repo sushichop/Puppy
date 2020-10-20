@@ -35,7 +35,7 @@ extension LogLevel: CustomStringConvertible {
 }
 
 extension LogLevel {
-    var emoji: String {
+    public var emoji: String {
         switch self {
         case .trace:
             return "🟤"
@@ -56,7 +56,7 @@ extension LogLevel {
         }
     }
 
-    var color: LogColor {
+    public var color: LogColor {
         switch self {
         case .trace:
             return .darkGray

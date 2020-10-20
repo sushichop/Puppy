@@ -17,7 +17,7 @@ public class FileRotationLogger: BaseLogger {
 
     public weak var delegate: FileRotationLoggerDeletate?
 
-    init(_ label: String, fileURL: URL) throws {
+    public init(_ label: String, fileURL: URL) throws {
         self.fileURL = fileURL
         debug("fileURL is \(fileURL)")
         super.init(label)

@@ -12,6 +12,8 @@ public class Puppy {
 
     public private(set) var loggers = Set<BaseLogger>()
 
+    public init() {}
+
     public func add(_ logger: BaseLogger) {
         if !(loggers.contains(logger)) {
             loggers.insert(logger)

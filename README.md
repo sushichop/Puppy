@@ -24,14 +24,16 @@
 
 ## Examples
 
-**Logging to console and file using file log rotation feature.**
+**Logging to console and file, then use log rotation feature about file.**
 
 You can basically use CocoaPods, Carthage, and Swift Package Manager for integration.
 
 ```swift
+import Puppy
+
 let console = ConsoleLogger("com.example.yourapp.consolelogger")
 let fileURL = URL(fileURLWithPath: "./rotation/foo.log").absoluteURL
-let fileRotation = try FileRotationLogger("com.example.yourapp.filerotationlogger",
+let fileRotation = try! FileRotationLogger("com.example.yourapp.filerotationlogger",
                                           fileURL: fileURL)
 
 fileRotation.maxFileSize = 10 * 1024 * 1024
@@ -51,6 +53,9 @@ You can use CocoaPods and Swift Package Manager for integration.
 (`apple/swift-log` does not support Carthage integration.)
 
 ```swift
+import Puppy
+import Logging
+
 let console = SystemLogger("com.example.yourapp.consolelogger")
 let syslog = SystemLogger("com.example.yourapp.systemlogger")
 
