@@ -40,7 +40,7 @@ swift-test: ## Run tests using SwiftPM
 
 .PHONY: swift-test-linux
 swift-test-linux: ## Run tests using SwiftPM on linux with docker
-	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) ./scripts/llvm-cov-report.sh
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) bash -x ./scripts/llvm-cov-report.sh
 
 .PHONY: export-codecov
 export-codecov: ## Export code coverage

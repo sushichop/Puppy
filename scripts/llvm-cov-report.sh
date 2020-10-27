@@ -1,5 +1,8 @@
 #!/bin/sh
 
+set -euo pipefail
+
+swift --version
 swift test --enable-test-discovery --enable-code-coverage
 
 BIN_PATH="$(swift build --show-bin-path)"
