@@ -52,9 +52,7 @@ jobs:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          swift --version
-          swift test --enable-test-discovery
+      - run: make swift-test
 
   swift-test-linux:
     name: swift-test-linux - Swift ${{ matrix.swift-version }}
@@ -65,9 +63,7 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          swift --version
-          docker run --rm --volume "${PWD}:/src" --workdir "/src" swift:${{ matrix.swift-version }} swift test --enable-test-discovery
+      - run: make swift-test-linux SWIFT_VERSION=${{ matrix.swift-version }}
 
   codecov:
     name: codecov - Xcode ${{ matrix.xcode }}
@@ -81,10 +77,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: export-codecov
-        run: |
-          swift --version
-          make export-codecov
+        run: make export-codecov
       - name: codecov
+        if: success()
         uses: codecov/codecov-action@v1
         with:
           file: coverage.lcov

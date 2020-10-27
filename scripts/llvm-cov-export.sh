@@ -1,8 +1,11 @@
 #!/bin/sh
 
-echo "Deleting coverage.lcov..."
-rm -f coverage.lcov
+set -euo pipefail
 
+echo "Deleting coverage.lcov..."
+rm -rf coverage.lcov
+
+swift --version
 swift test --enable-test-discovery --enable-code-coverage
 
 BIN_PATH="$(swift build --show-bin-path)"
