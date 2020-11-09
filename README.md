@@ -18,9 +18,9 @@
 
 - Written in Swift.
 - Supports console, file, syslog, and oslog as loggers.
-- Supports automatic log roration about file logger.
+- Supports automatic log rotation about file logger.
 - Supports both Darwin and Linux.
-- Supports apple/swift-log.
+- Supports [apple/swift-log](https://github.com/apple/swift-log/).
 
 ## Examples
 
@@ -31,33 +31,42 @@ You can basically use CocoaPods, Carthage, and Swift Package Manager for integra
 ```swift
 import Puppy
 
-let console = ConsoleLogger("com.example.yourapp.consolelogger")
-let fileURL = URL(fileURLWithPath: "./rotation/foo.log").absoluteURL
-let fileRotation = try! FileRotationLogger("com.example.yourapp.filerotationlogger",
-                                          fileURL: fileURL)
+let console = ConsoleLogger(bundleID + ".consolelogger")
 
+let appSupportDirURL = try! FileManager.default.url(for: .applicationSupportDirectory,
+                                                    in: .userDomainMask,
+                                                    appropriateFor: nil,
+                                                    create: true)
+let bundleID = Bundle.main.bundleIdentifier!
+let logfileURL = appSupportDirURL
+    .appendingPathComponent(bundleID, isDirectory: true)
+    .appendingPathComponent("rotation.log")
+
+let fileRotation = try! FileRotationLogger(bundleID + ".filerotationlogger",
+                                           fileURL: logfileURL)
 fileRotation.maxFileSize = 10 * 1024 * 1024
 fileRotation.maxArchivedFilesCount = 5
 
 let log = Puppy()
-log.add(console)
 log.add(fileRotation)
+log.add(console)
 
 log.info("INFO message")
 log.warning("WARNING message")
+
 ```
 
 **Logging to console and syslog using `apple/swift-log`.**
 
 You can use CocoaPods and Swift Package Manager for integration.
-(`apple/swift-log` does not support Carthage integration.)
 
 ```swift
 import Puppy
 import Logging
 
-let console = SystemLogger("com.example.yourapp.consolelogger")
-let syslog = SystemLogger("com.example.yourapp.systemlogger")
+let bundleID = Bundle.main.bundleIdentifier!
+let console = ConsoleLogger(bundleID + ".consolelogger")
+let syslog = SystemLogger(bundleID + ".systemlogger")
 
 let puppy = Puppy.default
 puppy.add(console)
