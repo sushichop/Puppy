@@ -14,59 +14,49 @@
 
 ### **Puppy is a flexible logging library written in Swift.**
 
+It supports multiple transports(console, file, syslog, and oslog) as loggers. It not only works alone, but also as a backend for [apple/swift-log](https://github.com/apple/swift-log/).
+Furthermore, it has file log rotation feature and you can also customize the log format as you like.
+
 ## Features
 
 - Written in Swift.
+- Supports both Darwin and Linux.
 - Supports console, file, syslog, and oslog as loggers.
 - Supports automatic log rotation about file logger.
-- Supports both Darwin and Linux.
-- Supports [apple/swift-log](https://github.com/apple/swift-log/).
+- Also Works as a backend for `apple/swift-log`.
 
 ## Examples
 
-**Logging to console and file, then use log rotation feature about file.**
+### Basic Usage
 
-You can basically use CocoaPods, Carthage, and Swift Package Manager for integration.
+Logging to mutliple transports(e.g. console and file).
 
-```swift
+```Swift
 import Puppy
 
-let console = ConsoleLogger(bundleID + ".consolelogger")
-
-let appSupportDirURL = try! FileManager.default.url(for: .applicationSupportDirectory,
-                                                    in: .userDomainMask,
-                                                    appropriateFor: nil,
-                                                    create: true)
-let bundleID = Bundle.main.bundleIdentifier!
-let logfileURL = appSupportDirURL
-    .appendingPathComponent(bundleID, isDirectory: true)
-    .appendingPathComponent("rotation.log")
-
-let fileRotation = try! FileRotationLogger(bundleID + ".filerotationlogger",
-                                           fileURL: logfileURL)
-fileRotation.maxFileSize = 10 * 1024 * 1024
-fileRotation.maxArchivedFilesCount = 5
+let console = ConsoleLogger("com.example.yourapp.console")
+let fileURL = URL(fileURLWithPath: "./foo.log").absoluteURL
+let file = FileLogger("com.example.yourapp.file", fileURL: fileURL)
 
 let log = Puppy()
-log.add(fileRotation)
-log.add(console)
+// Set the logging level.
+log.add(console, withLevel: .warning)
+log.add(file, withLevel: .warning)
 
-log.info("INFO message")
-log.warning("WARNING message")
-
+log.debug("DEBUG message")  // Will NOT be logged.
+log.error("ERROR message")  // Will be logged.
 ```
 
-**Logging to console and syslog using `apple/swift-log`.**
+### Use with [apple/swift-log](https://github.com/apple/swift-log/)
 
-You can use CocoaPods and Swift Package Manager for integration.
+Logging to mutliple transports(e.g. console and syslog) as a backend for `apple/swift-log`.
 
 ```swift
 import Puppy
 import Logging
 
-let bundleID = Bundle.main.bundleIdentifier!
-let console = ConsoleLogger(bundleID + ".consolelogger")
-let syslog = SystemLogger(bundleID + ".systemlogger")
+let console = ConsoleLogger("com.example.yourapp.console")
+let syslog = SystemLogger("com.example.yourapp.syslog")
 
 let puppy = Puppy.default
 puppy.add(console)
@@ -74,12 +64,78 @@ puppy.add(syslog)
 
 LoggingSystem.bootstrap {
     var handler = PuppyLogHandler(label: $0, puppy: puppy)
+    // Set the logging level.
     handler.logLevel = .trace
     return handler
 }
 
-log.trace("TRACE message")
-log.debug("DEBUG message")
+log.trace("TRACE message")  // Will be logged.
+log.debug("DEBUG message")  // Will be logged.
+```
+
+### Use file log rotation
+
+Logging to file and use log rotation feature.
+
+```swift
+import Puppy
+
+class ViewController: UIViewController {
+    let delegate = SampleFileRotationDelegate()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let fileRotation = try! FileRotationLogger("com.example.yourapp.filerotation",
+                                                   fileURL: "./rotation/foo.log")
+        fileRotation.maxFileSize = 10 * 1024 * 1024
+        fileRotation.maxArchivedFilesCount = 5
+        fileRotation.delegate = delegate
+        let log = Puppy()
+        log.add(fileRotation)
+        log.info("INFO message")
+        log.warning("WARNING message")
+    }
+}
+
+class SampleFileRotationDelegate: FileRotationLoggerDeletate {
+    func fileRotationLogger(_ fileRotationLogger: FileRotationLogger,
+                            didArchiveFileURL: URL, toFileURL: URL) {
+        print("didArchiveFileURL: \(didArchiveFileURL), toFileURL: \(toFileURL)")
+    }
+    func fileRotationLogger(_ fileRotationLogger: FileRotationLogger,
+                            didRemoveArchivedFileURL: URL) {
+        print("didRemoveArchivedFileURL: \(didRemoveArchivedFileURL)")
+    }
+}
+```
+
+### Customize the log format
+
+Customize the log format using `Formattable` protocol. Logging to oslog for example.
+
+```swift
+import Puppy
+
+class ViewController: UIViewController {    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let oslog = OSLogger("com.yourapp.oslog")
+        oslog.format = LogFormatter()
+        let log = Puppy()
+        log.add(oslog)
+        log.info("INFO message")
+        log.warning("WARNING message")
+    }
+}
+
+class LogFormatter: LogFormattable {
+    func formatMessage(_ level: LogLevel, message: String, tag: String, function: String,
+                       file: String, line: UInt, swiftLogInfo: [String : String],
+                       label: String, date: Date, threadID: UInt64) -> String {
+        let date = dateFormatter(date)
+        let file = shortFileName(file)
+        return "\(date) \(threadID) [\(level.emoji) \(level)] \(file)#L.\(line) \(function) \(message)"
+    }
+}
 ```
 
 
