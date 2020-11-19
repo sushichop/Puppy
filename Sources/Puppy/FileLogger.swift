@@ -15,7 +15,7 @@ public class FileLogger: BaseLogger {
 
     public init(_ label: String, fileURL: URL) throws {
         self.fileURL = fileURL
-        debug("fileURL is \(fileURL)")
+        debug("fileURL is \(fileURL).")
         super.init(label)
         try validateFileURL(fileURL)
         try openFile()
@@ -26,12 +26,18 @@ public class FileLogger: BaseLogger {
     }
 
     public override func log(_ level: LogLevel, string: String) {
-        fileHandle?.seekToEndOfFile()
-        if let data = (string + "\r\n").data(using: .utf8) {
-            fileHandle?.write(data)
-            if flushmode == .always {
-                fileHandle?.synchronizeFile()
+        do {
+            _ = try fileHandle?.seekToEndCompatible()
+            if let data = (string + "\r\n").data(using: .utf8) {
+                // swiftlint:disable force_try
+                try! fileHandle?.writeCompatible(contentsOf: data)
+                // swiftlint:enable force_try
+                if flushmode == .always {
+                    fileHandle?.synchronizeFile()
+                }
             }
+        } catch {
+            print("seekToEnd error. error is \(error.localizedDescription).")
         }
     }
 
@@ -62,7 +68,7 @@ public class FileLogger: BaseLogger {
         let directoryURL = fileURL.deletingLastPathComponent()
         do {
             try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
-            debug("created directoryURL is \(directoryURL)")
+            debug("created directoryURL is \(directoryURL).")
         } catch {
             throw FileError.creatingDirectoryFailed(at: directoryURL)
         }
@@ -70,7 +76,7 @@ public class FileLogger: BaseLogger {
         if !FileManager.default.fileExists(atPath: fileURL.path) {
             let successful = FileManager.default.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
             if successful {
-                debug("succeeded in creating filePath")
+                debug("succeeded in creating filePath.")
             } else {
                 throw FileError.creatingFileFailed(at: fileURL)
             }
@@ -99,4 +105,22 @@ public class FileLogger: BaseLogger {
 public enum FlushMode {
     case always
     case manual
+}
+
+extension FileHandle {
+    func seekToEndCompatible() throws -> UInt64 {
+        if #available(macOS 10.15.4, iOS 13.4, tvOS 13.4, watchOS 6.2, *) {
+            return try seekToEnd()
+        } else {
+            return seekToEndOfFile()
+        }
+    }
+
+    func writeCompatible(contentsOf data: Data) throws {
+        if #available(macOS 10.15.4, iOS 13.4, tvOS 13.4, watchOS 6.2, *) {
+            try write(contentsOf: data)
+        } else {
+            write(data)
+        }
+    }
 }
