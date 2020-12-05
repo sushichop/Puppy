@@ -1,9 +1,4 @@
-# Puppy 🐶
-
-[![release](https://img.shields.io/github/v/release/sushichop/Puppy.svg?color=blue)](https://github.com/sushichop/Puppy/releases)
-![CI](https://github.com/sushichop/Puppy/workflows/CI/badge.svg)
-[![codecov](https://codecov.io/gh/sushichop/Puppy/branch/main/graph/badge.svg)](https://codecov.io/gh/sushichop/Puppy)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sushichop/Puppy/blob/master/LICENSE)
+# Puppy
 
 ![Swift5.0+](https://img.shields.io/badge/Swift-5.0%2B-orange.svg?style=flat)
 [![CocoaPods](https://img.shields.io/cocoapods/v/Puppy.svg?style=flat)](https://cocoapods.org/pods/Puppy)
@@ -12,7 +7,12 @@
 ![platforms](https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat)
 ![platforms](https://img.shields.io/badge/Platforms-Linux-orange.svg?style=flat)
 
-### **Puppy is a flexible logging library written in Swift.**
+[![release](https://img.shields.io/github/v/release/sushichop/Puppy.svg?color=blue)](https://github.com/sushichop/Puppy/releases)
+![CI](https://github.com/sushichop/Puppy/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/gh/sushichop/Puppy/branch/main/graph/badge.svg)](https://codecov.io/gh/sushichop/Puppy)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sushichop/Puppy/blob/master/LICENSE)
+
+### **Puppy is a flexible logging library written in Swift** 🐶 
 
 It supports multiple transports(console, file, syslog, and oslog) as loggers. It not only works alone, but also as a backend for [apple/swift-log](https://github.com/apple/swift-log/).
 Furthermore, it has file log rotation feature and you can also customize the log format as you like.
