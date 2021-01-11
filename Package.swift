@@ -15,7 +15,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-log", from: "1.4.0"),
+        .package(url: "https://github.com/apple/swift-log.git", from: "1.4.0"),
     ],
     targets: [
         .systemLibrary(name: "CPuppy"),
