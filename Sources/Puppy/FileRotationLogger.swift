@@ -2,12 +2,6 @@ import Foundation
 
 public class FileRotationLogger: BaseLogger {
 
-    public override var queue: DispatchQueue! {
-        return Self.fileRotationLoggerQueue
-    }
-
-    private static let fileRotationLoggerQueue = DispatchQueue(label: "net.sushichop.puppy.filerotationlogger")
-
     public typealias ByteCount = UInt64
     public var maxFileSize: ByteCount = 10 * 1024 * 1024
     public var maxArchivedFilesCount: UInt8 = 5
@@ -48,7 +42,7 @@ public class FileRotationLogger: BaseLogger {
 
     public func delete(_ url: URL) throws {
         do {
-            try queue.sync {
+            try queue!.sync {
                 try FileManager.default.removeItem(at: url)
             }
         } catch {

@@ -2,12 +2,6 @@ import Foundation
 
 public class FileLogger: BaseLogger {
 
-    public override var queue: DispatchQueue! {
-        return Self.fileLoggerQueue
-    }
-
-    private static let fileLoggerQueue = DispatchQueue(label: "net.sushichop.puppy.filelogger")
-
     public var flushmode: FlushMode = .always
 
     private var fileHandle: FileHandle!
@@ -43,7 +37,7 @@ public class FileLogger: BaseLogger {
 
     public func delete(_ url: URL) throws {
         do {
-            try queue.sync {
+            try queue!.sync {
                 try FileManager.default.removeItem(at: url)
             }
         } catch {
@@ -52,7 +46,7 @@ public class FileLogger: BaseLogger {
     }
 
     public func flush() {
-        queue.sync {
+        queue!.sync {
             fileHandle?.synchronizeFile()
         }
     }
