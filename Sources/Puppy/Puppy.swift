@@ -7,6 +7,7 @@ import Foundation
 typealias Log = Puppy
 
 public class Puppy {
+
     public static var useDebug = false
     public static let `default` = Puppy()
 

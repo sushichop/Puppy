@@ -15,9 +15,9 @@ class PuppyLogHandlerTests: XCTestCase {
     }
 
     func testLoggingSystem() throws {
-        //let bool1 = [:].isEmpty         // true
-        //let bool2 = ["a": ""].isEmpty   // false
-        //let bool3 = ["b": nil].isEmpty  // false
+        // let bool1 = [:].isEmpty         // true
+        // let bool2 = ["a": ""].isEmpty   // false
+        // let bool3 = ["b": nil].isEmpty  // false
 
         let consoleLogger = ConsoleLogger("com.example.yourapp.consolelogger.swiftlog")
         consoleLogger.logLevel = .trace

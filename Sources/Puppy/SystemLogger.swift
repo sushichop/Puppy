@@ -5,12 +5,6 @@ import CPuppy
 
 public class SystemLogger: BaseLogger {
 
-    public override var queue: DispatchQueue! {
-        return Self.systemLoggerQueue
-    }
-
-    private static let systemLoggerQueue = DispatchQueue(label: "net.sushichop.puppy.systemlogger")
-
     public override func log(_ level: LogLevel, string: String) {
         string.withCString {
             let priority = logPriority(level)

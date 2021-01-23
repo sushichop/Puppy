@@ -6,7 +6,6 @@ import Foundation
 /// [ANSI escape code](https://en.wikipedia.org/wiki/ANSI_escape_code)
 /// [256 COLORS - CHEAT SHEET](https://jonasjacek.github.io/colors/)
 public enum LogColor {
-
     case black
     case red
     case green

@@ -4,6 +4,7 @@ import Foundation
 import Logging
 
 public struct PuppyLogHandler: LogHandler {
+
     public var logLevel: Logger.Level = .info
     public var metadata: Logger.Metadata
 

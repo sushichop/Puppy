@@ -3,6 +3,7 @@ import Foundation
 public protocol Loggerable {
 
     var label: String { get }
+    var queue: DispatchQueue? { get }
 
     func log(_ level: LogLevel, string: String)
 }
@@ -29,7 +30,7 @@ public class BaseLogger: Loggerable {
             formattedMessage = message
         }
 
-        if let queue = queue, asynchronous {
+        if let queue = queue {
             queue.async {
                 self.log(level, string: formattedMessage)
             }
@@ -38,13 +39,12 @@ public class BaseLogger: Loggerable {
         }
     }
 
-    public var asynchronous: Bool = true
+    public let label: String
+    public let queue: DispatchQueue?
 
-    public var label: String
-    public var queue: DispatchQueue? { return nil }
-
-    public init(_ label: String) {
+    public init(_ label: String, asynchronous: Bool = true) {
         self.label = label
+        self.queue = asynchronous ? DispatchQueue(label: label) : nil
     }
 
     public func log(_ level: LogLevel, string: String) {

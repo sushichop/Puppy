@@ -5,17 +5,11 @@ import os.log
 
 public class OSLogger: BaseLogger {
 
-    public override var queue: DispatchQueue! {
-        return Self.osLoggerQueue
-    }
-
-    private static let osLoggerQueue = DispatchQueue(label: "net.sushichop.puppy.oslogger")
-
     private let osLog: OSLog
 
-    public init(_ label: String, category: String = "Puppy") {
+    public init(_ label: String, asynchronous: Bool = true, category: String = "Puppy") {
         self.osLog = OSLog(subsystem: label, category: category)
-        super.init(label)
+        super.init(label, asynchronous: asynchronous)
     }
 
     public override func log(_ level: LogLevel, string: String) {

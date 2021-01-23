@@ -3,12 +3,6 @@ import Foundation
 
 public class MockLogger: BaseLogger {
 
-    public override var queue: DispatchQueue! {
-        return Self.mockLoggerQueue
-    }
-
-    private static let mockLoggerQueue = DispatchQueue(label: "net.sushichop.puppy.mocklogger")
-
     var invokedLog = false
     var invokedLogCount = 0
     var invokedLogLevels: [LogLevel] = []

@@ -29,7 +29,7 @@ Furthermore, it has file log rotation feature and you can also customize the log
 
 ### Basic Usage
 
-Logging to mutliple transports(e.g. console and file).
+Logging to mutliple transports(e.g. console and file). It is recommended that the first argument of each logger be a unique reverse-order FQDN since it is also used internally for a `DispatchQueue`'s label.
 
 ```Swift
 import Puppy
