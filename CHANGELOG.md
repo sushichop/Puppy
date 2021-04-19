@@ -1,6 +1,7 @@
 ## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
 
 - Instantiate `DispatchQueue` and add an argument named of `asynchronous`. [#9](https://github.com/sushichop/Puppy/pull/9)
+- Remove colons from log rotation file name(extension). [#11](https://github.com/sushichop/Puppy/pull/11)
 
 ## [0.1.2](https://github.com/sushichop/Puppy/releases/tag/0.1.2) (2020-12-05)
 
