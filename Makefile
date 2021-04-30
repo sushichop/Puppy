@@ -25,12 +25,12 @@ xcode-build: ## Run build using Xcode
 	set -o pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=macOS,variant=Mac Catalyst" | xcpretty -c
 	set -o pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=iOS Simulator,name=iPhone 8" | xcpretty -c
 	set -o pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=tvOS Simulator,name=Apple TV" | xcpretty -c
-	set -o pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=watchOS Simulator,name=Apple Watch Series 4 - 40mm" | xcpretty -c
+	set -o pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=watchOS Simulator,name=Apple Watch Series 5 - 40mm" | xcpretty -c
 
 .PHONY: xcode-test
 xcode-test: ## Run tests using Xcode
-	set -o pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=macOS,arch=x86_64" ENABLE_TESTABILITY=YES | xcpretty -c
-	set -o pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=macOS,arch=x86_64,variant=Mac Catalyst" ENABLE_TESTABILITY=YES | xcpretty -c
+	set -o pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=macOS" ENABLE_TESTABILITY=YES | xcpretty -c
+	set -o pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=macOS,variant=Mac Catalyst" ENABLE_TESTABILITY=YES | xcpretty -c
 	set -o pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=iOS Simulator,name=iPhone 8" ENABLE_TESTABILITY=YES | xcpretty -c
 	set -o pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=tvOS Simulator,name=Apple TV" ENABLE_TESTABILITY=YES | xcpretty -c
 

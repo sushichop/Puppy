@@ -143,7 +143,7 @@ public class FileRotationLogger: BaseLogger {
     }
 }
 
-public protocol FileRotationLoggerDeletate: class {
+public protocol FileRotationLoggerDeletate: AnyObject {
     func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didArchiveFileURL: URL, toFileURL: URL)
     func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveArchivedFileURL: URL)
 }
