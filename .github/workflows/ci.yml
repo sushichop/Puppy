@@ -16,8 +16,8 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        make-tatget: [xcode-build, carthage-build-workaround, pod-lib-lint]
-        xcode: [12.3]
+        make-tatget: [xcode-build, pod-lib-lint, carthage-build-workaround, carthage-build-xcframeworks]
+        xcode: [12.4]
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -30,7 +30,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        xcode: [12.3]
+        xcode: [12.4]
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -46,7 +46,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        xcode: [12.3]
+        xcode: [12.4]
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -70,7 +70,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        xcode: [12.3]
+        xcode: [12.4]
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app

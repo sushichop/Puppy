@@ -21,18 +21,18 @@ xctrace-list-devices: ## Run xcrun xctrace list devices
 
 .PHONY: xcode-build
 xcode-build: ## Run build using Xcode
-	set -o pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=macOS" | xcpretty -c
-	set -o pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=macOS,variant=Mac Catalyst" | xcpretty -c
-	set -o pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=iOS Simulator,name=iPhone 8" | xcpretty -c
-	set -o pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=tvOS Simulator,name=Apple TV" | xcpretty -c
-	set -o pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=watchOS Simulator,name=Apple Watch Series 5 - 40mm" | xcpretty -c
+	set -euo pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=macOS" | xcpretty -c
+	set -euo pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=macOS,variant=Mac Catalyst" | xcpretty -c
+	set -euo pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=iOS Simulator,name=iPhone 8" | xcpretty -c
+	set -euo pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=tvOS Simulator,name=Apple TV" | xcpretty -c
+	set -euo pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=watchOS Simulator,name=Apple Watch Series 5 - 40mm" | xcpretty -c
 
 .PHONY: xcode-test
 xcode-test: ## Run tests using Xcode
-	set -o pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=macOS" ENABLE_TESTABILITY=YES | xcpretty -c
-	set -o pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=macOS,variant=Mac Catalyst" ENABLE_TESTABILITY=YES | xcpretty -c
-	set -o pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=iOS Simulator,name=iPhone 8" ENABLE_TESTABILITY=YES | xcpretty -c
-	set -o pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=tvOS Simulator,name=Apple TV" ENABLE_TESTABILITY=YES | xcpretty -c
+	set -euo pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=macOS" ENABLE_TESTABILITY=YES | xcpretty -c
+	set -euo pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=macOS,variant=Mac Catalyst" ENABLE_TESTABILITY=YES | xcpretty -c
+	set -euo pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=iOS Simulator,name=iPhone 8" ENABLE_TESTABILITY=YES | xcpretty -c
+	set -euo pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=tvOS Simulator,name=Apple TV" ENABLE_TESTABILITY=YES | xcpretty -c
 
 .PHONY: swift-test
 swift-test: ## Run tests using SwiftPM
@@ -75,6 +75,12 @@ carthage-build-workaround: ## Run carthage build with workaround
 	@echo "Deleting Carthage artifacts..."
 	@rm -rf Carthage
 	./scripts/carthage-workaround.sh build --no-skip-current
+
+.PHONY: carthage-build-xcframeworks
+carthage-build-xcframeworks: ## Run carthage build with use-xcframeworks
+	@echo "Deleting Carthage artifacts..."
+	@rm -rf Carthage
+	carthage build --no-skip-current --use-xcframeworks
 
 .PHONY: linux
 linux: ## Run and login docker container
