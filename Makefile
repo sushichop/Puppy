@@ -21,35 +21,28 @@ xctrace-list-devices: ## Run xcrun xctrace list devices
 
 .PHONY: xcode-build
 xcode-build: ## Run build using Xcode
-	set -euo pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=macOS" | xcpretty -c
-	set -euo pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=macOS,variant=Mac Catalyst" | xcpretty -c
-	set -euo pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=iOS Simulator,name=iPhone 8" | xcpretty -c
-	set -euo pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=tvOS Simulator,name=Apple TV" | xcpretty -c
-	set -euo pipefail && xcodebuild clean build -workspace Puppy.xcworkspace -scheme Puppy -configuration Release -destination "platform=watchOS Simulator,name=Apple Watch Series 5 - 40mm" | xcpretty -c
+	./scripts/xcodebuild-script.sh
 
 .PHONY: xcode-test
 xcode-test: ## Run tests using Xcode
-	set -euo pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=macOS" ENABLE_TESTABILITY=YES | xcpretty -c
-	set -euo pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=macOS,variant=Mac Catalyst" ENABLE_TESTABILITY=YES | xcpretty -c
-	set -euo pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=iOS Simulator,name=iPhone 8" ENABLE_TESTABILITY=YES | xcpretty -c
-	set -euo pipefail && xcodebuild clean build-for-testing test-without-building -workspace Puppy.xcworkspace -scheme Puppy -configuration Debug -destination "platform=tvOS Simulator,name=Apple TV" ENABLE_TESTABILITY=YES | xcpretty -c
+	SCRIPT_TYPE=test ./scripts/xcodebuild-script.sh
 
 .PHONY: swift-test
 swift-test: ## Run tests using SwiftPM
-	./scripts/llvm-cov-report.sh
+	./scripts/llvm-cov-script.sh
 
 .PHONY: swift-test-linux
-swift-test-linux: ## Run tests using SwiftPM on linux with docker
-	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) bash -x ./scripts/llvm-cov-report.sh
+swift-test-linux: ## Run tests using SwiftPM on linux container
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) ./scripts/llvm-cov-script.sh
 
 .PHONY: export-codecov
 export-codecov: ## Export code coverage
-	./scripts/llvm-cov-export.sh
+	SCRIPT_TYPE=export ./scripts/llvm-cov-script.sh
 	#bash <(curl https://codecov.io/bash)
 
 .PHONY: export-codecov-linux
-export-codecov-linux: ## Export code coverage on Linux with Docker
-	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) ./scripts/llvm-cov-export.sh
+export-codecov-linux: ## Export code coverage on linux container
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) /bin/sh -c "SCRIPT_TYPE=export ./scripts/llvm-cov-script.sh"
 	#bash <(curl https://codecov.io/bash)
 
 .PHONY: swiftlint
@@ -66,22 +59,19 @@ pod-lib-lint: ## Run pod lib lint
 
 .PHONY: carthage-build
 carthage-build: ## Run carthage build
-	@echo "Deleting Carthage artifacts..."
-	@rm -rf Carthage
+	@echo "Deleting Carthage artifacts..." && rm -rf Carthage
 	carthage build --no-skip-current
 
 .PHONY: carthage-build-workaround
 carthage-build-workaround: ## Run carthage build with workaround
-	@echo "Deleting Carthage artifacts..."
-	@rm -rf Carthage
+	@echo "Deleting Carthage artifacts..." && rm -rf Carthage
 	./scripts/carthage-workaround.sh build --no-skip-current
 
 .PHONY: carthage-build-xcframeworks
 carthage-build-xcframeworks: ## Run carthage build with use-xcframeworks
-	@echo "Deleting Carthage artifacts..."
-	@rm -rf Carthage
+	@echo "Deleting Carthage artifacts..." && rm -rf Carthage
 	carthage build --no-skip-current --use-xcframeworks
 
 .PHONY: linux
-linux: ## Run and login docker container
+linux: ## Run and login linux container
 	docker run --rm -it --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)
