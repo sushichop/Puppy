@@ -9,24 +9,21 @@ let package = Package(
         .macOS(.v10_12), .iOS(.v10), .tvOS(.v10), .watchOS(.v3),
     ],
     products: [
-        .library(
-            name: "Puppy",
-            targets: ["Puppy"]
-        ),
+        .library(name: "Puppy", targets: ["Puppy"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-log.git", from: "1.4.0"),
+        .package(url: "https://github.com/apple/swift-log.git", from: "1.4.2"),
     ],
     targets: [
-        .systemLibrary(name: "CPuppy"),
-        .target(
-            name: "Puppy",
-            dependencies: [.target(name: "CPuppy"), .product(name: "Logging", package: "swift-log")]
-        ),
-        .testTarget(
-            name: "PuppyTests",
-            dependencies: ["Puppy"]
-        ),
+        .target(name: "CPuppy"),
+        .target(name: "Puppy", dependencies: [.product(name: "Logging", package: "swift-log")]),
+        .testTarget(name: "PuppyTests", dependencies: ["Puppy"]),
     ],
     swiftLanguageVersions: [.v5]
 )
+
+if let puppy = package.targets.first(where: { $0.name == "Puppy" }) {
+    puppy.dependencies.append(
+        .target(name: "CPuppy", condition: .when(platforms: [.linux]))
+    )
+}
