@@ -96,7 +96,7 @@ public class Puppy {
         pthread_threadid_np(nil, &threadID)
         #endif
         #if os(Linux)
-        threadID = sys_gettid_wrapper()
+        threadID = cpuppy_sys_gettid()
         #endif
         return threadID
     }

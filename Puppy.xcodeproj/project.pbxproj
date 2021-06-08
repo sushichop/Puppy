@@ -56,6 +56,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C712BB09266F31A60016A768 /* CPuppy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPuppy.h; sourceTree = "<group>"; };
+		C712BB0A266F31B10016A768 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		C712BB0B266F31C80016A768 /* CPuppy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CPuppy.c; sourceTree = "<group>"; };
 		C7695BB32533303900E0CA22 /* MockLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLogger.swift; sourceTree = "<group>"; };
 		C7695BC1253332DF00E0CA22 /* BaseLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLoggerTests.swift; sourceTree = "<group>"; };
 		C78B9212252DCA3E0026B9B1 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -75,8 +78,6 @@
 		C7ED71F9252DC0C50065B955 /* FileLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileLogger.swift; sourceTree = "<group>"; };
 		C7ED71FA252DC0C50065B955 /* OSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogger.swift; sourceTree = "<group>"; };
 		C7ED71FB252DC0C50065B955 /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
-		C7ED720C252DC0FB0065B955 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		C7ED720D252DC1120065B955 /* cpuppy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cpuppy.h; sourceTree = "<group>"; };
 		C7ED7210252DC1590065B955 /* PuppyLogHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuppyLogHandlerTests.swift; sourceTree = "<group>"; };
 		C7ED7211252DC1590065B955 /* FormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatterTests.swift; sourceTree = "<group>"; };
 		C7ED7212252DC1590065B955 /* OSLoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLoggerTests.swift; sourceTree = "<group>"; };
@@ -108,6 +109,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C712BB06266F30A60016A768 /* CPuppy */ = {
+			isa = PBXGroup;
+			children = (
+				C712BB07266F30B00016A768 /* include */,
+				C712BB08266F30B50016A768 /* src */,
+			);
+			path = CPuppy;
+			sourceTree = "<group>";
+		};
+		C712BB07266F30B00016A768 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				C712BB09266F31A60016A768 /* CPuppy.h */,
+				C712BB0A266F31B10016A768 /* module.modulemap */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		C712BB08266F30B50016A768 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C712BB0B266F31C80016A768 /* CPuppy.c */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		C7ED7194252DBEC70065B955 = {
 			isa = PBXGroup;
 			children = (
@@ -131,28 +158,11 @@
 		C7ED71C0252DC0530065B955 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				C7ED71C1252DC0530065B955 /* CPuppy */,
+				C712BB06266F30A60016A768 /* CPuppy */,
 				C7ED71C5252DC0530065B955 /* Puppy */,
 				C7ED71D2252DC0530065B955 /* SupportingFiles */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		C7ED71C1252DC0530065B955 /* CPuppy */ = {
-			isa = PBXGroup;
-			children = (
-				C7ED71C2252DC0530065B955 /* include */,
-				C7ED720C252DC0FB0065B955 /* module.modulemap */,
-			);
-			path = CPuppy;
-			sourceTree = "<group>";
-		};
-		C7ED71C2252DC0530065B955 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				C7ED720D252DC1120065B955 /* cpuppy.h */,
-			);
-			path = include;
 			sourceTree = "<group>";
 		};
 		C7ED71C5252DC0530065B955 /* Puppy */ = {

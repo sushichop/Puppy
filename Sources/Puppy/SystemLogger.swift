@@ -8,7 +8,7 @@ public class SystemLogger: BaseLogger {
     public override func log(_ level: LogLevel, string: String) {
         string.withCString {
             let priority = logPriority(level)
-            syslog_wrapper(priority, $0)
+            cpuppy_syslog(priority, $0)
         }
     }
 

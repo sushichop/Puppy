@@ -1,4 +1,4 @@
 module CPuppy {
-    header "include/cpuppy.h"
+    header "CPuppy.h"
     export *
 }
