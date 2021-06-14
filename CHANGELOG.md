@@ -5,6 +5,7 @@
 - Use `AnyObject` for protocol inheritance instead of `class`. [#13](https://github.com/sushichop/Puppy/pull/13)
 - Add `carthage-build-xcframeworks`. [#14](https://github.com/sushichop/Puppy/pull/14)
 - Specify Linux platform. [#15](https://github.com/sushichop/Puppy/pull/15)
+- Integrate modules in Xcode and Podspec. [#16](https://github.com/sushichop/Puppy/pull/16)
 
 ## [0.1.2](https://github.com/sushichop/Puppy/releases/tag/0.1.2) (2020-12-05)
 

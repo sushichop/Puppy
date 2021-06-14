@@ -7,8 +7,8 @@ extern "C" {
 
 
 #if defined(__linux__)
-#define _GNU_SOURCE
 
+#define _GNU_SOURCE
 #include <unistd.h>
 #include <sys/syscall.h>
 
