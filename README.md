@@ -8,7 +8,7 @@
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sushichop/Puppy/blob/master/LICENSE)
 
 ![platforms](https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-orange.svg?style=flat)
-![Carthage|SwiftPM](https://img.shields.io/badge/Carhage%20%7C%20SwiftPM-compatible-4BC51D.svg?style=flat)
+![Carthage|SwiftPM|Bazel](https://img.shields.io/badge/Carhage%20%7C%20SwiftPM%20%7C%20Bazel-compatible-4BC51D.svg?style=flat)
 
 ### **Puppy is a flexible logging library written in Swift** 🐶 
 

@@ -72,6 +72,14 @@ carthage-build-xcframeworks: ## Run carthage build with use-xcframeworks
 	@echo "Deleting Carthage artifacts..." && rm -rf Carthage
 	carthage build --no-skip-current --use-xcframeworks
 
+.PHONY: bazel-build
+bazel-build: ## Run bazel build
+	./scripts/bazel-script.sh
+
+.PHONY: bazel-build-linux
+bazel-build-linux: ## Run bazel build on Linux container
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) ./scripts/bazel-script.sh
+
 .PHONY: linux
 linux: ## Run and login linux container
 	docker run --rm -it --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)
