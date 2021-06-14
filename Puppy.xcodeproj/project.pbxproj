@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -21,6 +21,11 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		C74F94B226777D38003A88BE /* CPuppy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C74F94A926777D38003A88BE /* CPuppy.framework */; };
+		C74F94C226777DF7003A88BE /* CPuppyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C74F94C126777DF7003A88BE /* CPuppyTests.m */; };
+		C74F94C326777E1D003A88BE /* CPuppy.h in Headers */ = {isa = PBXBuildFile; fileRef = C712BB09266F31A60016A768 /* CPuppy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C74F94C826778428003A88BE /* CPuppy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C74F94A926777D38003A88BE /* CPuppy.framework */; };
+		C74F94CF267784F7003A88BE /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = C74F94CE267784F7003A88BE /* Logging */; };
 		C7695BB42533303900E0CA22 /* MockLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7695BB32533303900E0CA22 /* MockLogger.swift */; };
 		C7695BC2253332DF00E0CA22 /* BaseLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7695BC1253332DF00E0CA22 /* BaseLoggerTests.swift */; };
 		C7ED71A8252DBEC70065B955 /* Puppy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ED719E252DBEC70065B955 /* Puppy.framework */; };
@@ -46,6 +51,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C74F94B326777D38003A88BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C7ED7195252DBEC70065B955 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C74F94A826777D38003A88BE;
+			remoteInfo = CPuppy;
+		};
+		C74F94CA26778428003A88BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C7ED7195252DBEC70065B955 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C74F94A826777D38003A88BE;
+			remoteInfo = CPuppy;
+		};
 		C7ED71A9252DBEC70065B955 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C7ED7195252DBEC70065B955 /* Project object */;
@@ -59,6 +78,12 @@
 		C712BB09266F31A60016A768 /* CPuppy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPuppy.h; sourceTree = "<group>"; };
 		C712BB0A266F31B10016A768 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		C712BB0B266F31C80016A768 /* CPuppy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CPuppy.c; sourceTree = "<group>"; };
+		C74F94A926777D38003A88BE /* CPuppy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CPuppy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C74F94B126777D38003A88BE /* CPuppyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CPuppyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C74F94C126777DF7003A88BE /* CPuppyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPuppyTests.m; sourceTree = "<group>"; };
+		C74F94C426777E64003A88BE /* CPuppy.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = CPuppy.modulemap; sourceTree = "<group>"; };
+		C74F94C526777ECC003A88BE /* StaticFramework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StaticFramework.xcconfig; sourceTree = "<group>"; };
+		C74F94C626777EE9003A88BE /* StaticFrameworkTests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StaticFrameworkTests.xcconfig; sourceTree = "<group>"; };
 		C7695BB32533303900E0CA22 /* MockLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLogger.swift; sourceTree = "<group>"; };
 		C7695BC1253332DF00E0CA22 /* BaseLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLoggerTests.swift; sourceTree = "<group>"; };
 		C78B9212252DCA3E0026B9B1 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -91,10 +116,27 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C74F94A626777D38003A88BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C74F94AE26777D38003A88BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C74F94B226777D38003A88BE /* CPuppy.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C7ED719B252DBEC70065B955 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C74F94CF267784F7003A88BE /* Logging in Frameworks */,
+				C74F94C826778428003A88BE /* CPuppy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +154,7 @@
 		C712BB06266F30A60016A768 /* CPuppy */ = {
 			isa = PBXGroup;
 			children = (
+				C74F94C426777E64003A88BE /* CPuppy.modulemap */,
 				C712BB07266F30B00016A768 /* include */,
 				C712BB08266F30B50016A768 /* src */,
 			);
@@ -135,6 +178,21 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		C74F94C026777D8A003A88BE /* CPuppyTests */ = {
+			isa = PBXGroup;
+			children = (
+				C74F94C126777DF7003A88BE /* CPuppyTests.m */,
+			);
+			path = CPuppyTests;
+			sourceTree = "<group>";
+		};
+		C74F94C726778428003A88BE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C7ED7194252DBEC70065B955 = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +201,7 @@
 				C7ED719F252DBEC70065B955 /* Products */,
 				C7ED71C0252DC0530065B955 /* Sources */,
 				C7ED720E252DC1590065B955 /* Tests */,
+				C74F94C726778428003A88BE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,6 +210,8 @@
 			children = (
 				C7ED719E252DBEC70065B955 /* Puppy.framework */,
 				C7ED71A7252DBEC70065B955 /* PuppyTests.xctest */,
+				C74F94A926777D38003A88BE /* CPuppy.framework */,
+				C74F94B126777D38003A88BE /* CPuppyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -195,6 +256,7 @@
 		C7ED720E252DC1590065B955 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				C74F94C026777D8A003A88BE /* CPuppyTests */,
 				C7ED720F252DC1590065B955 /* PuppyTests */,
 				C7ED7217252DC1590065B955 /* SupportingFiles */,
 			);
@@ -231,6 +293,8 @@
 				C7ED7231252DC2F60065B955 /* Common.xcconfig */,
 				C7ED7232252DC2F60065B955 /* Framework.xcconfig */,
 				C7ED7230252DC2F60065B955 /* FrameworkTests.xcconfig */,
+				C74F94C526777ECC003A88BE /* StaticFramework.xcconfig */,
+				C74F94C626777EE9003A88BE /* StaticFrameworkTests.xcconfig */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -238,6 +302,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		C74F94A426777D38003A88BE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C74F94C326777E1D003A88BE /* CPuppy.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C7ED7199252DBEC70065B955 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -248,6 +320,42 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		C74F94A826777D38003A88BE /* CPuppy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C74F94BE26777D38003A88BE /* Build configuration list for PBXNativeTarget "CPuppy" */;
+			buildPhases = (
+				C74F94A426777D38003A88BE /* Headers */,
+				C74F94A526777D38003A88BE /* Sources */,
+				C74F94A626777D38003A88BE /* Frameworks */,
+				C74F94A726777D38003A88BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CPuppy;
+			productName = CPuppy;
+			productReference = C74F94A926777D38003A88BE /* CPuppy.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C74F94B026777D38003A88BE /* CPuppyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C74F94BF26777D38003A88BE /* Build configuration list for PBXNativeTarget "CPuppyTests" */;
+			buildPhases = (
+				C74F94AD26777D38003A88BE /* Sources */,
+				C74F94AE26777D38003A88BE /* Frameworks */,
+				C74F94AF26777D38003A88BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C74F94B426777D38003A88BE /* PBXTargetDependency */,
+			);
+			name = CPuppyTests;
+			productName = CPuppyTests;
+			productReference = C74F94B126777D38003A88BE /* CPuppyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C7ED719D252DBEC70065B955 /* Puppy */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C7ED71B2252DBEC70065B955 /* Build configuration list for PBXNativeTarget "Puppy" */;
@@ -260,9 +368,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				C74F94CB26778428003A88BE /* PBXTargetDependency */,
 			);
 			name = Puppy;
 			packageProductDependencies = (
+				C74F94CE267784F7003A88BE /* Logging */,
 			);
 			productName = Puppy;
 			productReference = C7ED719E252DBEC70065B955 /* Puppy.framework */;
@@ -292,9 +402,15 @@
 		C7ED7195252DBEC70065B955 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1200;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					C74F94A826777D38003A88BE = {
+						CreatedOnToolsVersion = 12.5;
+					};
+					C74F94B026777D38003A88BE = {
+						CreatedOnToolsVersion = 12.5;
+					};
 					C78B9219252DCFBD0026B9B1 = {
 						CreatedOnToolsVersion = 12.0.1;
 					};
@@ -317,11 +433,14 @@
 			);
 			mainGroup = C7ED7194252DBEC70065B955;
 			packageReferences = (
+				C74F94CD267784F7003A88BE /* XCRemoteSwiftPackageReference "swift-log" */,
 			);
 			productRefGroup = C7ED719F252DBEC70065B955 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				C74F94A826777D38003A88BE /* CPuppy */,
+				C74F94B026777D38003A88BE /* CPuppyTests */,
 				C7ED719D252DBEC70065B955 /* Puppy */,
 				C7ED71A6252DBEC70065B955 /* PuppyTests */,
 				C78B9219252DCFBD0026B9B1 /* SwiftLint */,
@@ -330,6 +449,20 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C74F94A726777D38003A88BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C74F94AF26777D38003A88BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C7ED719C252DBEC70065B955 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -368,6 +501,21 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C74F94A526777D38003A88BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C74F94AD26777D38003A88BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C74F94C226777DF7003A88BE /* CPuppyTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C7ED719A252DBEC70065B955 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -406,6 +554,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C74F94B426777D38003A88BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C74F94A826777D38003A88BE /* CPuppy */;
+			targetProxy = C74F94B326777D38003A88BE /* PBXContainerItemProxy */;
+		};
+		C74F94CB26778428003A88BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C74F94A826777D38003A88BE /* CPuppy */;
+			targetProxy = C74F94CA26778428003A88BE /* PBXContainerItemProxy */;
+		};
 		C7ED71AA252DBEC70065B955 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C7ED719D252DBEC70065B955 /* Puppy */;
@@ -414,6 +572,72 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		C74F94BA26777D38003A88BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C74F94C526777ECC003A88BE /* StaticFramework.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C74F94BB26777D38003A88BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C74F94C526777ECC003A88BE /* StaticFramework.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		C74F94BC26777D38003A88BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C74F94C626777EE9003A88BE /* StaticFrameworkTests.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+			};
+			name = Debug;
+		};
+		C74F94BD26777D38003A88BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C74F94C626777EE9003A88BE /* StaticFrameworkTests.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+			};
+			name = Release;
+		};
 		C78B921A252DCFBD0026B9B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -601,6 +825,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C74F94BE26777D38003A88BE /* Build configuration list for PBXNativeTarget "CPuppy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C74F94BA26777D38003A88BE /* Debug */,
+				C74F94BB26777D38003A88BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C74F94BF26777D38003A88BE /* Build configuration list for PBXNativeTarget "CPuppyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C74F94BC26777D38003A88BE /* Debug */,
+				C74F94BD26777D38003A88BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C78B921C252DCFBD0026B9B1 /* Build configuration list for PBXAggregateTarget "SwiftLint" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -638,6 +880,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C74F94CD267784F7003A88BE /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C74F94CE267784F7003A88BE /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C74F94CD267784F7003A88BE /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C7ED7195252DBEC70065B955 /* Project object */;
 }

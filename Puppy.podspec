@@ -22,7 +22,9 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "Core" do |core|
-    core.source_files = "Sources/Puppy/**/*.{swift}"
+    core.header_mappings_dir = "Sources/CPuppy/include"
+    core.public_header_files = "Sources/CPuppy/include/**/*.h"
+    core.source_files        = "Sources/CPuppy/**/*.{h,m}", "Sources/Puppy/**/*.{swift}"
   end
 
   s.cocoapods_version = ">= 1.7.0"

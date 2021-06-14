@@ -1,0 +1,5 @@
+framework module CPuppy {
+    umbrella header "include/CPuppy.h"
+    export *
+    module * { export * }
+}
