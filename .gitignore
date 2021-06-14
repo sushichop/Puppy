@@ -127,3 +127,6 @@ coverage.lcov
 # Bundler
 /.bundle
 /vendor
+
+# Bazel
+/bazel-*

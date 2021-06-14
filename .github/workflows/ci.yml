@@ -11,36 +11,6 @@ on:
       - '**'
 
 jobs:
-  build:
-    name: ${{ matrix.make-tatget }} - Xcode ${{ matrix.xcode }}
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        make-tatget: [xcode-build, pod-lib-lint, carthage-build-workaround, carthage-build-xcframeworks]
-        xcode: [12.4]
-      fail-fast: false
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
-    steps:
-      - uses: actions/checkout@v2
-      - run: make ${{ matrix.make-tatget }}
-
-  xcode-test:
-    name: xcode-test - Xcode ${{ matrix.xcode }}
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        xcode: [12.4]
-      fail-fast: false
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
-    steps:
-      - uses: actions/checkout@v2
-      - name: lint
-        run: make swiftlint
-      - name: test
-        run: make xcode-test
-
   swift-test:
     name: swift-test - Xcode ${{ matrix.xcode }}
     runs-on: macos-latest
@@ -84,3 +54,45 @@ jobs:
         with:
           file: coverage.lcov
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  xcode-test:
+    name: xcode-test - Xcode ${{ matrix.xcode }}
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        xcode: [12.4]
+      fail-fast: false
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
+    steps:
+      - uses: actions/checkout@v2
+      - name: lint
+        run: make swiftlint
+      - name: test
+        run: make xcode-test
+
+  build:
+    name: ${{ matrix.make-tatget }} - Xcode ${{ matrix.xcode }}
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        make-tatget: [xcode-build, pod-lib-lint, carthage-build-workaround, carthage-build-xcframeworks, bazel-build]
+        xcode: [12.4]
+      fail-fast: false
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
+    steps:
+      - uses: actions/checkout@v2
+      - run: make ${{ matrix.make-tatget }}
+
+  build-linux:
+    name: ${{ matrix.make-tatget }} - Swift ${{ matrix.swift-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        make-tatget: [bazel-build-linux]
+        swift-version: [5.3.2]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - run: make ${{ matrix.make-tatget }} SWIFT_VERSION=${{ matrix.swift-version }}
