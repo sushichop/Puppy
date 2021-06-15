@@ -7,6 +7,7 @@
 - Specify Linux platform. [#15](https://github.com/sushichop/Puppy/pull/15)
 - Integrate modules in Xcode and Podspec. [#16](https://github.com/sushichop/Puppy/pull/16)
 - Add `bazel-build`. [#17](https://github.com/sushichop/Puppy/pull/17)
+- Add `cmake/ninja-build`. [#18](https://github.com/sushichop/Puppy/pull/18)
 
 ## [0.1.2](https://github.com/sushichop/Puppy/releases/tag/0.1.2) (2020-12-05)
 

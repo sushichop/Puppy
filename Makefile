@@ -80,6 +80,22 @@ bazel-build: ## Run bazel build
 bazel-build-linux: ## Run bazel build on Linux container
 	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) ./scripts/bazel-script.sh
 
+.PHONY: cmake-build
+cmake-build: ## Run cmake build
+	./scripts/cmake-script.sh
+
+.PHONY: cmake-build-linux
+cmake-build-linux: ## Run cmake build on Linux container
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-focal ./scripts/cmake-script.sh
+
+.PHONY: ninja-build
+ninja-build: ## Run ninja build
+	SCRIPT_TYPE=ninja ./scripts/cmake-script.sh
+
+.PHONY: ninja-build-linux
+ninja-build-linux: ## Run ninja build on Linux container
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-focal /bin/sh -c "SCRIPT_TYPE=ninja ./scripts/cmake-script.sh"
+
 .PHONY: linux
 linux: ## Run and login linux container
 	docker run --rm -it --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)
