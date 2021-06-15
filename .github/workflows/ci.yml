@@ -74,7 +74,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        make-tatget: [bazel-build, camke-build, ninja-build]
+        make-tatget: [bazel-build, cmake-build, ninja-build]
         xcode: [12.4]
       fail-fast: false
     env:
@@ -88,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        make-tatget: [bazel-build-linux, camke-build-linux, ninja-build-linux]
+        make-tatget: [bazel-build-linux, cmake-build-linux, ninja-build-linux]
         swift-version: [5.3.2]
       fail-fast: false
     steps:
