@@ -13,9 +13,8 @@ add_library(Logging
 
 target_link_libraries(Logging PRIVATE
   $<$<NOT:$<PLATFORM_ID:Darwin>>:Foundation>)
-
 set_target_properties(Logging PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_Swift_MODULE_DIRECTORY})
 
-install_swiftmodule(Logging)
+install_swift_module(Logging)
 set_property(GLOBAL APPEND PROPERTY PUPPY_EXPORTS Logging)

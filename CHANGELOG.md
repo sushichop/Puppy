@@ -1,3 +1,7 @@
+## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+
+- Update `cmake-build` for Linux. [#19](https://github.com/sushichop/Puppy/pull/19)
+
 ## [0.2.0](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (2021-06-17)
 
 - Instantiate `DispatchQueue` and add an argument named of `asynchronous`. [#9](https://github.com/sushichop/Puppy/pull/9)
