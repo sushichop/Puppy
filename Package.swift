@@ -15,8 +15,10 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-log.git", from: "1.4.2"),
     ],
     targets: [
-        .target(name: "CPuppy"),
-        .target(name: "Puppy", dependencies: [.product(name: "Logging", package: "swift-log")]),
+        .target(name: "CPuppy",
+                exclude: ["CMakeLists.txt"]),
+        .target(name: "Puppy", dependencies: [.product(name: "Logging", package: "swift-log")],
+                exclude: ["CMakeLists.txt"]),
         .testTarget(name: "PuppyTests", dependencies: ["Puppy"]),
     ],
     swiftLanguageVersions: [.v5]
