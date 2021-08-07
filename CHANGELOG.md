@@ -1,4 +1,4 @@
-## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+## [0.3.0](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (2021-08-07)
 
 - Update `cmake-build` for Linux. [#19](https://github.com/sushichop/Puppy/pull/19)
 - Workaround for `carthage build` in both Xcode 12 and 13. [#20](https://github.com/sushichop/Puppy/pull/20)
