@@ -138,6 +138,20 @@ class LogFormatter: LogFormattable {
 }
 ```
 
+### Create a custom logger
+
+You can create your own custom logger. All you have to do is inherit `BaseLogger` class and override `log(_:string:)` method.
+
+```swift
+import Puppy
+
+class CustomLogger: BaseLogger {
+    override func log(_ level: LogLevel, string: String) {
+        // Implements the logging feature here.
+    }
+}
+```
+
 
 ## License
 

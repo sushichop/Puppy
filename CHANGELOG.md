@@ -2,7 +2,8 @@
 
 - Update `cmake-build` for Linux. [#19](https://github.com/sushichop/Puppy/pull/19)
 - Workaround for `carthage build` in both Xcode 12 and 13. [#20](https://github.com/sushichop/Puppy/pull/20)
-- Follow up `Integrate modules into Xcode`. [#21](https://github.com/sushichop/Puppy/pull/21)
+- Follow up `Integrate modules into Xcode`. [#22](https://github.com/sushichop/Puppy/pull/22)
+- Make `BaseLogger` inheritable outside of the module(`Puppy`). [#23](https://github.com/sushichop/Puppy/pull/23)
 
 ## [0.2.0](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (2021-06-17)
 
