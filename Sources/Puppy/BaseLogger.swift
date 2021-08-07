@@ -8,7 +8,7 @@ public protocol Loggerable {
     func log(_ level: LogLevel, string: String)
 }
 
-public class BaseLogger: Loggerable {
+open class BaseLogger: Loggerable {
 
     public var enabled: Bool = true
     public var logLevel: LogLevel = .trace
@@ -47,8 +47,8 @@ public class BaseLogger: Loggerable {
         self.queue = asynchronous ? DispatchQueue(label: label) : nil
     }
 
-    public func log(_ level: LogLevel, string: String) {
-
+    open func log(_ level: LogLevel, string: String) {
+        // Implements the logging feature here.
     }
 }
 
