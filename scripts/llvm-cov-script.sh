@@ -9,6 +9,7 @@ if  [ "${SCRIPT_TYPE}" = "export" ]; then
   rm -f coverage.lcov
 fi
 
+swift package clean
 swift test --enable-test-discovery --enable-code-coverage
 
 BIN_PATH="$(swift build --show-bin-path)"

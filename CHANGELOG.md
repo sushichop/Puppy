@@ -1,3 +1,7 @@
+## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+
+- Add file required only for Swift 5.3.x or before on Linux. [25](https://github.com/sushichop/Puppy/pull/25)
+
 ## [0.3.0](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (2021-08-07)
 
 - Update `cmake-build` for Linux. [#19](https://github.com/sushichop/Puppy/pull/19)
