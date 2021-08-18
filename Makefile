@@ -72,6 +72,14 @@ carthage-build-xcframeworks: ## Run carthage build with use-xcframeworks
 	@echo "Deleting Carthage artifacts..." && rm -rf Carthage
 	carthage build --no-skip-current --use-xcframeworks
 
+.PHONY: swift-build
+swift-build: ## Run swift build
+	swift package clean && swift build -c release
+
+.PHONY: swift-build-linux
+swift-build-linux: ## Run swift build on Linux container
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) /bin/sh -c "swift package clean && swift build -c release"
+
 .PHONY: bazel-build
 bazel-build: ## Run bazel build
 	./scripts/bazel-script.sh
