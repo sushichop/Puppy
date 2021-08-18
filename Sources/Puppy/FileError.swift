@@ -6,4 +6,5 @@ public enum FileError: Error, Equatable {
     case creatingFileFailed(at: URL)
     case writingFailed(at: URL)
     case deletingFailed(at: URL)
+    case missingFileURL
 }

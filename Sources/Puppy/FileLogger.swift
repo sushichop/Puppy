@@ -5,14 +5,23 @@ public class FileLogger: BaseLogger {
     public var flushmode: FlushMode = .always
 
     private var fileHandle: FileHandle!
-    private let fileURL: URL
+    private let fileURL: URL?
+    private let closeHandleOnDeinit: Bool
 
     public init(_ label: String, fileURL: URL) throws {
         self.fileURL = fileURL
+        self.closeHandleOnDeinit = true
         debug("fileURL is \(fileURL).")
         super.init(label)
         try validateFileURL(fileURL)
         try openFile()
+    }
+
+    public init(_ label: String, file: FileHandle, callerCloses: Bool = true) {
+        self.fileURL = nil
+        self.closeHandleOnDeinit = !callerCloses
+        self.fileHandle = file
+        super.init(label)
     }
 
     deinit {
@@ -58,6 +67,9 @@ public class FileLogger: BaseLogger {
     }
 
     private func openFile() throws {
+        guard let fileURL = self.fileURL else {
+            throw FileError.missingFileURL
+        }
         closeFile()
         let directoryURL = fileURL.deletingLastPathComponent()
         do {
@@ -90,7 +102,9 @@ public class FileLogger: BaseLogger {
     private func closeFile() {
         if fileHandle != nil {
             fileHandle.synchronizeFile()
-            fileHandle.closeFile()
+            if closeHandleOnDeinit {
+                fileHandle.closeFile()
+            }
             fileHandle = nil
         }
     }

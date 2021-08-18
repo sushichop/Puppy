@@ -48,4 +48,11 @@ class PuppyTests: XCTestCase {
               "42".colorize(.colorNumber(42))
         )
     }
+
+    func testFileLoggerToStdout() throws {
+            let log: Puppy = Puppy.default
+            let fileLogger = FileLogger("label", file: FileHandle.standardOutput, callerCloses: true)
+            log.add(fileLogger)
+            log.info("This test output is directed to stdout.")
+    }
 }
