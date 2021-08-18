@@ -7,20 +7,23 @@ public class FileLogger: BaseLogger {
     private var fileHandle: FileHandle!
     private let fileURL: URL?
     private let closeHandleOnDeinit: Bool
+    private let seekable: Bool
 
     public init(_ label: String, fileURL: URL) throws {
         self.fileURL = fileURL
         self.closeHandleOnDeinit = true
+        self.seekable = true
         debug("fileURL is \(fileURL).")
         super.init(label)
         try validateFileURL(fileURL)
         try openFile()
     }
 
-    public init(_ label: String, file: FileHandle, callerCloses: Bool = true) {
+    public init(_ label: String, file: FileHandle, callerCloses: Bool = true, seekable: Bool = true) {
         self.fileURL = nil
         self.closeHandleOnDeinit = !callerCloses
         self.fileHandle = file
+        self.seekable = seekable
         super.init(label)
     }
 
@@ -30,7 +33,9 @@ public class FileLogger: BaseLogger {
 
     public override func log(_ level: LogLevel, string: String) {
         do {
-            _ = try fileHandle?.seekToEndCompatible()
+            if seekable {
+                _ = try fileHandle?.seekToEndCompatible()
+            }
             if let data = (string + "\r\n").data(using: .utf8) {
                 // swiftlint:disable force_try
                 try! fileHandle?.writeCompatible(contentsOf: data)
