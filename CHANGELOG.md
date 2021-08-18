@@ -1,15 +1,15 @@
-## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+## [0.3.1](https://github.com/sushichop/Puppy/releases/tag/0.3.1) (2021-08-18)
 
 - Add file required only for Swift 5.3.x or before on Linux. [25](https://github.com/sushichop/Puppy/pull/25)
 
-## [0.3.0](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (2021-08-07)
+## [0.3.0](https://github.com/sushichop/Puppy/releases/tag/0.3.0) (2021-08-07)
 
 - Update `cmake-build` for Linux. [#19](https://github.com/sushichop/Puppy/pull/19)
 - Workaround for `carthage build` in both Xcode 12 and 13. [#20](https://github.com/sushichop/Puppy/pull/20)
 - Follow up `Integrate modules into Xcode`. [#22](https://github.com/sushichop/Puppy/pull/22)
 - Make `BaseLogger` inheritable outside of the module(`Puppy`). [#23](https://github.com/sushichop/Puppy/pull/23)
 
-## [0.2.0](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (2021-06-17)
+## [0.2.0](https://github.com/sushichop/Puppy/releases/tag/0.2.0) (2021-06-17)
 
 - Instantiate `DispatchQueue` and add an argument named of `asynchronous`. [#9](https://github.com/sushichop/Puppy/pull/9)
 - Remove colons from log rotation file name(extension). [#11](https://github.com/sushichop/Puppy/pull/11)
