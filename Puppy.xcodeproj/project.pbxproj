@@ -25,9 +25,9 @@
 		C74F94C226777DF7003A88BE /* CPuppyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C74F94C126777DF7003A88BE /* CPuppyTests.m */; };
 		C74F94C326777E1D003A88BE /* CPuppy.h in Headers */ = {isa = PBXBuildFile; fileRef = C712BB09266F31A60016A768 /* CPuppy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C74F94C826778428003A88BE /* CPuppy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C74F94A926777D38003A88BE /* CPuppy.framework */; };
-		C74F94CF267784F7003A88BE /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = C74F94CE267784F7003A88BE /* Logging */; };
 		C7695BB42533303900E0CA22 /* MockLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7695BB32533303900E0CA22 /* MockLogger.swift */; };
 		C7695BC2253332DF00E0CA22 /* BaseLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7695BC1253332DF00E0CA22 /* BaseLoggerTests.swift */; };
+		C7C3C7AF26D51D6E00856A45 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = C7C3C7AE26D51D6E00856A45 /* Logging */; };
 		C7ED71A8252DBEC70065B955 /* Puppy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ED719E252DBEC70065B955 /* Puppy.framework */; };
 		C7ED71FC252DC0C50065B955 /* FileRotationLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F0252DC0C50065B955 /* FileRotationLogger.swift */; };
 		C7ED71FD252DC0C50065B955 /* SystemLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F1252DC0C50065B955 /* SystemLogger.swift */; };
@@ -136,7 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C74F94CF267784F7003A88BE /* Logging in Frameworks */,
+				C7C3C7AF26D51D6E00856A45 /* Logging in Frameworks */,
 				C74F94C826778428003A88BE /* CPuppy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,7 +374,7 @@
 			);
 			name = Puppy;
 			packageProductDependencies = (
-				C74F94CE267784F7003A88BE /* Logging */,
+				C7C3C7AE26D51D6E00856A45 /* Logging */,
 			);
 			productName = Puppy;
 			productReference = C7ED719E252DBEC70065B955 /* Puppy.framework */;
@@ -435,7 +435,7 @@
 			);
 			mainGroup = C7ED7194252DBEC70065B955;
 			packageReferences = (
-				C74F94CD267784F7003A88BE /* XCRemoteSwiftPackageReference "swift-log" */,
+				C7C3C7AD26D51D6E00856A45 /* XCRemoteSwiftPackageReference "swift-log" */,
 			);
 			productRefGroup = C7ED719F252DBEC70065B955 /* Products */;
 			projectDirPath = "";
@@ -884,7 +884,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C74F94CD267784F7003A88BE /* XCRemoteSwiftPackageReference "swift-log" */ = {
+		C7C3C7AD26D51D6E00856A45 /* XCRemoteSwiftPackageReference "swift-log" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-log.git";
 			requirement = {
@@ -895,9 +895,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C74F94CE267784F7003A88BE /* Logging */ = {
+		C7C3C7AE26D51D6E00856A45 /* Logging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C74F94CD267784F7003A88BE /* XCRemoteSwiftPackageReference "swift-log" */;
+			package = C7C3C7AD26D51D6E00856A45 /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
 		};
 /* End XCSwiftPackageProductDependency section */
