@@ -3,7 +3,7 @@
 import XCTest
 @testable import Puppy
 
-class SystemLoggerTests: XCTestCase {
+final class SystemLoggerTests: XCTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()

@@ -1,7 +1,7 @@
 import XCTest
 @testable import Puppy
 
-class PuppyTests: XCTestCase {
+final class PuppyTests: XCTestCase {
 
     let log = Puppy.default
 

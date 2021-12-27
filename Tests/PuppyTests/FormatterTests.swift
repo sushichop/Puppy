@@ -4,7 +4,7 @@ import XCTest
 import Logging
 #endif
 
-class FormatterTests: XCTestCase {
+final class FormatterTests: XCTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()

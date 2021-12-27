@@ -4,7 +4,7 @@ import XCTest
 @testable import Puppy
 import Logging
 
-class PuppyLogHandlerTests: XCTestCase {
+final class PuppyLogHandlerTests: XCTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
