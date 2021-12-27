@@ -1,7 +1,7 @@
 import Foundation
 @testable import Puppy
 
-public class MockLogger: BaseLogger {
+final public class MockLogger: BaseLogger {
 
     var invokedLog = false
     var invokedLogCount = 0
@@ -16,7 +16,7 @@ public class MockLogger: BaseLogger {
     }
 }
 
-public class MockLogFormatter: LogFormattable {
+final public class MockLogFormatter: LogFormattable {
 
     var invokedFormatMessageCount = 0
     var invokedFormatMessageLevels: [LogLevel] = []

@@ -1,3 +1,7 @@
+## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+
+- `FileRotatonLogger` inherits `FileLogger`. [#29](https://github.com/sushichop/Puppy/pull/29)
+
 ## [0.3.1](https://github.com/sushichop/Puppy/releases/tag/0.3.1) (2021-08-18)
 
 - Add file required only for Swift 5.3.x or before on Linux. [25](https://github.com/sushichop/Puppy/pull/25)

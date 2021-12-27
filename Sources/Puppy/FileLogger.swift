@@ -2,13 +2,14 @@ import Foundation
 
 public class FileLogger: BaseLogger {
 
-    public var flushmode: FlushMode = .always
+    public private(set) var flushMode: FlushMode
 
-    private var fileHandle: FileHandle!
-    private let fileURL: URL
+    var fileHandle: FileHandle!
+    let fileURL: URL
 
-    public init(_ label: String, fileURL: URL) throws {
+    public init(_ label: String, fileURL: URL, flushMode: FlushMode = .always) throws {
         self.fileURL = fileURL
+        self.flushMode = flushMode
         debug("fileURL is \(fileURL).")
         super.init(label)
         try validateFileURL(fileURL)
@@ -26,7 +27,7 @@ public class FileLogger: BaseLogger {
                 // swiftlint:disable force_try
                 try! fileHandle?.writeCompatible(contentsOf: data)
                 // swiftlint:enable force_try
-                if flushmode == .always {
+                if flushMode == .always {
                     fileHandle?.synchronizeFile()
                 }
             }
@@ -51,13 +52,7 @@ public class FileLogger: BaseLogger {
         }
     }
 
-    private func validateFileURL(_ url: URL) throws {
-        if url.hasDirectoryPath {
-            throw FileError.isNotFile(url: url)
-        }
-    }
-
-    private func openFile() throws {
+    func openFile() throws {
         closeFile()
         let directoryURL = fileURL.deletingLastPathComponent()
         do {
@@ -87,11 +82,17 @@ public class FileLogger: BaseLogger {
         }
     }
 
-    private func closeFile() {
+    func closeFile() {
         if fileHandle != nil {
             fileHandle.synchronizeFile()
             fileHandle.closeFile()
             fileHandle = nil
+        }
+    }
+
+    private func validateFileURL(_ url: URL) throws {
+        if url.hasDirectoryPath {
+            throw FileError.isNotFile(url: url)
         }
     }
 }

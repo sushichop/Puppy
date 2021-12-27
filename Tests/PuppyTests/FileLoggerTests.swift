@@ -1,7 +1,7 @@
 import XCTest
 @testable import Puppy
 
-class FileLoggerTests: XCTestCase {
+final class FileLoggerTests: XCTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -48,32 +48,28 @@ class FileLoggerTests: XCTestCase {
     func testCheckFileType() throws {
         let emptyFileURL = URL(fileURLWithPath: "").absoluteURL     // file:///private/tmp/
         XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.notfile0", fileURL: emptyFileURL)) { error in
-            let error = error as? FileError
-            XCTAssertEqual(error, FileError.isNotFile(url: emptyFileURL))
+            XCTAssertEqual(error as? FileError, .isNotFile(url: emptyFileURL))
         }
 
         let directoryURL = URL(fileURLWithPath: "./").absoluteURL   // file:///private/tmp/
         XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.notfile1", fileURL: directoryURL)) { error in
-            let error = error as? FileError
-            XCTAssertEqual(error, FileError.isNotFile(url: directoryURL))
+            XCTAssertEqual(error as? FileError, .isNotFile(url: directoryURL))
         }
     }
 
-    #if !os(Linux)
+    #if canImport(Darwin)
     func testCreatingError() throws {
         let fileURLNotAbleToCreateDirectory = URL(fileURLWithPath: "/foo/bar.log").absoluteURL  // file:///foo/bar.log
         let directoryURLNotAbleToCreateDirectory = URL(fileURLWithPath: "/foo/").absoluteURL    // file:///foo
         XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.notcreatedirectory",
                                             fileURL: fileURLNotAbleToCreateDirectory)) { error in
-            let error = error as? FileError
-            XCTAssertEqual(error, FileError.creatingDirectoryFailed(at: directoryURLNotAbleToCreateDirectory))
+            XCTAssertEqual(error as? FileError, .creatingDirectoryFailed(at: directoryURLNotAbleToCreateDirectory))
         }
 
         let fileURLNotAbleToCreateFile = URL(fileURLWithPath: "/foo.log").absoluteURL   // file:///foo.log
         XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.notcreatefile",
                                             fileURL: fileURLNotAbleToCreateFile)) { error in
-            let error = error as? FileError
-            XCTAssertEqual(error, FileError.creatingFileFailed(at: fileURLNotAbleToCreateFile))
+            XCTAssertEqual(error as? FileError, FileError.creatingFileFailed(at: fileURLNotAbleToCreateFile))
         }
     }
     #endif
@@ -81,24 +77,22 @@ class FileLoggerTests: XCTestCase {
     func testDeletingFile() throws {
         let existentFileURL = URL(fileURLWithPath: "./existent.log").absoluteURL
         let noExistentFileURL = URL(fileURLWithPath: "./no-existent.log").absoluteURL
+        let fileLogger = try FileLogger("com.example.yourapp.filelogger.deleting", fileURL: existentFileURL)
 
-        let fileLoggerError = try FileLogger("com.example.yourapp.filelogger.error", fileURL: existentFileURL)
-        try fileLoggerError.delete(existentFileURL)
-
-        XCTAssertThrowsError(try fileLoggerError.delete(noExistentFileURL)) { error in
-            let error = error as? FileError
-            XCTAssertEqual(error, FileError.deletingFailed(at: noExistentFileURL))
+        try fileLogger.delete(existentFileURL)
+        XCTAssertThrowsError(try fileLogger.delete(noExistentFileURL)) { error in
+            XCTAssertEqual(error as? FileError, .deletingFailed(at: noExistentFileURL))
         }
     }
 
     func testFlushFile() throws {
         let flushFileURL = URL(fileURLWithPath: "./flush.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.flush", fileURL: flushFileURL)
-        fileLogger.flushmode = .manual
+        let fileLogger = try FileLogger("com.example.yourapp.filelogger.flush", fileURL: flushFileURL, flushMode: .manual)
         let log = Puppy()
         log.add(fileLogger)
         log.trace("flush, TRACE message using FileLogger")
         log.verbose("flush, VERBOSE message using FileLogger")
+
         fileLogger.flush()
         try fileLogger.delete(flushFileURL)
         log.remove(fileLogger)
