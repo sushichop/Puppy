@@ -10,7 +10,7 @@
 ![platforms](https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-orange.svg?style=flat)
 ![Carthage|SwiftPM|Bazel](https://img.shields.io/badge/Carhage%20%7C%20SwiftPM%20%7C%20Bazel-compatible-4BC51D.svg?style=flat)
 
-### **Puppy is a flexible logging library written in Swift** 🐶 
+### **Puppy is a flexible logging library written in Swift** 🐶
 
 It supports multiple transports(console, file, syslog, and oslog) as loggers. It not only works alone, but also as a backend for [apple/swift-log](https://github.com/apple/swift-log/).
 Furthermore, it has file log rotation feature and you can also customize the log format as you like.
@@ -115,7 +115,7 @@ Customize the log format using `Formattable` protocol. Logging to oslog for exam
 ```swift
 import Puppy
 
-class ViewController: UIViewController {    
+class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let oslog = OSLogger("com.yourapp.oslog")
@@ -151,7 +151,6 @@ class CustomLogger: BaseLogger {
     }
 }
 ```
-
 
 ## License
 

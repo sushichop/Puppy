@@ -36,21 +36,65 @@ public class FileLogger: BaseLogger {
         }
     }
 
-    public func delete(_ url: URL) throws {
-        do {
-            try queue!.sync {
-                try FileManager.default.removeItem(at: url)
-            }
-        } catch {
-            throw FileError.deletingFailed(at: url)
+    public func delete(_ url: URL) -> Result<URL, FileDeletingError> {
+        queue!.sync {
+            Result { try FileManager.default.removeItem(at: url) }
+                .map { url }
+                .mapError { _ in
+                    FileDeletingError.failed(at: url)
+                }
         }
     }
+
+    public func delete(_ url: URL, completion: @escaping (Result<URL, FileDeletingError>) -> Void) {
+        queue!.async {
+            let result = Result { try FileManager.default.removeItem(at: url) }
+                .map { url }
+                .mapError { _ in
+                    FileDeletingError.failed(at: url)
+                }
+            completion(result)
+        }
+    }
+
+    #if compiler(>=5.5.2)
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    public func delete(_ url: URL) async throws -> URL {
+        try await withCheckedThrowingContinuation { continuation in
+            queue!.async {
+                do {
+                    try FileManager.default.removeItem(at: url)
+                    continuation.resume(returning: url)
+                } catch {
+                    continuation.resume(throwing: FileDeletingError.failed(at: url))
+                }
+            }
+        }
+    }
+    #endif
 
     public func flush() {
         queue!.sync {
             fileHandle?.synchronizeFile()
         }
     }
+
+    public func flush(completion: @escaping () -> Void) {
+        queue!.async {
+            completion()
+        }
+    }
+
+    #if compiler(>=5.5.2)
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    public func flush() async {
+        await withCheckedContinuation { continuation in
+            queue!.async {
+                continuation.resume()
+            }
+        }
+    }
+    #endif
 
     func openFile() throws {
         closeFile()

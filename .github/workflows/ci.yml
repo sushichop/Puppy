@@ -5,10 +5,10 @@ on:
     branches:
       - main
     tags:
-      - '**'
+      - "**"
   pull_request:
     branches:
-      - '**'
+      - "**"
 
 jobs:
   swift-test:
@@ -16,7 +16,7 @@ jobs:
     runs-on: macos-11
     strategy:
       matrix:
-        xcode: [12.5.1]
+        xcode: [12.5, 13.2.1]
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        swift-version: [5.4.2]
+        swift-version: [5.4.0, 5.5.2]
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
@@ -40,7 +40,7 @@ jobs:
     runs-on: macos-11
     strategy:
       matrix:
-        xcode: [12.5.1]
+        xcode: [13.2.1]
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -60,8 +60,15 @@ jobs:
     runs-on: macos-11
     strategy:
       matrix:
-        make-tatget: [xcode-test, xcode-build, pod-lib-lint, carthage-build-workaround, carthage-build-xcframeworks]
-        xcode: [12.5.1]
+        make-tatget:
+          [
+            xcode-test,
+            xcode-build,
+            pod-lib-lint,
+            carthage-build-workaround,
+            carthage-build-xcframeworks,
+          ]
+        xcode: [13.2.1]
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -74,8 +81,14 @@ jobs:
     runs-on: macos-11
     strategy:
       matrix:
-        make-tatget: [swift-build, bazel-build, cmake-build, ninja-build]
-        xcode: [12.5.1]
+        make-tatget: 
+          [
+            swift-build,
+            bazel-build,
+            cmake-build,
+            ninja-build,
+          ]
+        xcode: [13.2.1]
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -88,8 +101,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        make-tatget: [swift-build-linux, bazel-build-linux, cmake-build-linux, ninja-build-linux]
-        swift-version: [5.4.2]
+        make-tatget:
+          [
+            swift-build-linux,
+            bazel-build-linux,
+            cmake-build-linux,
+            ninja-build-linux,
+          ]
+        swift-version: [5.5.2]
       fail-fast: false
     steps:
       - uses: actions/checkout@v2

@@ -4,7 +4,7 @@ set -eu
 
 MODULE_NAME="Puppy"
 SCRIPT_TYPE=${SCRIPT_TYPE:-build}
-BAZELISK_VERSION="1.9.0"
+BAZELISK_VERSION="1.11.0"
 
 case $(uname) in
   Darwin)

@@ -29,7 +29,7 @@ final class FileRotationLoggerTests: XCTestCase {
             log.info("\(num) message")
         }
 
-        try fileRotation.delete(rotationDirectoryURL)
+        _ = fileRotation.delete(rotationDirectoryURL)
         log.remove(fileRotation)
     }
 }

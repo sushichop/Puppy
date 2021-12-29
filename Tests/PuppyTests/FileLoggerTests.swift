@@ -23,11 +23,11 @@ final class FileLoggerTests: XCTestCase {
         log.trace("\(Date()): TRACE message using FileLogger")
         log.verbose("\(Date()): VERBOSE message using FileLogger")
 
-        try fileLogger.delete(directoryURL)
+        _ = fileLogger.delete(directoryURL)
         log.remove(fileLogger)
     }
 
-    #if os(Linux) || os(macOS)
+    #if os(macOS) || os(Linux)
     func testTildeFileLogger() throws {
         let directoryName = "~/puppy_" + UUID().uuidString.lowercased()
         let fileName = directoryName + "/foo.log"
@@ -40,7 +40,7 @@ final class FileLoggerTests: XCTestCase {
         log.trace("Tilde, TRACE message using FileLogger")
         log.verbose("Tilde, VERBOSE message using FileLogger")
 
-        try fileLogger.delete(directoryURL)
+        _ = fileLogger.delete(directoryURL)
         log.remove(fileLogger)
     }
     #endif
@@ -69,7 +69,7 @@ final class FileLoggerTests: XCTestCase {
         let fileURLNotAbleToCreateFile = URL(fileURLWithPath: "/foo.log").absoluteURL   // file:///foo.log
         XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.notcreatefile",
                                             fileURL: fileURLNotAbleToCreateFile)) { error in
-            XCTAssertEqual(error as? FileError, FileError.creatingFileFailed(at: fileURLNotAbleToCreateFile))
+            XCTAssertEqual(error as? FileError, .creatingFileFailed(at: fileURLNotAbleToCreateFile))
         }
     }
     #endif
@@ -79,11 +79,130 @@ final class FileLoggerTests: XCTestCase {
         let noExistentFileURL = URL(fileURLWithPath: "./no-existent.log").absoluteURL
         let fileLogger = try FileLogger("com.example.yourapp.filelogger.deleting", fileURL: existentFileURL)
 
-        try fileLogger.delete(existentFileURL)
-        XCTAssertThrowsError(try fileLogger.delete(noExistentFileURL)) { error in
-            XCTAssertEqual(error as? FileError, .deletingFailed(at: noExistentFileURL))
+        let resultSuccess = fileLogger.delete(existentFileURL)
+        switch resultSuccess {
+        case .success(let url):
+            XCTAssertEqual(existentFileURL, url)
+        case .failure:
+            XCTFail("shuould not be failed, but was failed")
+        }
+
+        let resultFailure = fileLogger.delete(noExistentFileURL)
+        switch resultFailure {
+        case .success:
+            XCTFail("should not be successful, but was successful")
+        case .failure(let error):
+            XCTAssertEqual(error as FileDeletingError, .failed(at: noExistentFileURL))
+            XCTAssertEqual(error.localizedDescription, "failed to delete the file: \(noExistentFileURL)")
         }
     }
+
+    func testDeletingFileAsync() throws {
+        let existentFileURL = URL(fileURLWithPath: "./existent-async.log").absoluteURL
+        let noExistentFileURL = URL(fileURLWithPath: "./no-existent-async.log").absoluteURL
+        let fileLogger = try FileLogger("com.example.yourapp.filelogger.deletingasync", fileURL: existentFileURL)
+
+        let expSuccess = expectation(description: "expSuccessAsyncResult")
+        fileLogger.delete(existentFileURL) { result in
+            switch result {
+            case .success(let url):
+                XCTAssertEqual(existentFileURL, url)
+                expSuccess.fulfill()
+            case .failure:
+                XCTFail("shuould not be failed, but was failed")
+            }
+        }
+
+        let expFailure = expectation(description: "expFailureAsyncResult")
+        fileLogger.delete(noExistentFileURL) { result in
+            switch result {
+            case .success:
+                XCTFail("should not be successful, but was successful")
+            case .failure(let error):
+                XCTAssertEqual(error as FileDeletingError, .failed(at: noExistentFileURL))
+                XCTAssertEqual(error.localizedDescription, "failed to delete the file: \(noExistentFileURL)")
+                expFailure.fulfill()
+            }
+        }
+
+        wait(for: [expSuccess, expFailure], timeout: 5.0)
+    }
+
+    func testDeletingFileResultConversion() throws {
+        let existentFileURL = URL(fileURLWithPath: "./existent-result-conversion.log").absoluteURL
+        let noExistentFileURL = URL(fileURLWithPath: "./no-existent-result-conversion.log").absoluteURL
+        let fileLogger = try FileLogger("com.example.yourapp.filelogger.deletingresultconversion", fileURL: existentFileURL)
+
+        do {
+            let url = try fileLogger.delete(existentFileURL).get()
+            XCTAssertEqual(url, existentFileURL)
+        } catch {
+            XCTFail("error should not be thrown, but it was thrown: \(error.localizedDescription)")
+        }
+
+        do {
+            _ = try fileLogger.delete(noExistentFileURL).get()
+            XCTFail("error should be thrown while awaiting, but it was not thrown")
+        } catch {
+            XCTAssertEqual(error as? FileDeletingError, .failed(at: noExistentFileURL))
+            XCTAssertEqual(error.localizedDescription, "failed to delete the file: \(noExistentFileURL)")
+        }
+    }
+
+    func testDeletingFileAsyncResultConversion() throws {
+        let existentFileURL = URL(fileURLWithPath: "./existent-async-result-conversion.log").absoluteURL
+        let noExistentFileURL = URL(fileURLWithPath: "./no-existent-async-result-conversion.log").absoluteURL
+        let fileLogger = try FileLogger("com.example.yourapp.filelogger.deletingasyncresultconversion", fileURL: existentFileURL)
+
+        let expSuccess = expectation(description: "expSuccessAsync")
+        fileLogger.delete(existentFileURL) { result in
+            do {
+                let url = try result.get()
+                XCTAssertEqual(url, existentFileURL)
+                expSuccess.fulfill()
+            } catch {
+                XCTFail("error should not be thrown, but it was thrown: \(error.localizedDescription)")
+            }
+        }
+
+        let expFailure = expectation(description: "expFailureAsync")
+        fileLogger.delete(noExistentFileURL) { result in
+            do {
+                _ = try result.get()
+                XCTFail("error should be thrown while awaiting, but it was not thrown")
+            } catch {
+                XCTAssertEqual(error as? FileDeletingError, .failed(at: noExistentFileURL))
+                XCTAssertEqual(error.localizedDescription, "failed to delete the file: \(noExistentFileURL)")
+                expFailure.fulfill()
+            }
+        }
+
+        wait(for: [expSuccess, expFailure], timeout: 5.0)
+    }
+
+    #if compiler(>=5.5.2)
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    func testDeletingFileAsyncAwait() async throws {
+        let existentFileURL = URL(fileURLWithPath: "./existent-async-await.log").absoluteURL
+        let noExistentFileURL = URL(fileURLWithPath: "./no-existent-async-await.log").absoluteURL
+        let fileLogger = try FileLogger("com.example.yourapp.filelogger.deletingasyncawait", fileURL: existentFileURL)
+
+        do {
+            let url = try await fileLogger.delete(existentFileURL)
+            XCTAssertEqual(url, existentFileURL)
+        } catch {
+            XCTFail("error should not be thrown, but it was thrown: \(error.localizedDescription)")
+        }
+
+        do {
+            _ = try await fileLogger.delete(noExistentFileURL)
+            XCTFail("error should be thrown while awaiting, but it was not thrown")
+        } catch {
+            XCTAssertEqual(error as? FileDeletingError, .failed(at: noExistentFileURL))
+            XCTAssertEqual(error.localizedDescription, "failed to delete the file: \(noExistentFileURL)")
+        }
+    }
+    #endif
 
     func testFlushFile() throws {
         let flushFileURL = URL(fileURLWithPath: "./flush.log").absoluteURL
@@ -94,7 +213,44 @@ final class FileLoggerTests: XCTestCase {
         log.verbose("flush, VERBOSE message using FileLogger")
 
         fileLogger.flush()
-        try fileLogger.delete(flushFileURL)
+        _ = fileLogger.delete(flushFileURL)
         log.remove(fileLogger)
     }
+
+    func testFlushFileAsync() throws {
+        let fileURL = URL(fileURLWithPath: "./flush-async.log").absoluteURL
+        let fileLogger = try FileLogger("com.example.yourapp.filelogger.flushasync", fileURL: fileURL, flushMode: .manual)
+        let log = Puppy()
+        log.add(fileLogger)
+        log.trace("flushAsync, TRACE message using FileLogger")
+        log.verbose("flushAsync, VERBOSE message using FileLogger")
+
+        let exp = expectation(description: "flushAsync")
+        fileLogger.flush {
+            // Do NOT add a task into the same queue synchronously.
+            // _ = fileLogger.delete(fileURL)
+            fileLogger.delete(fileURL) { _ in
+                log.remove(fileLogger)
+                exp.fulfill()
+            }
+        }
+
+        wait(for: [exp], timeout: 5.0)
+    }
+
+    #if compiler(>=5.5.2)
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    func testFlushFileAsyncAwait() async throws {
+        let fileURL = URL(fileURLWithPath: "./flush-async-await.log").absoluteURL
+        let fileLogger = try FileLogger("com.example.yourapp.filelogger.flushasyncawait", fileURL: fileURL, flushMode: .manual)
+        let log = Puppy()
+        log.add(fileLogger)
+        log.trace("flushAsyncAwait, TRACE message using FileLogger")
+        log.verbose("flushAsyncAwait, VERBOSE message using FileLogger")
+
+        await fileLogger.flush()
+        _ = try await fileLogger.delete(fileURL)
+        log.remove(fileLogger)
+    }
+    #endif
 }
