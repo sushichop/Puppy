@@ -3,11 +3,11 @@ name: Danger
 on:
   pull_request:
     branches:
-      - '**'
+      - "**"
   issue_comment:
     types:
       - created
-  
+
 jobs:
   danger-for-internal:
     name: Danger for internal

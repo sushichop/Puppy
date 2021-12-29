@@ -5,5 +5,15 @@ public enum FileError: Error, Equatable {
     case creatingDirectoryFailed(at: URL)
     case creatingFileFailed(at: URL)
     case writingFailed(at: URL)
-    case deletingFailed(at: URL)
+}
+
+public enum FileDeletingError: Error, Equatable, LocalizedError {
+    case failed(at: URL)
+
+    public var errorDescription: String? {
+        switch self {
+        case .failed(at: let url):
+            return "failed to delete the file: \(url)"
+        }
+    }
 }

@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 HELP_INDENT := 28
 
-SWIFT_VERSION := 5.4.2
+SWIFT_VERSION := 5.5.2
 
 .PHONY: help
 help:

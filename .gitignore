@@ -130,3 +130,6 @@ coverage.lcov
 
 # Bazel
 /bazel-*
+
+# VisualStudioCode
+.vscode/*

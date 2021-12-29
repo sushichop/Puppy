@@ -78,7 +78,6 @@
 		C712BB09266F31A60016A768 /* CPuppy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPuppy.h; sourceTree = "<group>"; };
 		C712BB0A266F31B10016A768 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		C712BB0B266F31C80016A768 /* CPuppy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CPuppy.c; sourceTree = "<group>"; };
-		C71A3F0626CABD7300EA889E /* LinuxMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinuxMain.swift; sourceTree = "<group>"; };
 		C74F94A926777D38003A88BE /* CPuppy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CPuppy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C74F94B126777D38003A88BE /* CPuppyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CPuppyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C74F94C126777DF7003A88BE /* CPuppyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPuppyTests.m; sourceTree = "<group>"; };
@@ -257,7 +256,6 @@
 		C7ED720E252DC1590065B955 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				C71A3F0626CABD7300EA889E /* LinuxMain.swift */,
 				C74F94C026777D8A003A88BE /* CPuppyTests */,
 				C7ED720F252DC1590065B955 /* PuppyTests */,
 				C7ED7217252DC1590065B955 /* SupportingFiles */,
@@ -405,7 +403,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1250;
+				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					C74F94A826777D38003A88BE = {
 						CreatedOnToolsVersion = 12.5;

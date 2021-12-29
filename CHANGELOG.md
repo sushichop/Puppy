@@ -1,6 +1,7 @@
 ## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
 
 - `FileRotatonLogger` inherits `FileLogger`. [#29](https://github.com/sushichop/Puppy/pull/29)
+- Add asynchronous methods for `delete` and `flush`. [#30](https://github.com/sushichop/Puppy/pull/30)
 
 ## [0.3.1](https://github.com/sushichop/Puppy/releases/tag/0.3.1) (2021-08-18)
 
