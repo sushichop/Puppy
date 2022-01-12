@@ -85,7 +85,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let fileRotation = try! FileRotationLogger("com.example.yourapp.filerotation",
-                                                   fileURL: "./rotation/foo.log")
+                                                   fileURL: "./logs/foo.log")
+        fileRotation.suffixExtension = .date_uuid   // Default option is `.numbering`.
         fileRotation.maxFileSize = 10 * 1024 * 1024
         fileRotation.maxArchivedFilesCount = 5
         fileRotation.delegate = delegate

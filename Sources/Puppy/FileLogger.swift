@@ -2,6 +2,10 @@ import Foundation
 
 public class FileLogger: BaseLogger {
 
+    public enum FlushMode {
+        case always
+        case manual
+    }
     public private(set) var flushMode: FlushMode
 
     var fileHandle: FileHandle!
@@ -32,7 +36,7 @@ public class FileLogger: BaseLogger {
                 }
             }
         } catch {
-            print("seekToEnd error. error is \(error.localizedDescription).")
+            print("error in seekToEnd, error: \(error.localizedDescription)")
         }
     }
 
@@ -101,7 +105,7 @@ public class FileLogger: BaseLogger {
         let directoryURL = fileURL.deletingLastPathComponent()
         do {
             try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
-            debug("created directoryURL is \(directoryURL).")
+            debug("created directoryURL, directoryURL: \(directoryURL)")
         } catch {
             throw FileError.creatingDirectoryFailed(at: directoryURL)
         }
@@ -109,12 +113,12 @@ public class FileLogger: BaseLogger {
         if !FileManager.default.fileExists(atPath: fileURL.path) {
             let successful = FileManager.default.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
             if successful {
-                debug("succeeded in creating filePath.")
+                debug("succeeded in creating filePath")
             } else {
                 throw FileError.creatingFileFailed(at: fileURL)
             }
         } else {
-            debug("filePath exists. filePath is \(fileURL.path).")
+            debug("filePath exists, filePath: \(fileURL.path)")
         }
 
         if fileHandle == nil {
@@ -139,11 +143,6 @@ public class FileLogger: BaseLogger {
             throw FileError.isNotFile(url: url)
         }
     }
-}
-
-public enum FlushMode {
-    case always
-    case manual
 }
 
 extension FileHandle {
