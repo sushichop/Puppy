@@ -18,7 +18,7 @@ final class FileRotationLoggerTests: XCTestCase {
         let rotationDirectoryURL = URL(fileURLWithPath: "./rotation-numbering").absoluteURL
 
         let fileRotation = try FileRotationLogger("com.example.yourapp.filerotationlogger.numbering", fileURL: rotationFileURL)
-        // fileRotation.suffixExtension = .numbering    // default case
+        fileRotation.suffixExtension = .numbering   // default case
         fileRotation.maxFileSize = 512
         fileRotation.maxArchivedFilesCount = 4
         fileRotation.delegate = self
