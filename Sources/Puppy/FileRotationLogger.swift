@@ -37,7 +37,10 @@ public class FileRotationLogger: FileLogger {
                 let oldArchivedFileURLs = ascArchivedFileURLs(fileURL)
                 for (index, oldArchivedFileURL) in oldArchivedFileURLs.enumerated() {
                     let generationNumber = oldArchivedFileURLs.count + 1 - index
-                    let rotatedFileURL = oldArchivedFileURL.deletingPathExtension().appendingPathExtension("\(generationNumber)")
+                    let rotatedFileURL = oldArchivedFileURL
+                        .deletingPathExtension()
+                        .appendingPathExtension("\(generationNumber)")
+                        .appendingPathComponent(".txt")
                     debug("generationNumber: \(generationNumber), rotatedFileURL: \(rotatedFileURL)")
                     if !FileManager.default.fileExists(atPath: rotatedFileURL.path) {
                         try FileManager.default.moveItem(at: oldArchivedFileURL, to: rotatedFileURL)
