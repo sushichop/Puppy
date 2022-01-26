@@ -14,7 +14,7 @@ public class FileRotationLogger: FileLogger {
     public var maxFileSize: ByteCount = 10 * 1024 * 1024
     public var maxArchivedFilesCount: UInt8 = 5
 
-    public weak var delegate: FileRotationLoggerDeletate?
+    public weak var delegate: FileRotationLoggerDelegate?
 
     public init(_ label: String, fileURL: URL) throws {
         try super.init(label, fileURL: fileURL)
@@ -113,7 +113,7 @@ public class FileRotationLogger: FileLogger {
     }
 }
 
-public protocol FileRotationLoggerDeletate: AnyObject {
+public protocol FileRotationLoggerDelegate: AnyObject {
     func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didArchiveFileURL: URL, toFileURL: URL)
     func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveArchivedFileURL: URL)
 }

@@ -56,7 +56,7 @@ final class FileRotationLoggerTests: XCTestCase {
     }
 }
 
-extension FileRotationLoggerTests: FileRotationLoggerDeletate {
+extension FileRotationLoggerTests: FileRotationLoggerDelegate {
     func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didArchiveFileURL: URL, toFileURL: URL) {
         print("didArchive! didArchiveFileURL: \(didArchiveFileURL), toFileURL: \(toFileURL)")
     }
