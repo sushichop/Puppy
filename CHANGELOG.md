@@ -4,6 +4,7 @@
 - Add asynchronous methods for `delete` and `flush`. [#30](https://github.com/sushichop/Puppy/pull/30)
 - Add `test_spec` in `podspec`. [#31](https://github.com/sushichop/Puppy/pull/31)
 - Add suffix extension types for `FileRotationLogger`. [#32](https://github.com/sushichop/Puppy/pull/32)
+- FileRotationLoggerDelegate Fix Spelling. [#34](https://github.com/sushichop/Puppy/pull/34)
 
 ## [0.3.1](https://github.com/sushichop/Puppy/releases/tag/0.3.1) (2021-08-18)
 
