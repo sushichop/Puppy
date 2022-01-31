@@ -14,7 +14,6 @@ Pod::Spec.new do |s|
   s.source            = { :git => "https://github.com/sushichop/Puppy.git", :tag => "#{s.version}" }
   
   s.default_subspec   = "Default"
-  s.preserve_paths    = "Sources/CPuppy/**/*"
 
   s.subspec "Default" do |default|
     default.dependency "Puppy/Core"
@@ -24,7 +23,7 @@ Pod::Spec.new do |s|
   s.subspec "Core" do |core|
     core.header_mappings_dir = "Sources/CPuppy/include"
     core.public_header_files = "Sources/CPuppy/include/**/*.h"
-    core.source_files        = "Sources/CPuppy/**/*.{h,m}", "Sources/Puppy/**/*.{swift}"
+    core.source_files        = "Sources/CPuppy/**/*.{h,c}", "Sources/Puppy/**/*.{swift}"
   end
 
   s.test_spec "UnitTests" do |unit_tests|

@@ -6,6 +6,7 @@
 - Add suffix extension types for `FileRotationLogger`. [#32](https://github.com/sushichop/Puppy/pull/32)
 - FileRotationLoggerDelegate Fix Spelling. [#34](https://github.com/sushichop/Puppy/pull/34)
 - Add option for file permission. [#36](https://github.com/sushichop/Puppy/pull/36)
+- Import more precisely. [#38](https://github.com/sushichop/Puppy/pull/38)
 
 ## [0.3.1](https://github.com/sushichop/Puppy/releases/tag/0.3.1) (2021-08-18)
 

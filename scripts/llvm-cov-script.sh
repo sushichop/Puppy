@@ -10,7 +10,7 @@ if  [ "${SCRIPT_TYPE}" = "export" ]; then
 fi
 
 swift package clean
-swift test --enable-test-discovery --enable-code-coverage
+swift test --enable-code-coverage
 
 BIN_PATH="$(swift build --show-bin-path)"
 XCTEST_PATH="$(find ${BIN_PATH} -name '*.xctest')"

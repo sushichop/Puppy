@@ -1,7 +1,6 @@
 #if os(Linux)
-
 import Foundation
-import CPuppy
+import func CPuppy.cpuppy_syslog
 
 public class SystemLogger: BaseLogger {
 
