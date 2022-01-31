@@ -34,7 +34,9 @@ import Puppy
 
 let console = ConsoleLogger("com.example.yourapp.console")
 let fileURL = URL(fileURLWithPath: "./foo.log").absoluteURL
-let file = FileLogger("com.example.yourapp.file", fileURL: fileURL)
+let file = FileLogger("com.example.yourapp.file",
+                      fileURL: fileURL,
+                      filePermission: "600")  // Default permission is "640". 
 
 let log = Puppy()
 // Set the logging level.

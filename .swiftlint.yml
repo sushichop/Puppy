@@ -15,6 +15,10 @@ line_length:
   error: 240
   ignores_comments: true
 
+type_body_length:
+  - 400
+  - 500
+
 identifier_name:
   excluded:
     - at

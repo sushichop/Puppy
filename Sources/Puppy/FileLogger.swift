@@ -8,14 +8,21 @@ public class FileLogger: BaseLogger {
     }
     public private(set) var flushMode: FlushMode
 
+    var filePermission: Permission
+    var intPermission: Int16 {
+        return Int16(filePermission, radix: 8)!
+    }
+
     var fileHandle: FileHandle!
     let fileURL: URL
 
-    public init(_ label: String, fileURL: URL, flushMode: FlushMode = .always) throws {
+    public init(_ label: String, fileURL: URL, filePermisson: Permission = "640", flushMode: FlushMode = .always) throws {
         self.fileURL = fileURL
+        self.filePermission = filePermisson
         self.flushMode = flushMode
         debug("fileURL is \(fileURL).")
         super.init(label)
+        try validateFilePermssion(filePermisson)
         try validateFileURL(fileURL)
         try openFile()
     }
@@ -111,7 +118,7 @@ public class FileLogger: BaseLogger {
         }
 
         if !FileManager.default.fileExists(atPath: fileURL.path) {
-            let successful = FileManager.default.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
+            let successful = FileManager.default.createFile(atPath: fileURL.path, contents: nil, attributes: [FileAttributeKey.posixPermissions: intPermission])
             if successful {
                 debug("succeeded in creating filePath")
             } else {
@@ -135,6 +142,15 @@ public class FileLogger: BaseLogger {
             fileHandle.synchronizeFile()
             fileHandle.closeFile()
             fileHandle = nil
+        }
+    }
+
+    private func validateFilePermssion(_ filePermission: Permission) throws {
+        let min = Int16("000", radix: 8)!
+        let max = Int16("777", radix: 8)!
+        if let intPermission = Int16(filePermission, radix: 8), intPermission >= min, intPermission <= max {
+        } else {
+            throw FileError.invalidPermssion(filePermission)
         }
     }
 
