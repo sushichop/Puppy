@@ -1,5 +1,4 @@
 #if canImport(Darwin)
-
 import Foundation
 import os.log
 

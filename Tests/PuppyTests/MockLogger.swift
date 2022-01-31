@@ -1,5 +1,5 @@
 import Foundation
-@testable import Puppy
+import Puppy
 
 final public class MockLogger: BaseLogger {
 

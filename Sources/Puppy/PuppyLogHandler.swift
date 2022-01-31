@@ -1,5 +1,4 @@
 #if canImport(Logging)
-
 import Foundation
 import Logging
 

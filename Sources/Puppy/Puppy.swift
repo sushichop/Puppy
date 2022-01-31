@@ -1,8 +1,7 @@
-#if os(Linux)
-import CPuppy
-#endif
-
 import Foundation
+#if os(Linux)
+import func CPuppy.cpuppy_sys_gettid
+#endif
 
 typealias Log = Puppy
 

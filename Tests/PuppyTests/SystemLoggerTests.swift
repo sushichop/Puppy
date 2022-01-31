@@ -1,7 +1,6 @@
 #if os(Linux)
-
 import XCTest
-@testable import Puppy
+import Puppy
 
 final class SystemLoggerTests: XCTestCase {
 

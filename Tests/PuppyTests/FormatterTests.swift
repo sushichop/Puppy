@@ -1,5 +1,5 @@
 import XCTest
-@testable import Puppy
+import Puppy
 #if canImport(Logging)
 import Logging
 #endif
