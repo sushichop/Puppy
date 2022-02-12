@@ -1,3 +1,7 @@
+## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+
+- Remove concurrency features. [#39](https://github.com/sushichop/Puppy/pull/39)
+
 ## [0.4.0](https://github.com/sushichop/Puppy/releases/tag/0.4.0) (2022-01-31)
 
 - `FileRotatonLogger` inherits `FileLogger`. [#29](https://github.com/sushichop/Puppy/pull/29)

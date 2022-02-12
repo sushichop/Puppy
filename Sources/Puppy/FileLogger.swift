@@ -68,22 +68,6 @@ public class FileLogger: BaseLogger {
         }
     }
 
-    #if compiler(>=5.5.2)
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    public func delete(_ url: URL) async throws -> URL {
-        try await withCheckedThrowingContinuation { continuation in
-            queue!.async {
-                do {
-                    try FileManager.default.removeItem(at: url)
-                    continuation.resume(returning: url)
-                } catch {
-                    continuation.resume(throwing: FileDeletingError.failed(at: url))
-                }
-            }
-        }
-    }
-    #endif
-
     public func flush() {
         queue!.sync {
             fileHandle?.synchronizeFile()
@@ -95,17 +79,6 @@ public class FileLogger: BaseLogger {
             completion()
         }
     }
-
-    #if compiler(>=5.5.2)
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    public func flush() async {
-        await withCheckedContinuation { continuation in
-            queue!.async {
-                continuation.resume()
-            }
-        }
-    }
-    #endif
 
     func openFile() throws {
         closeFile()
