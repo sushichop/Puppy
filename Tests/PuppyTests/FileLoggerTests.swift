@@ -180,30 +180,6 @@ final class FileLoggerTests: XCTestCase {
         wait(for: [expSuccess, expFailure], timeout: 5.0)
     }
 
-    #if compiler(>=5.5.2)
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    func testDeletingFileAsyncAwait() async throws {
-        let existentFileURL = URL(fileURLWithPath: "./existent-async-await.log").absoluteURL
-        let noExistentFileURL = URL(fileURLWithPath: "./no-existent-async-await.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.deletingasyncawait", fileURL: existentFileURL)
-
-        do {
-            let url = try await fileLogger.delete(existentFileURL)
-            XCTAssertEqual(url, existentFileURL)
-        } catch {
-            XCTFail("error should not be thrown, but it was thrown: \(error.localizedDescription)")
-        }
-
-        do {
-            _ = try await fileLogger.delete(noExistentFileURL)
-            XCTFail("error should be thrown while awaiting, but it was not thrown")
-        } catch {
-            XCTAssertEqual(error as? FileDeletingError, .failed(at: noExistentFileURL))
-            XCTAssertEqual(error.localizedDescription, "failed to delete the file: \(noExistentFileURL)")
-        }
-    }
-    #endif
-
     func testFlushFile() throws {
         let flushFileURL = URL(fileURLWithPath: "./flush.log").absoluteURL
         let fileLogger = try FileLogger("com.example.yourapp.filelogger.flush", fileURL: flushFileURL, flushMode: .manual)
@@ -237,22 +213,6 @@ final class FileLoggerTests: XCTestCase {
 
         wait(for: [exp], timeout: 5.0)
     }
-
-    #if compiler(>=5.5.2)
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    func testFlushFileAsyncAwait() async throws {
-        let fileURL = URL(fileURLWithPath: "./flush-async-await.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.flushasyncawait", fileURL: fileURL, flushMode: .manual)
-        let log = Puppy()
-        log.add(fileLogger)
-        log.trace("flushAsyncAwait, TRACE message using FileLogger")
-        log.verbose("flushAsyncAwait, VERBOSE message using FileLogger")
-
-        await fileLogger.flush()
-        _ = try await fileLogger.delete(fileURL)
-        log.remove(fileLogger)
-    }
-    #endif
 
     func testFilePermssion() throws {
         let fileURL = URL(fileURLWithPath: "./permisson600.log").absoluteURL
