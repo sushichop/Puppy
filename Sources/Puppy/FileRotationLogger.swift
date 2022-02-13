@@ -4,11 +4,9 @@ public class FileRotationLogger: FileLogger {
 
     public enum SuffixExtension {
         case numbering
-        // swiftlint:disable identifier_name
         case date_uuid
-        // swiftlint:enable identifier_name
     }
-    public var suffixExtension: SuffixExtension = .date_uuid
+    public var suffixExtension: SuffixExtension = .numbering
 
     public typealias ByteCount = UInt64
     public var maxFileSize: ByteCount = 10 * 1024 * 1024

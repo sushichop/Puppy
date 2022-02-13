@@ -5,7 +5,6 @@ included:
   - Sources
   - Tests
   - Package.swift
-  - Dangerfile.swift
 
 trailing_comma:
   mandatory_comma: true
@@ -20,5 +19,6 @@ type_body_length:
   - 500
 
 identifier_name:
+  allowed_symbols: "_"
   excluded:
     - at

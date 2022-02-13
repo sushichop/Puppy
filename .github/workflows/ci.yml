@@ -13,7 +13,7 @@ on:
 jobs:
   swift-test:
     name: swift-test - Xcode ${{ matrix.xcode }}
-    runs-on: macos-11
+    runs-on: macos-latest
     strategy:
       matrix:
         xcode: [12.5, 13.2.1]
@@ -37,7 +37,7 @@ jobs:
 
   codecov:
     name: codecov - Xcode ${{ matrix.xcode }}
-    runs-on: macos-11
+    runs-on: macos-latest
     strategy:
       matrix:
         xcode: [13.2.1]
@@ -57,7 +57,7 @@ jobs:
 
   xcode:
     name: ${{ matrix.make-tatget }} - Xcode ${{ matrix.xcode }}
-    runs-on: macos-11
+    runs-on: macos-latest
     strategy:
       matrix:
         make-tatget:
@@ -78,7 +78,7 @@ jobs:
 
   build:
     name: ${{ matrix.make-tatget }} - Xcode ${{ matrix.xcode }}
-    runs-on: macos-11
+    runs-on: macos-latest
     strategy:
       matrix:
         make-tatget: 
