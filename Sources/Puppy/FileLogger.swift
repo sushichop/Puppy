@@ -9,8 +9,8 @@ public class FileLogger: BaseLogger {
     public private(set) var flushMode: FlushMode
 
     var filePermission: Permission
-    var intPermission: Int16 {
-        return Int16(filePermission, radix: 8)!
+    var uintPermission: UInt16 {
+        return UInt16(filePermission, radix: 8)!
     }
 
     var fileHandle: FileHandle!
@@ -91,7 +91,7 @@ public class FileLogger: BaseLogger {
         }
 
         if !FileManager.default.fileExists(atPath: fileURL.path) {
-            let successful = FileManager.default.createFile(atPath: fileURL.path, contents: nil, attributes: [FileAttributeKey.posixPermissions: intPermission])
+            let successful = FileManager.default.createFile(atPath: fileURL.path, contents: nil, attributes: [FileAttributeKey.posixPermissions: uintPermission])
             if successful {
                 debug("succeeded in creating filePath")
             } else {
@@ -119,9 +119,9 @@ public class FileLogger: BaseLogger {
     }
 
     private func validateFilePermssion(_ filePermission: Permission) throws {
-        let min = Int16("000", radix: 8)!
-        let max = Int16("777", radix: 8)!
-        if let intPermission = Int16(filePermission, radix: 8), intPermission >= min, intPermission <= max {
+        let min = UInt16("000", radix: 8)!
+        let max = UInt16("777", radix: 8)!
+        if let uintPermission = Int16(filePermission, radix: 8), uintPermission >= min, uintPermission <= max {
         } else {
             throw FileError.invalidPermssion(filePermission)
         }
