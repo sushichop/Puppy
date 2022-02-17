@@ -225,9 +225,9 @@ final class FileLoggerTests: XCTestCase {
 
         let attribute = try FileManager.default.attributesOfItem(atPath: fileURL.path)
         // swiftlint:disable force_cast
-        let permission = attribute[FileAttributeKey.posixPermissions] as! Int16
+        let permission = attribute[FileAttributeKey.posixPermissions] as! UInt16
         // swiftlint:enable force_cast
-        let expectedPermission = Int16("600", radix: 8)!
+        let expectedPermission = UInt16("600", radix: 8)!
         XCTAssertEqual(permission, expectedPermission)
 
         _ = fileLogger.delete(fileURL)
