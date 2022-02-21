@@ -1,7 +1,7 @@
 import Foundation
 #if os(Linux)
 import func CPuppy.cpuppy_sys_gettid
-#endif
+#endif // os(Linux)
 
 typealias Log = Puppy
 
@@ -93,10 +93,10 @@ public class Puppy {
         var threadID: UInt64 = 0
         #if canImport(Darwin)
         pthread_threadid_np(nil, &threadID)
-        #endif
-        #if os(Linux)
+        #elseif os(Linux)
         threadID = cpuppy_sys_gettid()
-        #endif
+        #else
+        #endif // canImport(Darwin)
         return threadID
     }
 }
@@ -107,5 +107,5 @@ func debug(_ items: Any) {
     if Puppy.useDebug {
         print("Puppy:", items)
     }
-    #endif
+    #endif // DEBUG
 }

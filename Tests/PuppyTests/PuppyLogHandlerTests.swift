@@ -48,4 +48,4 @@ final class PuppyLogHandlerTests: XCTestCase {
     }
 }
 
-#endif
+#endif // canImport(Logging)

@@ -43,4 +43,4 @@ public class OSLogger: BaseLogger {
     }
 }
 
-#endif
+#endif // canImport(Darwin)

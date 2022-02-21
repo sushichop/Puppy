@@ -64,4 +64,4 @@ extension Logger.Level {
     }
 }
 
-#endif
+#endif // canImport(Logging)

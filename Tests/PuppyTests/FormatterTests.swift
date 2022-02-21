@@ -2,7 +2,7 @@ import XCTest
 import Puppy
 #if canImport(Logging)
 import Logging
-#endif
+#endif // canImport(Logging)
 
 final class FormatterTests: XCTestCase {
 
