@@ -28,4 +28,4 @@ final class SystemLoggerTests: XCTestCase {
     }
 }
 
-#endif
+#endif // os(Linux)

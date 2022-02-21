@@ -38,13 +38,13 @@ final class PuppyTests: XCTestCase {
               "magenta".colorize(.magenta),
               "cyan".colorize(.cyan),
               "lightGray".colorize(.lightGray),
-              "darkGray   ".colorize(.darkGray),
-              "lightRed   ".colorize(.lightRed),
-              "lightGreen ".colorize(.lightGreen),
+              "darkGray".colorize(.darkGray),
+              "lightRed".colorize(.lightRed),
+              "lightGreen".colorize(.lightGreen),
               "lightYellow".colorize(.lightYellow),
-              "lightBlue  ".colorize(.lightBlue),
-              "lightCyan  ".colorize(.lightCyan),
-              "white      ".colorize(.white),
+              "lightBlue".colorize(.lightBlue),
+              "lightCyan".colorize(.lightCyan),
+              "white".colorize(.white),
               "42".colorize(.colorNumber(42))
         )
     }

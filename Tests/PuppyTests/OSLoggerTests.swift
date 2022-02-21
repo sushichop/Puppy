@@ -28,4 +28,4 @@ final class OSLoggerTests: XCTestCase {
     }
 }
 
-#endif
+#endif // canImport(Darwin)

@@ -47,8 +47,9 @@ open class BaseLogger: Loggerable {
         self.queue = asynchronous ? DispatchQueue(label: label) : nil
     }
 
+    /// Needs to override this method in the inherited class.
     open func log(_ level: LogLevel, string: String) {
-        // Implements the logging feature here.
+        print("NEED TO OVERRIDE!!: \(string)")
     }
 }
 

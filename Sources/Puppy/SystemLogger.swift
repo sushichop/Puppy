@@ -35,4 +35,4 @@ public class SystemLogger: BaseLogger {
     }
 }
 
-#endif
+#endif // os(Linux)

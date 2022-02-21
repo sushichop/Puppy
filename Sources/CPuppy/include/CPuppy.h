@@ -22,11 +22,11 @@ static inline void cpuppy_syslog(int priority, const char *message) {
     syslog(priority, "%s", message);
 }
 
-#endif  // __linux__
+#endif // __linux__
 
 
 #if defined(__cplusplus)
-}  // extern "C"
+} // extern "C"
 #endif
 
 #endif // CPUPPY_H

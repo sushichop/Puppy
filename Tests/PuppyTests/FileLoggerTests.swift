@@ -43,7 +43,7 @@ final class FileLoggerTests: XCTestCase {
         _ = fileLogger.delete(directoryURL)
         log.remove(fileLogger)
     }
-    #endif
+    #endif // os(macOS) || os(Linux)
 
     func testCheckFileType() throws {
         let emptyFileURL = URL(fileURLWithPath: "").absoluteURL     // file:///private/tmp/
@@ -72,7 +72,7 @@ final class FileLoggerTests: XCTestCase {
             XCTAssertEqual(error as? FileError, .creatingFileFailed(at: fileURLNotAbleToCreateFile))
         }
     }
-    #endif
+    #endif // canImport(Darwin)
 
     func testDeletingFile() throws {
         let existentFileURL = URL(fileURLWithPath: "./existent.log").absoluteURL
