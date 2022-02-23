@@ -214,20 +214,27 @@ final class FileLoggerTests: XCTestCase {
         wait(for: [exp], timeout: 5.0)
     }
 
-    func testFilePermssion() throws {
-        let fileURL = URL(fileURLWithPath: "./permisson600.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.permisson600", fileURL: fileURL, filePermisson: "600")
+    func testFilePermission() throws {
+        let fileURL = URL(fileURLWithPath: "./permission600.log").absoluteURL
+        let fileLogger = try FileLogger("com.example.yourapp.filelogger.permission600", fileURL: fileURL, filePermission: "600")
         let log = Puppy()
         log.add(fileLogger)
-        log.trace("permisson, TRACE message using FileLogger")
-        log.verbose("permisson, VERBOSE message using FileLogger")
+        log.trace("permission, TRACE message using FileLogger")
+        log.verbose("permission, VERBOSE message using FileLogger")
         fileLogger.flush()
 
         let attribute = try FileManager.default.attributesOfItem(atPath: fileURL.path)
         // swiftlint:disable force_cast
         let permission = attribute[FileAttributeKey.posixPermissions] as! UInt16
         // swiftlint:enable force_cast
+
+        #if os(Windows)
+        // NOTE: If the file is writable, its permission is always "700" on Windows.
+        // Reference: https://github.com/apple/swift-corelibs-foundation/blob/main/Sources/Foundation/FileManager%2BWin32.swift
+        let expectedPermission = UInt16("700", radix: 8)!
+        #else
         let expectedPermission = UInt16("600", radix: 8)!
+        #endif // os(Windows)
         XCTAssertEqual(permission, expectedPermission)
 
         _ = fileLogger.delete(fileURL)
@@ -235,14 +242,14 @@ final class FileLoggerTests: XCTestCase {
     }
 
     func testFilePermissionError() throws {
-        let permission800FileURL = URL(fileURLWithPath: "./permisson800.log").absoluteURL
-        XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.permisson800", fileURL: permission800FileURL, filePermisson: "800")) { error in
-            XCTAssertEqual(error as? FileError, .invalidPermssion("800"))
+        let permission800FileURL = URL(fileURLWithPath: "./permission800.log").absoluteURL
+        XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.permission800", fileURL: permission800FileURL, filePermission: "800")) { error in
+            XCTAssertEqual(error as? FileError, .invalidPermission(at: permission800FileURL, filePermission: "800"))
         }
 
-        let permissionABCFileURL = URL(fileURLWithPath: "./permissonABC.log").absoluteURL
-        XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.permissonABC", fileURL: permissionABCFileURL, filePermisson: "ABC")) { error in
-            XCTAssertEqual(error as? FileError, .invalidPermssion("ABC"))
+        let permissionABCFileURL = URL(fileURLWithPath: "./permissionABC.log").absoluteURL
+        XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.permissionABC", fileURL: permissionABCFileURL, filePermission: "ABC")) { error in
+            XCTAssertEqual(error as? FileError, .invalidPermission(at: permissionABCFileURL, filePermission: "ABC"))
         }
     }
 }

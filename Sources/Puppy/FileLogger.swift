@@ -8,22 +8,22 @@ public class FileLogger: BaseLogger {
     }
     public private(set) var flushMode: FlushMode
 
-    var filePermission: Permission
-    var uintPermission: UInt16 {
+    private let filePermission: String
+    private var uintPermission: UInt16 {
         return UInt16(filePermission, radix: 8)!
     }
 
     var fileHandle: FileHandle!
     let fileURL: URL
 
-    public init(_ label: String, fileURL: URL, filePermisson: Permission = "640", flushMode: FlushMode = .always) throws {
+    public init(_ label: String, fileURL: URL, filePermission: String = "640", flushMode: FlushMode = .always) throws {
         self.fileURL = fileURL
-        self.filePermission = filePermisson
+        self.filePermission = filePermission
         self.flushMode = flushMode
         debug("fileURL is \(fileURL).")
         super.init(label)
-        try validateFilePermssion(filePermisson)
         try validateFileURL(fileURL)
+        try validateFilePermission(fileURL, filePermission: filePermission)
         try openFile()
     }
 
@@ -118,18 +118,18 @@ public class FileLogger: BaseLogger {
         }
     }
 
-    private func validateFilePermssion(_ filePermission: Permission) throws {
-        let min = UInt16("000", radix: 8)!
-        let max = UInt16("777", radix: 8)!
-        if let uintPermission = Int16(filePermission, radix: 8), uintPermission >= min, uintPermission <= max {
-        } else {
-            throw FileError.invalidPermssion(filePermission)
-        }
-    }
-
     private func validateFileURL(_ url: URL) throws {
         if url.hasDirectoryPath {
             throw FileError.isNotFile(url: url)
+        }
+    }
+
+    private func validateFilePermission(_ url: URL, filePermission: String) throws {
+        let min = UInt16("000", radix: 8)!
+        let max = UInt16("777", radix: 8)!
+        if let uintPermission = UInt16(filePermission, radix: 8), uintPermission >= min, uintPermission <= max {
+        } else {
+            throw FileError.invalidPermission(at: url, filePermission: filePermission)
         }
     }
 }
