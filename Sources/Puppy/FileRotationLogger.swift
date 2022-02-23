@@ -14,8 +14,8 @@ public class FileRotationLogger: FileLogger {
 
     public weak var delegate: FileRotationLoggerDelegate?
 
-    public init(_ label: String, fileURL: URL, filePermssion: Permission = "640") throws {
-        try super.init(label, fileURL: fileURL, filePermisson: filePermssion)
+    public init(_ label: String, fileURL: URL, filePermission: String = "640") throws {
+        try super.init(label, fileURL: fileURL, filePermission: filePermission)
     }
 
     public override func log(_ level: LogLevel, string: String) {
