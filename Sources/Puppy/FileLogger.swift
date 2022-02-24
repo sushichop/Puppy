@@ -47,22 +47,22 @@ public class FileLogger: BaseLogger {
         }
     }
 
-    public func delete(_ url: URL) -> Result<URL, FileDeletingError> {
+    public func delete(_ url: URL) -> Result<URL, FileError> {
         queue!.sync {
             Result { try FileManager.default.removeItem(at: url) }
                 .map { url }
                 .mapError { _ in
-                    FileDeletingError.failed(at: url)
+                    FileError.deletingFailed(at: url)
                 }
         }
     }
 
-    public func delete(_ url: URL, completion: @escaping (Result<URL, FileDeletingError>) -> Void) {
+    public func delete(_ url: URL, completion: @escaping (Result<URL, FileError>) -> Void) {
         queue!.async {
             let result = Result { try FileManager.default.removeItem(at: url) }
                 .map { url }
                 .mapError { _ in
-                    FileDeletingError.failed(at: url)
+                    FileError.deletingFailed(at: url)
                 }
             completion(result)
         }
@@ -105,7 +105,7 @@ public class FileLogger: BaseLogger {
             do {
                 fileHandle = try FileHandle(forWritingTo: fileURL)
             } catch {
-                throw FileError.writingFailed(at: fileURL)
+                throw FileError.openingForWritingFailed(at: fileURL)
             }
         }
     }

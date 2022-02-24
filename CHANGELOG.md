@@ -5,6 +5,7 @@
 - Change the type of intPermission to `UInt16`. [#41](https://github.com/sushichop/Puppy/pull/41)
 - Output a message prompting to override. [#42](https://github.com/sushichop/Puppy/pull/42)
 - Use String type for filePermission. [#43](https://github.com/sushichop/Puppy/pull/43)
+- Add error descriptions to `FileError`. [#44](https://github.com/sushichop/Puppy/pull/44)
 
 ## [0.4.0](https://github.com/sushichop/Puppy/releases/tag/0.4.0) (2022-01-31)
 
