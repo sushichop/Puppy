@@ -102,6 +102,7 @@ final class FileLoggerTests: XCTestCase {
         }
     }
 
+    #if canImport(Darwin)
     func testWritingError() throws {
         let fileURL = URL(fileURLWithPath: "./readonly.log").absoluteURL
         XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.readonly", fileURL: fileURL, filePermission: "400")) { error in
@@ -112,6 +113,7 @@ final class FileLoggerTests: XCTestCase {
             // swiftlint:enable force_try
         }
     }
+    #endif // canImport(Darwin)
 
     #if canImport(Darwin)
     func testCreatingError() throws {
