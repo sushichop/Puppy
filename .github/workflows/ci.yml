@@ -33,10 +33,7 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - uses: sushichop/gha-swift-env@v1
-        with:
-          swift-version: ${{ matrix.swift-version }}
-      - run: swift package clean && swift test
+      - run: make swift-test-linux SWIFT_VERSION=${{ matrix.swift-version }}
 
   swift-test-windows:
     name: swift-test-windows - Swift ${{ matrix.swift-version }}
@@ -47,10 +44,10 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - uses: sushichop/gha-swift-env@v1
-        with:
-          swift-version: ${{ matrix.swift-version }}
-      - run: swift package clean && swift test
+      - name: Set up Swift Windows
+        run: ./scripts/SwiftWindows.ps1 -SwiftVersion ${{ matrix.swift-version }}
+      - name: Test a Swift package
+        run: swift package clean && swift test
 
   codecov:
     name: codecov - Xcode ${{ matrix.xcode }}
@@ -138,9 +135,8 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - uses: sushichop/gha-swift-env@v1
-        with:
-          swift-version: ${{ matrix.swift-version }}
+      - name: Set up Swift Windows
+        run: ./scripts/SwiftWindows.ps1 -SwiftVersion ${{ matrix.swift-version }}
       - name: Build with CMake and Ninja
         run: |
           $SwiftFlags = '-sdk ' + "$Env:SDKROOT".Replace('\', '/')
