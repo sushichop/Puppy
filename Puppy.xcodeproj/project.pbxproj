@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		C71A59F227CA57CD00A577EC /* FileManager+Windows.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71A59F127CA57CD00A577EC /* FileManager+Windows.swift */; };
+		C71A59F427CA580100A577EC /* FileManager+WindowsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71A59F327CA580100A577EC /* FileManager+WindowsTests.swift */; };
 		C74F94B226777D38003A88BE /* CPuppy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C74F94A926777D38003A88BE /* CPuppy.framework */; };
 		C74F94C226777DF7003A88BE /* CPuppyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C74F94C126777DF7003A88BE /* CPuppyTests.m */; };
 		C74F94C326777E1D003A88BE /* CPuppy.h in Headers */ = {isa = PBXBuildFile; fileRef = C712BB09266F31A60016A768 /* CPuppy.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -79,6 +81,8 @@
 		C712BB09266F31A60016A768 /* CPuppy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPuppy.h; sourceTree = "<group>"; };
 		C712BB0A266F31B10016A768 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		C712BB0B266F31C80016A768 /* CPuppy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CPuppy.c; sourceTree = "<group>"; };
+		C71A59F127CA57CD00A577EC /* FileManager+Windows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Windows.swift"; sourceTree = "<group>"; };
+		C71A59F327CA580100A577EC /* FileManager+WindowsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+WindowsTests.swift"; sourceTree = "<group>"; };
 		C74F94A926777D38003A88BE /* CPuppy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CPuppy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C74F94B126777D38003A88BE /* CPuppyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CPuppyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C74F94C126777DF7003A88BE /* CPuppyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPuppyTests.m; sourceTree = "<group>"; };
@@ -234,6 +238,7 @@
 				C7ED71F8252DC0C50065B955 /* ConsoleLogger.swift */,
 				C7ED71F7252DC0C50065B955 /* FileError.swift */,
 				C7ED71F9252DC0C50065B955 /* FileLogger.swift */,
+				C71A59F127CA57CD00A577EC /* FileManager+Windows.swift */,
 				C7ED71F0252DC0C50065B955 /* FileRotationLogger.swift */,
 				C7ED71F2252DC0C50065B955 /* Formatter.swift */,
 				C7ED71F5252DC0C50065B955 /* LogColor.swift */,
@@ -269,6 +274,7 @@
 			children = (
 				C7695BC1253332DF00E0CA22 /* BaseLoggerTests.swift */,
 				C7ED7213252DC1590065B955 /* FileLoggerTests.swift */,
+				C71A59F327CA580100A577EC /* FileManager+WindowsTests.swift */,
 				C7ED7216252DC1590065B955 /* FileRotationLoggerTests.swift */,
 				C7ED7211252DC1590065B955 /* FormatterTests.swift */,
 				C7695BB32533303900E0CA22 /* MockLogger.swift */,
@@ -523,6 +529,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7ED71FE252DC0C50065B955 /* Formatter.swift in Sources */,
+				C71A59F227CA57CD00A577EC /* FileManager+Windows.swift in Sources */,
 				C7ED71FD252DC0C50065B955 /* SystemLogger.swift in Sources */,
 				C7ED7201252DC0C50065B955 /* LogColor.swift in Sources */,
 				C7ED7205252DC0C50065B955 /* FileLogger.swift in Sources */,
@@ -542,6 +549,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7ED721A252DC1590065B955 /* FormatterTests.swift in Sources */,
+				C71A59F427CA580100A577EC /* FileManager+WindowsTests.swift in Sources */,
 				C7ED721C252DC1590065B955 /* FileLoggerTests.swift in Sources */,
 				C7ED721D252DC1590065B955 /* SystemLoggerTests.swift in Sources */,
 				C7ED721F252DC1590065B955 /* FileRotationLoggerTests.swift in Sources */,

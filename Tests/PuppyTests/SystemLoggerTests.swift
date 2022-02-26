@@ -1,4 +1,3 @@
-#if os(Linux)
 import XCTest
 import Puppy
 
@@ -13,6 +12,7 @@ final class SystemLoggerTests: XCTestCase {
     }
 
     func testSystemLogger() throws {
+        #if os(Linux)
         let systemLogger = SystemLogger("com.example.yourapp.systemlogger")
         let log = Puppy()
         log.add(systemLogger)
@@ -25,7 +25,6 @@ final class SystemLoggerTests: XCTestCase {
         log.error("ERROR message using SystemLogger")
         log.critical("CRITICAL message using SystemLogger")
         log.remove(systemLogger)
+        #endif // os(Linux)
     }
 }
-
-#endif // os(Linux)

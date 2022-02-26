@@ -78,14 +78,23 @@ public class FileRotationLogger: FileLogger {
     private func ascArchivedFileURLs(_ fileURL: URL) -> [URL] {
         var ascArchivedFileURLs: [URL] = []
         do {
-            let archivedDirectoryURL = fileURL.deletingLastPathComponent()
-            let archivedFileURLs = try FileManager.default
-                .contentsOfDirectory(at: archivedDirectoryURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            let archivedDirectoryURL: URL = fileURL.deletingLastPathComponent()
+            let archivedFileURLs = try FileManager.default.contentsOfDirectory(atPath: archivedDirectoryURL.path)
+                .map { archivedDirectoryURL.appendingPathComponent($0) }
                 .filter { $0 != fileURL && $0.deletingPathExtension() == fileURL }
+
             ascArchivedFileURLs = try archivedFileURLs.sorted {
-                let modificationDate0 = try FileManager.default.attributesOfItem(atPath: $0.path)[.modificationDate] as? Date
-                let modificationDate1 = try FileManager.default.attributesOfItem(atPath: $1.path)[.modificationDate] as? Date
-                return modificationDate0!.timeIntervalSince1970 < modificationDate1!.timeIntervalSince1970
+                #if os(Windows)
+                let modificationTime0 = try FileManager.default.windowsModificationTime(atPath: $0.path)
+                let modificationTime1 = try FileManager.default.windowsModificationTime(atPath: $1.path)
+                return modificationTime0 < modificationTime1
+                #else
+                // swiftlint:disable force_cast
+                let modificationDate0 = try FileManager.default.attributesOfItem(atPath: $0.path)[.modificationDate] as! Date
+                let modificationDate1 = try FileManager.default.attributesOfItem(atPath: $1.path)[.modificationDate] as! Date
+                // swiftlint:enable force_cast
+                return modificationDate0.timeIntervalSince1970 < modificationDate1.timeIntervalSince1970
+                #endif
             }
         } catch {
             print("error in ascArchivedFileURLs, error: \(error.localizedDescription)")

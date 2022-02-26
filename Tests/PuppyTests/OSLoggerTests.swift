@@ -1,4 +1,3 @@
-#if canImport(Darwin)
 import XCTest
 import Puppy
 
@@ -13,6 +12,7 @@ final class OSLoggerTests: XCTestCase {
     }
 
     func testOSLogger() throws {
+        #if canImport(Darwin)
         let osLogger = OSLogger("com.example.yourapp.oslogger")
         let log = Puppy()
         log.add(osLogger)
@@ -25,7 +25,6 @@ final class OSLoggerTests: XCTestCase {
         log.error("ERROR message using OSLogger")
         log.critical("CRITICAL message using OSLogger")
         log.remove(osLogger)
+        #endif // canImport(Darwin)
     }
 }
-
-#endif // canImport(Darwin)
