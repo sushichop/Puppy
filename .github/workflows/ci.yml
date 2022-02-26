@@ -138,7 +138,7 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - uses: sushichop/gha-swift-env
+      - uses: sushichop/gha-swift-env@v1
         with:
           swift-version: ${{ matrix.swift-version }}
       - name: Build with CMake and Ninja
