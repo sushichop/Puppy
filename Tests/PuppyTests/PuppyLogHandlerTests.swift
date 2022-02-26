@@ -1,7 +1,8 @@
-#if canImport(Logging)
 import XCTest
 import Puppy
+#if canImport(Logging)
 import Logging
+#endif // canImport(Logging)
 
 final class PuppyLogHandlerTests: XCTestCase {
 
@@ -14,6 +15,8 @@ final class PuppyLogHandlerTests: XCTestCase {
     }
 
     func testLoggingSystem() throws {
+        #if canImport(Logging)
+
         // let bool1 = [:].isEmpty         // true
         // let bool2 = ["a": ""].isEmpty   // false
         // let bool3 = ["b": nil].isEmpty  // false
@@ -45,7 +48,6 @@ final class PuppyLogHandlerTests: XCTestCase {
         logger.critical("CRITICAL message using PuppyLogHandler")
 
         puppy.remove(consoleLogger)
+        #endif // canImport(Logging)
     }
 }
-
-#endif // canImport(Logging)

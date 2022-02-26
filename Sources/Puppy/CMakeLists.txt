@@ -3,6 +3,7 @@ add_library(Puppy
   ConsoleLogger.swift
   FileError.swift
   FileLogger.swift
+  FileManager+Windows.swift
   FileRotationLogger.swift
   Formatter.swift
   LogColor.swift

@@ -1,7 +1,11 @@
 import Foundation
-#if os(Linux)
+#if canImport(Darwin)
+#elseif os(Linux)
 import func CPuppy.cpuppy_sys_gettid
-#endif // os(Linux)
+#elseif os(Windows)
+import func WinSDK.GetCurrentThreadId
+#else
+#endif // canImport(Darwin)
 
 typealias Log = Puppy
 
@@ -95,6 +99,8 @@ public class Puppy {
         pthread_threadid_np(nil, &threadID)
         #elseif os(Linux)
         threadID = cpuppy_sys_gettid()
+        #elseif os(Windows)
+        threadID = UInt64(GetCurrentThreadId())
         #else
         #endif // canImport(Darwin)
         return threadID

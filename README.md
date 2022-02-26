@@ -1,24 +1,25 @@
 # Puppy
 
-![Swift5.0+](https://img.shields.io/badge/Swift-5.0%2B-orange.svg?style=flat)
+![Swift5.4+](https://img.shields.io/badge/Swift-5.4%2B-orange.svg?style=flat)
 [![release](https://img.shields.io/github/v/release/sushichop/Puppy.svg?color=blue)](https://github.com/sushichop/Puppy/releases)
 [![CocoaPods](https://img.shields.io/cocoapods/v/Puppy.svg?color=blue)](https://cocoapods.org/pods/Puppy)
 ![CI](https://github.com/sushichop/Puppy/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/sushichop/Puppy/branch/main/graph/badge.svg)](https://codecov.io/gh/sushichop/Puppy)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sushichop/Puppy/blob/master/LICENSE)
 
-![platforms](https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-orange.svg?style=flat)
-![Carthage|SwiftPM|Bazel](https://img.shields.io/badge/Carhage%20%7C%20SwiftPM%20%7C%20Bazel-compatible-4BC51D.svg?style=flat)
+![platforms](https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux%20%7C%20Windows-orange.svg?style=flat)
+![SwiftPM|CMake|Bazel|Carthage](https://img.shields.io/badge/SwiftPM%20%7C%20CMake%20%7C%20Bazel%20%7C%20Carthage-compatible-4BC51D.svg?style=flat)
 
 ### **Puppy is a flexible logging library written in Swift** 🐶
 
 It supports multiple transports(console, file, syslog, and oslog) as loggers. It not only works alone, but also as a backend for [apple/swift-log](https://github.com/apple/swift-log/).
-Furthermore, it has file log rotation feature and you can also customize the log format as you like.
+
+Furthermore, it has file log rotation feature and you can also customize the log format as you like. And it supports **cross-platform(Darwin, Linux, and Windows)**.
 
 ## Features
 
 - Written in Swift.
-- Supports both Darwin and Linux.
+- Supports cross-platform(Darwin, Linux, and Windows).
 - Supports console, file, syslog, and oslog as loggers.
 - Supports automatic log rotation about file logger.
 - Also Works as a backend for `apple/swift-log`.

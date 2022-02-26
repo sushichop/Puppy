@@ -1,7 +1,8 @@
 .DEFAULT_GOAL := help
 HELP_INDENT := 28
 
-SWIFT_VERSION := 5.5.2
+SWIFT_VERSION := 5.5.3
+DISTRIBUTION := focal
 
 .PHONY: help
 help:
@@ -33,7 +34,7 @@ swift-test: ## Run tests using SwiftPM
 
 .PHONY: swift-test-linux
 swift-test-linux: ## Run tests using SwiftPM on linux container
-	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) ./scripts/llvm-cov-script.sh
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION) ./scripts/llvm-cov-script.sh
 
 .PHONY: export-codecov
 export-codecov: ## Export code coverage
@@ -42,7 +43,7 @@ export-codecov: ## Export code coverage
 
 .PHONY: export-codecov-linux
 export-codecov-linux: ## Export code coverage on linux container
-	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) /bin/sh -c "SCRIPT_TYPE=export ./scripts/llvm-cov-script.sh"
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION) /bin/sh -c "SCRIPT_TYPE=export ./scripts/llvm-cov-script.sh"
 	#bash <(curl https://codecov.io/bash)
 
 .PHONY: swiftlint
@@ -78,7 +79,7 @@ swift-build: ## Run swift build
 
 .PHONY: swift-build-linux
 swift-build-linux: ## Run swift build on Linux container
-	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) /bin/sh -c "swift package clean && swift build -c release"
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION) /bin/sh -c "swift package clean && swift build -c release"
 
 .PHONY: bazel-build
 bazel-build: ## Run bazel build
@@ -86,7 +87,7 @@ bazel-build: ## Run bazel build
 
 .PHONY: bazel-build-linux
 bazel-build-linux: ## Run bazel build on Linux container
-	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION) ./scripts/bazel-script.sh
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION) ./scripts/bazel-script.sh
 
 .PHONY: cmake-build
 cmake-build: ## Run cmake build
@@ -94,7 +95,7 @@ cmake-build: ## Run cmake build
 
 .PHONY: cmake-build-linux
 cmake-build-linux: ## Run cmake build on Linux container
-	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-focal ./scripts/cmake-script.sh
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION) ./scripts/cmake-script.sh
 
 .PHONY: ninja-build
 ninja-build: ## Run ninja build
@@ -102,8 +103,8 @@ ninja-build: ## Run ninja build
 
 .PHONY: ninja-build-linux
 ninja-build-linux: ## Run ninja build on Linux container
-	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-focal /bin/sh -c "SCRIPT_TYPE=ninja ./scripts/cmake-script.sh"
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION) /bin/sh -c "SCRIPT_TYPE=ninja ./scripts/cmake-script.sh"
 
 .PHONY: linux
 linux: ## Run and login linux container
-	docker run --rm -it --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)
+	docker run --rm -it --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION)

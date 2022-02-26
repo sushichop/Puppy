@@ -16,7 +16,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        xcode: [12.5, 13.2.1]
+        xcode: ['12.5.1', '13.2.1']
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -29,18 +29,32 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        swift-version: [5.4.0, 5.5.2]
+        swift-version: ['5.4.2', '5.5.3']
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
       - run: make swift-test-linux SWIFT_VERSION=${{ matrix.swift-version }}
+
+  swift-test-windows:
+    name: swift-test-windows - Swift ${{ matrix.swift-version }}
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        swift-version: ['5.4.2', '5.5.3']
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Swift Windows
+        run: ./scripts/SwiftWindows.ps1 -SwiftVersion ${{ matrix.swift-version }}
+      - name: Test a Swift package
+        run: swift package clean && swift test
 
   codecov:
     name: codecov - Xcode ${{ matrix.xcode }}
     runs-on: macos-latest
     strategy:
       matrix:
-        xcode: [13.2.1]
+        xcode: ['13.2.1']
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -56,11 +70,11 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   xcode:
-    name: ${{ matrix.make-tatget }} - Xcode ${{ matrix.xcode }}
+    name: ${{ matrix.make-target }} - Xcode ${{ matrix.xcode }}
     runs-on: macos-latest
     strategy:
       matrix:
-        make-tatget:
+        make-target:
           [
             xcode-test,
             xcode-build,
@@ -68,48 +82,63 @@ jobs:
             carthage-build-workaround,
             carthage-build-xcframeworks,
           ]
-        xcode: [13.2.1]
+        xcode: ['13.2.1']
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
     steps:
       - uses: actions/checkout@v2
-      - run: make ${{ matrix.make-tatget }}
+      - run: make ${{ matrix.make-target }}
 
-  build:
-    name: ${{ matrix.make-tatget }} - Xcode ${{ matrix.xcode }}
+  build-darwin:
+    name: ${{ matrix.make-target }} - Xcode ${{ matrix.xcode }}
     runs-on: macos-latest
     strategy:
       matrix:
-        make-tatget: 
+        make-target: 
           [
             swift-build,
             bazel-build,
-            cmake-build,
-            ninja-build,
+            cmake-build
           ]
-        xcode: [13.2.1]
+        xcode: ['13.2.1']
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
     steps:
       - uses: actions/checkout@v2
-      - run: make ${{ matrix.make-tatget }}
+      - run: make ${{ matrix.make-target }}
 
   build-linux:
-    name: ${{ matrix.make-tatget }} - Swift ${{ matrix.swift-version }}
+    name: ${{ matrix.make-target }} - Swift ${{ matrix.swift-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        make-tatget:
+        make-target:
           [
             swift-build-linux,
             bazel-build-linux,
-            cmake-build-linux,
-            ninja-build-linux,
+            cmake-build-linux
           ]
-        swift-version: [5.5.2]
+        swift-version: ['5.5.3']
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - run: make ${{ matrix.make-tatget }} SWIFT_VERSION=${{ matrix.swift-version }}
+      - run: make ${{ matrix.make-target }} SWIFT_VERSION=${{ matrix.swift-version }}
+
+  build-windows:
+    name: cmake-build-windows - Swift ${{ matrix.swift-version }}
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        swift-version: ['5.5.3']
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Swift Windows
+        run: ./scripts/SwiftWindows.ps1 -SwiftVersion ${{ matrix.swift-version }}
+      - name: Build with CMake and Ninja
+        run: |
+          $SwiftFlags = '-sdk ' + "$Env:SDKROOT".Replace('\', '/')
+          cmake -B ./build -D CMAKE_C_COMPILER=clang -D CMAKE_BUILD_TYPE=Release -D CMAKE_Swift_FLAGS=$SwiftFlags -G Ninja -S .
+          ninja -C ./build -v

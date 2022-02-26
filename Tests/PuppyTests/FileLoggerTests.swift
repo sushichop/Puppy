@@ -27,8 +27,8 @@ final class FileLoggerTests: XCTestCase {
         log.remove(fileLogger)
     }
 
-    #if os(macOS) || os(Linux)
     func testTildeFileLogger() throws {
+        #if os(macOS) || os(Linux)
         let directoryName = "~/puppy_" + UUID().uuidString.lowercased()
         let fileName = directoryName + "/foo.log"
         let directoryURL = URL(fileURLWithPath: (directoryName as NSString).expandingTildeInPath).absoluteURL
@@ -42,8 +42,8 @@ final class FileLoggerTests: XCTestCase {
 
         _ = fileLogger.delete(directoryURL)
         log.remove(fileLogger)
+        #endif // os(macOS) || os(Linux)
     }
-    #endif // os(macOS) || os(Linux)
 
     func testCheckFileType() throws {
         let emptyFileURL = URL(fileURLWithPath: "").absoluteURL     // file:///private/tmp/
@@ -102,8 +102,8 @@ final class FileLoggerTests: XCTestCase {
         }
     }
 
-    #if canImport(Darwin)
     func testWritingError() throws {
+        #if canImport(Darwin)
         let fileURL = URL(fileURLWithPath: "./readonly.log").absoluteURL
         XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.readonly", fileURL: fileURL, filePermission: "400")) { error in
             XCTAssertEqual(error as? FileError, .openingForWritingFailed(at: fileURL))
@@ -112,11 +112,11 @@ final class FileLoggerTests: XCTestCase {
             try! FileManager.default.removeItem(at: fileURL)
             // swiftlint:enable force_try
         }
+        #endif // canImport(Darwin)
     }
-    #endif // canImport(Darwin)
 
-    #if canImport(Darwin)
     func testCreatingError() throws {
+        #if canImport(Darwin)
         let fileURLNotAbleToCreateDirectory = URL(fileURLWithPath: "/foo/bar.log").absoluteURL  // file:///foo/bar.log
         let directoryURLNotAbleToCreateDirectory = URL(fileURLWithPath: "/foo/").absoluteURL    // file:///foo
         XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.notcreatedirectory",
@@ -131,8 +131,8 @@ final class FileLoggerTests: XCTestCase {
             XCTAssertEqual(error as? FileError, .creatingFileFailed(at: fileURLNotAbleToCreateFile))
             XCTAssertEqual(error.localizedDescription, "failed to create a file: \(fileURLNotAbleToCreateFile)")
         }
+        #endif // canImport(Darwin)
     }
-    #endif // canImport(Darwin)
 
     func testDeletingFile() throws {
         let existentFileURL = URL(fileURLWithPath: "./existent.log").absoluteURL
