@@ -11,43 +11,50 @@ on:
       - "**"
 
 jobs:
-  swift-test:
-    name: swift-test - Xcode ${{ matrix.xcode }}
-    runs-on: macos-latest
+  swiftpm:
+    name: SwiftPM - Swift ${{ matrix.swift-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        xcode: ['12.5.1', '13.2.1']
-      fail-fast: false
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
-    steps:
-      - uses: actions/checkout@v2
-      - run: make swift-test
-
-  swift-test-linux:
-    name: swift-test-linux - Swift ${{ matrix.swift-version }}
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
+        os: ['macos-latest', 'ubuntu-latest', 'windows-latest']
         swift-version: ['5.4.2', '5.5.3']
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - run: make swift-test-linux SWIFT_VERSION=${{ matrix.swift-version }}
+      - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
+        if: runner.os == 'macOS'
+        run: |
+          if [ '${{ matrix.swift-version }}' = '5.4.2' ]; then echo DEVELOPER_DIR=/Applications/Xcode_12.5.1.app >> $GITHUB_ENV; fi
+          if [ '${{ matrix.swift-version }}' = '5.5.3' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.2.1.app >> $GITHUB_ENV; fi
+      - uses: sushichop/gha-swift-env@v1
+        with:
+          swift-version: ${{ matrix.swift-version }}
+      - name: Build a Swift package
+        run: swift build -v -c release
+      - name: Build a Swift package
+        run: swift test -v
 
-  swift-test-windows:
-    name: swift-test-windows - Swift ${{ matrix.swift-version }}
-    runs-on: windows-latest
+  cmake:
+    name: CMake - Swift ${{ matrix.swift-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: ['macos-latest', 'ubuntu-latest', 'windows-latest']
         swift-version: ['5.4.2', '5.5.3']
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Swift Windows
-        run: ./scripts/SwiftWindows.ps1 -SwiftVersion ${{ matrix.swift-version }}
-      - name: Test a Swift package
-        run: swift package clean && swift test
+      - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
+        if: runner.os == 'macOS'
+        run: |
+          if [ '${{ matrix.swift-version }}' = '5.4.2' ]; then echo DEVELOPER_DIR=/Applications/Xcode_12.5.1.app >> $GITHUB_ENV; fi
+          if [ '${{ matrix.swift-version }}' = '5.5.3' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.2.1.app >> $GITHUB_ENV; fi
+      - uses: sushichop/gha-swift-env@v1
+        with:
+          swift-version: ${{ matrix.swift-version }}
+      - name: Build with CMake and Ninja
+        shell: bash
+        run: ./scripts/cmake-script.sh
 
   codecov:
     name: codecov - Xcode ${{ matrix.xcode }}
@@ -90,55 +97,25 @@ jobs:
       - uses: actions/checkout@v2
       - run: make ${{ matrix.make-target }}
 
-  build-darwin:
-    name: ${{ matrix.make-target }} - Xcode ${{ matrix.xcode }}
-    runs-on: macos-latest
+  bazel:
+    name: Bazel - Swift ${{ matrix.swift-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        make-target: 
-          [
-            swift-build,
-            bazel-build,
-            cmake-build
-          ]
-        xcode: ['13.2.1']
-      fail-fast: false
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
-    steps:
-      - uses: actions/checkout@v2
-      - run: make ${{ matrix.make-target }}
-
-  build-linux:
-    name: ${{ matrix.make-target }} - Swift ${{ matrix.swift-version }}
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        make-target:
-          [
-            swift-build-linux,
-            bazel-build-linux,
-            cmake-build-linux
-          ]
+        os: ['macos-latest', 'ubuntu-latest']
         swift-version: ['5.5.3']
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - run: make ${{ matrix.make-target }} SWIFT_VERSION=${{ matrix.swift-version }}
-
-  build-windows:
-    name: cmake-build-windows - Swift ${{ matrix.swift-version }}
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        swift-version: ['5.5.3']
-      fail-fast: false
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Swift Windows
-        run: ./scripts/SwiftWindows.ps1 -SwiftVersion ${{ matrix.swift-version }}
-      - name: Build with CMake and Ninja
+      - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
+        if: runner.os == 'macOS'
         run: |
-          $SwiftFlags = '-sdk ' + "$Env:SDKROOT".Replace('\', '/')
-          cmake -B ./build -D CMAKE_C_COMPILER=clang -D CMAKE_BUILD_TYPE=Release -D CMAKE_Swift_FLAGS=$SwiftFlags -G Ninja -S .
-          ninja -C ./build -v
+          if [ '${{ matrix.swift-version }}' = '5.4.2' ]; then echo DEVELOPER_DIR=/Applications/Xcode_12.5.1.app >> $GITHUB_ENV; fi
+          if [ '${{ matrix.swift-version }}' = '5.5.3' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.2.1.app >> $GITHUB_ENV; fi
+      - uses: sushichop/gha-swift-env@v1
+        with:
+          swift-version: ${{ matrix.swift-version }}
+      - name: Build with Bazel
+        run: |
+          bazelisk version
+          CC=clang bazelisk build //:Puppy --verbose_failures
