@@ -7,6 +7,7 @@
 - Use String type for filePermission. [#43](https://github.com/sushichop/Puppy/pull/43)
 - Add error descriptions to `FileError`. [#44](https://github.com/sushichop/Puppy/pull/44)
 - Support Windows. [#45](https://github.com/sushichop/Puppy/pull/45)
+- Update GitHub Actions. [#46](https://github.com/sushichop/Puppy/pull/46)
 
 ## [0.4.0](https://github.com/sushichop/Puppy/releases/tag/0.4.0) (2022-01-31)
 
