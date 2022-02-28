@@ -1,4 +1,4 @@
-## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+## [0.5.0](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (2022-02-28)
 
 - Remove concurrency features. [#39](https://github.com/sushichop/Puppy/pull/39)
 - Fix the default rotation type to `numbering`. [#40](https://github.com/sushichop/Puppy/pull/40)
