@@ -87,7 +87,7 @@ bazel-build: ## Run bazel build
 
 .PHONY: bazel-build-linux
 bazel-build-linux: ## Run bazel build on Linux container
-	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION) ./scripts/bazel-script.sh
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION) /bin/sh -c "DISTRIBUTION=$(DISTRIBUTION) ./scripts/bazel-script.sh"
 
 .PHONY: cmake-build
 cmake-build: ## Run cmake build
@@ -95,15 +95,7 @@ cmake-build: ## Run cmake build
 
 .PHONY: cmake-build-linux
 cmake-build-linux: ## Run cmake build on Linux container
-	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION) ./scripts/cmake-script.sh
-
-.PHONY: ninja-build
-ninja-build: ## Run ninja build
-	SCRIPT_TYPE=ninja ./scripts/cmake-script.sh
-
-.PHONY: ninja-build-linux
-ninja-build-linux: ## Run ninja build on Linux container
-	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION) /bin/sh -c "SCRIPT_TYPE=ninja ./scripts/cmake-script.sh"
+	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION) /bin/sh -c "DISTRIBUTION=$(DISTRIBUTION) ./scripts/cmake-script.sh"
 
 .PHONY: linux
 linux: ## Run and login linux container
