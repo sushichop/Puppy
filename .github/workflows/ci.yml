@@ -40,7 +40,7 @@ jobs:
     strategy:
       matrix:
         os: ['macos-latest', 'ubuntu-latest', 'windows-latest']
-        swift-version: ['5.4.2', '5.5.3']
+        swift-version: ['5.5.3']
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
@@ -117,5 +117,4 @@ jobs:
           swift-version: ${{ matrix.swift-version }}
       - name: Build with Bazel
         run: |
-          bazelisk version
-          CC=clang bazelisk build //:Puppy --verbose_failures
+          run: ./scripts/bazel-script.sh
