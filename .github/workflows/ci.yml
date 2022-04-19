@@ -17,14 +17,13 @@ jobs:
     strategy:
       matrix:
         os: ['macos-12', 'ubuntu-latest', 'windows-latest']
-        swift-version: ['5.5.3', '5.6']
+        swift-version: ['5.6']
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
       - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
         if: runner.os == 'macOS'
         run: |
-          if [ '${{ matrix.swift-version }}' = '5.5.3' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.2.1.app >> $GITHUB_ENV; fi
           if [ '${{ matrix.swift-version }}' = '5.6' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.3.app >> $GITHUB_ENV; fi
       - uses: sushichop/gha-swift-env@v1
         with:
@@ -47,7 +46,6 @@ jobs:
       - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
         if: runner.os == 'macOS'
         run: |
-          if [ '${{ matrix.swift-version }}' = '5.5.3' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.2.1.app >> $GITHUB_ENV; fi
           if [ '${{ matrix.swift-version }}' = '5.6' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.3.app >> $GITHUB_ENV; fi
       - uses: sushichop/gha-swift-env@v1
         with:
@@ -110,7 +108,6 @@ jobs:
       - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
         if: runner.os == 'macOS'
         run: |
-          if [ '${{ matrix.swift-version }}' = '5.5.3' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.2.1.app >> $GITHUB_ENV; fi
           if [ '${{ matrix.swift-version }}' = '5.6' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.3.app >> $GITHUB_ENV; fi
       - uses: sushichop/gha-swift-env@v1
         with:
