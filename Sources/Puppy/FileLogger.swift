@@ -20,7 +20,7 @@ public class FileLogger: BaseLogger {
         self.fileURL = fileURL
         self.filePermission = filePermission
         self.flushMode = flushMode
-        debug("fileURL is \(fileURL).")
+        puppyDebug("initialized, fileURL: \(fileURL)")
         super.init(label)
         try validateFileURL(fileURL)
         try validateFilePermission(fileURL, filePermission: filePermission)
@@ -85,7 +85,7 @@ public class FileLogger: BaseLogger {
         let directoryURL = fileURL.deletingLastPathComponent()
         do {
             try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
-            debug("created directoryURL, directoryURL: \(directoryURL)")
+            puppyDebug("created directoryURL, directoryURL: \(directoryURL)")
         } catch {
             throw FileError.creatingDirectoryFailed(at: directoryURL)
         }
@@ -93,12 +93,12 @@ public class FileLogger: BaseLogger {
         if !FileManager.default.fileExists(atPath: fileURL.path) {
             let successful = FileManager.default.createFile(atPath: fileURL.path, contents: nil, attributes: [FileAttributeKey.posixPermissions: uintPermission])
             if successful {
-                debug("succeeded in creating filePath")
+                puppyDebug("succeeded in creating filePath")
             } else {
                 throw FileError.creatingFileFailed(at: fileURL)
             }
         } else {
-            debug("filePath exists, filePath: \(fileURL.path)")
+            puppyDebug("filePath exists, filePath: \(fileURL.path)")
         }
 
         if fileHandle == nil {

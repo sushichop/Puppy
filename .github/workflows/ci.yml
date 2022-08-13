@@ -31,7 +31,7 @@ jobs:
       - name: Build a Swift package
         run: swift build -v -c release
       - name: Test a Swift package
-        run: swift test -v
+        run: swift test -v -Xswiftc -DPUPPY_DEBUG
 
   swiftpm-backwards:
     name: SwiftPM - Swift ${{ matrix.swift-version }} on ${{ matrix.os }}
@@ -53,7 +53,7 @@ jobs:
       - name: Build a Swift package
         run: swift build -v -c release
       - name: Test a Swift package
-        run: swift test -v
+        run: swift test -v -Xswiftc -DPUPPY_DEBUG
 
   cmake:
     name: CMake - Swift ${{ matrix.swift-version }} on ${{ matrix.os }}
