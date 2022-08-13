@@ -5,11 +5,9 @@ final class FileRotationLoggerTests: XCTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        Puppy.useDebug = true
     }
 
     override func tearDownWithError() throws {
-        Puppy.useDebug = false
         try super.tearDownWithError()
     }
 

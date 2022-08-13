@@ -11,9 +11,7 @@ typealias Log = Puppy
 
 public class Puppy {
 
-    public static var useDebug = false
     public static let `default` = Puppy()
-
     public private(set) var loggers = Set<BaseLogger>()
 
     public init() {}
@@ -108,10 +106,8 @@ public class Puppy {
 }
 
 @inlinable
-func debug(_ items: Any) {
-    #if DEBUG
-    if Puppy.useDebug {
-        print("Puppy:", items)
-    }
-    #endif // DEBUG
+func puppyDebug(_ items: Any) {
+    #if DEBUG && PUPPY_DEBUG
+    print("PUPPY_DEBUG:", items)
+    #endif // DEBUG && PUPPY_DEBUG
 }

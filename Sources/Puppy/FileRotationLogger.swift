@@ -36,7 +36,7 @@ public class FileRotationLogger: FileLogger {
                 for (index, oldArchivedFileURL) in oldArchivedFileURLs.enumerated() {
                     let generationNumber = oldArchivedFileURLs.count + 1 - index
                     let rotatedFileURL = oldArchivedFileURL.deletingPathExtension().appendingPathExtension("\(generationNumber)")
-                    debug("generationNumber: \(generationNumber), rotatedFileURL: \(rotatedFileURL)")
+                    puppyDebug("generationNumber: \(generationNumber), rotatedFileURL: \(rotatedFileURL)")
                     if !FileManager.default.fileExists(atPath: rotatedFileURL.path) {
                         try FileManager.default.moveItem(at: oldArchivedFileURL, to: rotatedFileURL)
                     }
@@ -68,7 +68,7 @@ public class FileRotationLogger: FileLogger {
 
         // Opens a new target file.
         do {
-            debug("will openFile in rotateFiles")
+            puppyDebug("will openFile in rotateFiles")
             try openFile()
         } catch {
             print("error in openFile while rotating, error: \(error.localizedDescription)")
@@ -99,7 +99,7 @@ public class FileRotationLogger: FileLogger {
         } catch {
             print("error in ascArchivedFileURLs, error: \(error.localizedDescription)")
         }
-        debug("ascArchivedFileURLs: \(ascArchivedFileURLs)")
+        puppyDebug("ascArchivedFileURLs: \(ascArchivedFileURLs)")
         return ascArchivedFileURLs
     }
 
@@ -108,9 +108,9 @@ public class FileRotationLogger: FileLogger {
             let archivedFileURLs = ascArchivedFileURLs(fileURL)
             if archivedFileURLs.count > maxArchivedFilesCount {
                 for index in 0 ..< archivedFileURLs.count - Int(maxArchivedFilesCount) {
-                    debug("\(archivedFileURLs[index]) will be removed...")
+                    puppyDebug("\(archivedFileURLs[index]) will be removed...")
                     try FileManager.default.removeItem(at: archivedFileURLs[index])
-                    debug("\(archivedFileURLs[index]) has been removed")
+                    puppyDebug("\(archivedFileURLs[index]) has been removed")
                     delegate?.fileRotationLogger(self, didRemoveArchivedFileURL: archivedFileURLs[index])
                 }
             }
