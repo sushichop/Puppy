@@ -2,6 +2,7 @@
 
 - Use macro for debugging. [#50](https://github.com/sushichop/Puppy/pull/50)
 - Move `Hashable` to `Loggerable`. [#51](https://github.com/sushichop/Puppy/pull/51)
+- Add a missing method. [#52](https://github.com/sushichop/Puppy/pull/52)
 
 ## [0.5.0](https://github.com/sushichop/Puppy/releases/tag/0.5.0) (2022-02-28)
 
