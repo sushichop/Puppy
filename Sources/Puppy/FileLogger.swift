@@ -76,6 +76,7 @@ public class FileLogger: BaseLogger {
 
     public func flush(completion: @escaping () -> Void) {
         queue!.async {
+            self.fileHandle?.synchronizeFile()
             completion()
         }
     }
