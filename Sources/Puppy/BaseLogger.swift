@@ -1,15 +1,23 @@
 import Foundation
 
-public protocol Loggerable {
-
+public protocol Loggerable: Hashable {
     var label: String { get }
     var queue: DispatchQueue? { get }
 
     func log(_ level: LogLevel, string: String)
 }
 
-open class BaseLogger: Loggerable {
+extension Loggerable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(label)
+    }
 
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.label == rhs.label
+    }
+}
+
+open class BaseLogger: Loggerable {
     public var enabled: Bool = true
     public var logLevel: LogLevel = .trace
 
@@ -23,13 +31,12 @@ open class BaseLogger: Loggerable {
     func formatMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64) {
         if !enabled { return }
 
-        var formattedMessage = ""
+        var tmpFormattedMessage = message
         if let format = format {
-            formattedMessage = format.formatMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: label, date: date, threadID: threadID)
-        } else {
-            formattedMessage = message
+            tmpFormattedMessage = format.formatMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: label, date: date, threadID: threadID)
         }
 
+        let formattedMessage = tmpFormattedMessage
         if let queue = queue {
             queue.async {
                 self.log(level, string: formattedMessage)
@@ -50,16 +57,5 @@ open class BaseLogger: Loggerable {
     /// Needs to override this method in the inherited class.
     open func log(_ level: LogLevel, string: String) {
         print("NEED TO OVERRIDE!!: \(string)")
-    }
-}
-
-extension BaseLogger: Hashable {
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(label)
-    }
-
-    public static func == (lhs: BaseLogger, rhs: BaseLogger) -> Bool {
-        return lhs.label == rhs.label
     }
 }
