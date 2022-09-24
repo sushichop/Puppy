@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Default" do |default|
     default.dependency "Puppy/Core"
-    default.dependency "Logging", "1.4.2"
+    default.dependency "Logging", "~> 1.4"
   end
 
   s.subspec "Core" do |core|
