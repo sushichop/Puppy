@@ -1,4 +1,4 @@
-## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+## [0.5.1](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (2022-09-24)
 
 - Use macro for debugging. [#50](https://github.com/sushichop/Puppy/pull/50)
 - Move `Hashable` to `Loggerable`. [#51](https://github.com/sushichop/Puppy/pull/51)
