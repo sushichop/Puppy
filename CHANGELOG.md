@@ -1,4 +1,8 @@
-## [0.5.1](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (2022-09-24)
+## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+
+- Disable bitcode. [#54](https://github.com/sushichop/Puppy/pull/54)
+
+## [0.5.1](https://github.com/sushichop/Puppy/releases/tag/0.5.1) (2022-09-24)
 
 - Use macro for debugging. [#50](https://github.com/sushichop/Puppy/pull/50)
 - Move `Hashable` to `Loggerable`. [#51](https://github.com/sushichop/Puppy/pull/51)
