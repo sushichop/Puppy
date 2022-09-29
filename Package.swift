@@ -6,13 +6,13 @@ import PackageDescription
 let package = Package(
     name: "Puppy",
     platforms: [
-        .macOS(.v10_12), .iOS(.v10), .tvOS(.v10), .watchOS(.v3),
+        .macOS(.v11), .iOS(.v14), .tvOS(.v14), .watchOS(.v7),
     ],
     products: [
         .library(name: "Puppy", targets: ["Puppy"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-log.git", from: "1.4.2"),
+        .package(url: "https://github.com/apple/swift-log.git", from: "1.4.4"),
     ],
     targets: [
         .target(name: "CPuppy",

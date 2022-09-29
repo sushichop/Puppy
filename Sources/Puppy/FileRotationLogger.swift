@@ -25,7 +25,7 @@ public class FileRotationLogger: FileLogger {
     }
 
     private func rotateFiles() {
-        guard let size = try? fileHandle.seekToEndCompatible(), size > maxFileSize else { return }
+        guard let size = try? fileHandle.seekToEnd(), size > maxFileSize else { return }
         closeFile()
 
         // Rotates old archived files.

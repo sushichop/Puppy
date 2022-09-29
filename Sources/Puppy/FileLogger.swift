@@ -33,13 +33,13 @@ public class FileLogger: BaseLogger {
 
     public override func log(_ level: LogLevel, string: String) {
         do {
-            _ = try fileHandle?.seekToEndCompatible()
+            _ = try fileHandle?.seekToEnd()
             if let data = (string + "\r\n").data(using: .utf8) {
                 // swiftlint:disable force_try
-                try! fileHandle?.writeCompatible(contentsOf: data)
+                try! fileHandle?.write(contentsOf: data)
                 // swiftlint:enable force_try
                 if flushMode == .always {
-                    fileHandle?.synchronizeFile()
+                    try? fileHandle?.synchronize()
                 }
             }
         } catch {
@@ -70,13 +70,13 @@ public class FileLogger: BaseLogger {
 
     public func flush() {
         queue!.sync {
-            fileHandle?.synchronizeFile()
+            try? fileHandle?.synchronize()
         }
     }
 
     public func flush(completion: @escaping () -> Void) {
         queue!.async {
-            self.fileHandle?.synchronizeFile()
+            try? self.fileHandle?.synchronize()
             completion()
         }
     }
@@ -113,8 +113,8 @@ public class FileLogger: BaseLogger {
 
     func closeFile() {
         if fileHandle != nil {
-            fileHandle.synchronizeFile()
-            fileHandle.closeFile()
+            try? fileHandle.synchronize()
+            try? fileHandle.close()
             fileHandle = nil
         }
     }
@@ -131,24 +131,6 @@ public class FileLogger: BaseLogger {
         if let uintPermission = UInt16(filePermission, radix: 8), uintPermission >= min, uintPermission <= max {
         } else {
             throw FileError.invalidPermission(at: url, filePermission: filePermission)
-        }
-    }
-}
-
-extension FileHandle {
-    func seekToEndCompatible() throws -> UInt64 {
-        if #available(macOS 10.15.4, iOS 13.4, tvOS 13.4, watchOS 6.2, *) {
-            return try seekToEnd()
-        } else {
-            return seekToEndOfFile()
-        }
-    }
-
-    func writeCompatible(contentsOf data: Data) throws {
-        if #available(macOS 10.15.4, iOS 13.4, tvOS 13.4, watchOS 6.2, *) {
-            try write(contentsOf: data)
-        } else {
-            write(data)
         }
     }
 }
