@@ -1,6 +1,7 @@
 ## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
 
 - Disable bitcode. [#54](https://github.com/sushichop/Puppy/pull/54)
+- Update platform versions. [#55](https://github.com/sushichop/Puppy/pull/55)
 
 ## [0.5.1](https://github.com/sushichop/Puppy/releases/tag/0.5.1) (2022-09-24)
 

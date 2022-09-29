@@ -239,15 +239,15 @@ final class FileLoggerTests: XCTestCase {
     }
 
     func testFlushFile() throws {
-        let flushFileURL = URL(fileURLWithPath: "./flush.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.flush", fileURL: flushFileURL, flushMode: .manual)
+        let fileURL = URL(fileURLWithPath: "./flush.log").absoluteURL
+        let fileLogger = try FileLogger("com.example.yourapp.filelogger.flush", fileURL: fileURL, flushMode: .manual)
         let log = Puppy()
         log.add(fileLogger)
         log.trace("flush, TRACE message using FileLogger")
         log.verbose("flush, VERBOSE message using FileLogger")
 
         fileLogger.flush()
-        _ = fileLogger.delete(flushFileURL)
+        _ = fileLogger.delete(fileURL)
         log.remove(fileLogger)
     }
 
