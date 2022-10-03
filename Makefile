@@ -55,8 +55,8 @@ swiftlint-autocorrect: ## Run SwiftLint with autocorrect format
 	swiftlint autocorrect --format
 
 .PHONY: pod-lib-lint
-pod-lib-lint: ## Run pod lib lint
-	pod lib lint
+pod-lib-lint: ## Run pod lib lint --verbose
+	pod lib lint --verbose
 
 .PHONY: carthage-build
 carthage-build: ## Run carthage build
