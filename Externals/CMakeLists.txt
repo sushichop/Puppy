@@ -2,7 +2,7 @@ include(FetchContent)
 
 FetchContent_Declare(swift-log
   GIT_REPOSITORY https://github.com/apple/swift-log.git
-  GIT_TAG 1.4.2
+  GIT_TAG 1.4.4
 )
 FetchContent_MakeAvailable(swift-log)
 

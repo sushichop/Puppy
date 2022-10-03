@@ -5,8 +5,8 @@ load(
 
 http_archive(
     name = "build_bazel_rules_swift",
-    url = "https://github.com/bazelbuild/rules_swift/releases/download/0.27.0/rules_swift.0.27.0.tar.gz",
-    sha256 = "a2fd565e527f83fb3f9eb07eb9737240e668c9242d3bc318712efa54a7deda97",
+    url = "https://github.com/bazelbuild/rules_swift/releases/download/1.2.0/rules_swift.1.2.0.tar.gz",
+    sha256 = "51efdaf85e04e51174de76ef563f255451d5a5cd24c61ad902feeadafc7046d9",
 )
 
 load(
@@ -25,8 +25,8 @@ swift_rules_extra_dependencies()
 
 http_archive(
     name = "swift-log",
-    url = "https://github.com/apple/swift-log/archive/refs/tags/1.4.2.tar.gz",
-    sha256 = "de51662b35f47764b6e12e9f1d43e7de28f6dd64f05bc30a318cf978cf3bc473",
-    strip_prefix = "swift-log-1.4.2",
+    url = "https://github.com/apple/swift-log/archive/refs/tags/1.4.4.tar.gz",
+    sha256 = "48fe66426c784c0c20031f15dc17faf9f4c9037c192bfac2f643f65cb2321ba0",
+    strip_prefix = "swift-log-1.4.4",
     build_file = "//:Externals/BUILD.bazel",
 )

@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 HELP_INDENT := 28
 
-SWIFT_VERSION := 5.6
+SWIFT_VERSION := 5.7
 DISTRIBUTION := focal
 
 .PHONY: help
@@ -83,10 +83,12 @@ swift-build-linux: ## Run swift build on Linux container
 
 .PHONY: bazel-build
 bazel-build: ## Run bazel build
+	@echo "Deleting Bazel artifacts..." && rm -rf bazel-*
 	./scripts/bazel-script.sh
 
 .PHONY: bazel-build-linux
 bazel-build-linux: ## Run bazel build on Linux container
+	@echo "Deleting Bazel artifacts..." && rm -rf bazel-*
 	docker run --rm --volume "$(CURDIR):/src" --workdir "/src" swift:$(SWIFT_VERSION)-$(DISTRIBUTION) /bin/sh -c "DISTRIBUTION=$(DISTRIBUTION) ./scripts/bazel-script.sh"
 
 .PHONY: cmake-build
