@@ -87,7 +87,6 @@ jobs:
           [
             xcode-test,
             xcode-build,
-            pod-lib-lint,
             carthage-build-workaround,
             carthage-build-xcframeworks,
           ]
