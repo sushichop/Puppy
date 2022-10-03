@@ -9,7 +9,7 @@ dests[0]="platform=macOS"
 dests[1]="platform=macOS,variant=Mac Catalyst"
 dests[2]="platform=iOS Simulator,name=iPhone 8"
 dests[3]="platform=tvOS Simulator,name=Apple TV"
-dests[4]="platform=watchOS Simulator,name=Apple Watch Series 5 (40mm)"
+dests[4]="platform=watchOS Simulator,name=Apple Watch SE (44mm) (2nd generation)"
 
 for dest in "${dests[@]}"
 do
