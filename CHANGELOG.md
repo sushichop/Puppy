@@ -2,6 +2,7 @@
 
 - Disable bitcode. [#54](https://github.com/sushichop/Puppy/pull/54)
 - Update platform versions. [#55](https://github.com/sushichop/Puppy/pull/55)
+- Update to Xcode 14.0.1 and Swift 5.6 or later. [#56](https://github.com/sushichop/Puppy/pull/56)
 
 ## [0.5.1](https://github.com/sushichop/Puppy/releases/tag/0.5.1) (2022-09-24)
 

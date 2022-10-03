@@ -1,6 +1,6 @@
 # Puppy
 
-![Swift5.4+](https://img.shields.io/badge/Swift-5.4%2B-orange.svg?style=flat)
+![Swift5.6+](https://img.shields.io/badge/Swift-5.6%2B-orange.svg?style=flat)
 [![release](https://img.shields.io/github/v/release/sushichop/Puppy.svg?color=blue)](https://github.com/sushichop/Puppy/releases)
 [![CocoaPods](https://img.shields.io/cocoapods/v/Puppy.svg?color=blue)](https://cocoapods.org/pods/Puppy)
 ![CI](https://github.com/sushichop/Puppy/workflows/CI/badge.svg)
