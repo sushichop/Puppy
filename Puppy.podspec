@@ -13,12 +13,12 @@ Pod::Spec.new do |s|
 
   s.source            = { :git => "https://github.com/sushichop/Puppy.git", :tag => "#{s.version}" }
   
-  s.default_subspec   = "Core"
+  s.default_subspec   = "Default"
 
-  # s.subspec "Default" do |default|
-  #   default.dependency "Puppy/Core"
-  #   default.dependency "Logging", "~> 1.4"
-  # end
+  s.subspec "Default" do |default|
+    default.dependency "Puppy/Core"
+    default.dependency "Logging", "~> 1.4"
+  end
 
   s.subspec "Core" do |core|
     core.header_mappings_dir = "Sources/CPuppy/include"
@@ -26,9 +26,9 @@ Pod::Spec.new do |s|
     core.source_files        = "Sources/CPuppy/**/*.{h,c}", "Sources/Puppy/**/*.{swift}"
   end
 
-  # s.test_spec "UnitTests" do |unit_tests|
-  #   unit_tests.source_files  = "Tests/PuppyTests/**/*.{swift}"
-  # end
+  s.test_spec "UnitTests" do |unit_tests|
+    unit_tests.source_files  = "Tests/PuppyTests/**/*.{swift}"
+  end
 
   s.cocoapods_version = ">= 1.7.0"
   s.swift_versions    = ["5.0"]
