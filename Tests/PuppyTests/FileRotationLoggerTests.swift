@@ -52,6 +52,32 @@ final class FileRotationLoggerTests: XCTestCase {
         _ = fileRotation.delete(rotationDirectoryURL)
         log.remove(fileRotation)
     }
+
+    func testFileRotationErrorCatch() throws {
+        let rotationFileURL = URL(fileURLWithPath: "./rotation-error-catch/rotation-error-catch.log").absoluteURL
+        let rotationDirectoryURL = URL(fileURLWithPath: "./rotation-error-catch").absoluteURL
+
+        let fileRotation = try FileRotationLogger("com.example.yourapp.filerotationlogger.errorcatch", fileURL: rotationFileURL)
+
+        let log = Puppy()
+        log.add(fileRotation)
+
+        _ = fileRotation.delete(rotationDirectoryURL)
+        for num in 0...2 {
+            log.info("\(num) error-catch")
+        }
+
+        let resultFailure = fileRotation.delete(rotationDirectoryURL)
+        switch resultFailure {
+        case .success:
+            XCTFail("should not be successful, but was successful")
+        case .failure(let error):
+            XCTAssertEqual(error as FileError, .deletingFailed(at: rotationDirectoryURL))
+            XCTAssertEqual(error.localizedDescription, "failed to delete a file: \(rotationDirectoryURL)")
+        }
+
+        log.remove(fileRotation)
+    }
 }
 
 extension FileRotationLoggerTests: FileRotationLoggerDelegate {
