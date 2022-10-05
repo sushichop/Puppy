@@ -24,9 +24,19 @@ public class FileRotationLogger: FileLogger {
         rotateFiles()
     }
 
+    private func fileSize(_ fileURL: URL) throws -> UInt64 {
+        #if os(Windows)
+        return try FileManager.default.windowsFileSize(atPath: fileURL.path)
+        #else
+        let attributes = try FileManager.default.attributesOfItem(atPath: fileURL.path)
+        // swiftlint:disable force_cast
+        return attributes[.size] as! UInt64
+        // swiftlint:enable force_cast
+        #endif
+    }
+
     private func rotateFiles() {
-        guard let size = try? fileHandle.seekToEnd(), size > maxFileSize else { return }
-        closeFile()
+        guard let size = try? fileSize(fileURL), size > maxFileSize else { return }
 
         // Rotates old archived files.
         switch suffixExtension {

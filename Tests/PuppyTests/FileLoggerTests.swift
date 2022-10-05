@@ -64,7 +64,7 @@ final class FileLoggerTests: XCTestCase {
         log.add(fileLogger)
         log.trace("permission, TRACE message using FileLogger")
         log.verbose("permission, VERBOSE message using FileLogger")
-        fileLogger.flush()
+        fileLogger.flush(fileURL)
 
         let attribute = try FileManager.default.attributesOfItem(atPath: fileURL.path)
         // swiftlint:disable force_cast
@@ -100,7 +100,7 @@ final class FileLoggerTests: XCTestCase {
         }
     }
 
-    func testWritingError() throws {
+    func testOpeningToWriteError() throws {
         #if canImport(Darwin)
         let fileURL = URL(fileURLWithPath: "./readonly.log").absoluteURL
         XCTAssertThrowsError(try FileLogger("com.example.yourapp.filelogger.readonly", fileURL: fileURL, filePermission: "400")) { error in
@@ -110,6 +110,18 @@ final class FileLoggerTests: XCTestCase {
             try! FileManager.default.removeItem(at: fileURL)
             // swiftlint:enable force_try
         }
+        #endif // canImport(Darwin)
+    }
+
+    func testAppendingErrorCatch() throws {
+        #if canImport(Darwin)
+        let fileURL = URL(fileURLWithPath: "./readonly.log").absoluteURL
+        let fileLogger = try FileLogger("com.example.yourapp.filelogger.appendingerrorcatch", fileURL: fileURL)
+        let log = Puppy()
+        log.add(fileLogger)
+        _ = fileLogger.delete(fileURL)
+        log.trace("appendingErrorCatch, TRACE message using FileLogger")
+        log.remove(fileLogger)
         #endif // canImport(Darwin)
     }
 
@@ -246,7 +258,7 @@ final class FileLoggerTests: XCTestCase {
         log.trace("flush, TRACE message using FileLogger")
         log.verbose("flush, VERBOSE message using FileLogger")
 
-        fileLogger.flush()
+        fileLogger.flush(fileURL)
         _ = fileLogger.delete(fileURL)
         log.remove(fileLogger)
     }
@@ -260,7 +272,7 @@ final class FileLoggerTests: XCTestCase {
         log.verbose("flushAsync, VERBOSE message using FileLogger")
 
         let exp = expectation(description: "flushAsync")
-        fileLogger.flush {
+        fileLogger.flush(fileURL) {
             // Do NOT add a task into the same queue synchronously.
             // _ = fileLogger.delete(fileURL)
             fileLogger.delete(fileURL) { _ in
