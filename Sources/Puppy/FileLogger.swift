@@ -13,7 +13,6 @@ public class FileLogger: BaseLogger {
         return UInt16(filePermission, radix: 8)!
     }
 
-    var fileHandle: FileHandle!
     let fileURL: URL
 
     public init(_ label: String, fileURL: URL, filePermission: String = "640", flushMode: FlushMode = .always) throws {
@@ -27,23 +26,26 @@ public class FileLogger: BaseLogger {
         try openFile()
     }
 
-    deinit {
-        closeFile()
-    }
-
     public override func log(_ level: LogLevel, string: String) {
+        var handle: FileHandle!
         do {
-            _ = try fileHandle?.seekToEnd()
+            defer {
+                if flushMode == .always {
+                    try? handle?.synchronize()
+                }
+                try? handle?.close()
+            }
+
+            handle = try FileHandle(forWritingTo: fileURL)
+            _ = try handle?.seekToEnd()
             if let data = (string + "\r\n").data(using: .utf8) {
                 // swiftlint:disable force_try
-                try! fileHandle?.write(contentsOf: data)
+                try! handle?.write(contentsOf: data)
                 // swiftlint:enable force_try
-                if flushMode == .always {
-                    try? fileHandle?.synchronize()
-                }
+
             }
         } catch {
-            print("error in seekToEnd, error: \(error.localizedDescription)")
+            print("error in appending data in a file, error: \(error.localizedDescription), file: \(fileURL)")
         }
     }
 
@@ -68,21 +70,24 @@ public class FileLogger: BaseLogger {
         }
     }
 
-    public func flush() {
+    public func flush(_ url: URL) {
         queue!.sync {
-            try? fileHandle?.synchronize()
+            let handle = try? FileHandle(forWritingTo: url)
+            try? handle?.synchronize()
+            try? handle?.close()
         }
     }
 
-    public func flush(completion: @escaping () -> Void) {
+    public func flush(_ url: URL, completion: @escaping () -> Void) {
         queue!.async {
-            try? self.fileHandle?.synchronize()
+            let handle = try? FileHandle(forWritingTo: url)
+            try? handle?.synchronize()
+            try? handle?.close()
             completion()
         }
     }
 
     func openFile() throws {
-        closeFile()
         let directoryURL = fileURL.deletingLastPathComponent()
         do {
             try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
@@ -102,20 +107,15 @@ public class FileLogger: BaseLogger {
             puppyDebug("filePath exists, filePath: \(fileURL.path)")
         }
 
-        if fileHandle == nil {
-            do {
-                fileHandle = try FileHandle(forWritingTo: fileURL)
-            } catch {
-                throw FileError.openingForWritingFailed(at: fileURL)
+        var handle: FileHandle!
+        do {
+            defer {
+                try? handle?.synchronize()
+                try? handle?.close()
             }
-        }
-    }
-
-    func closeFile() {
-        if fileHandle != nil {
-            try? fileHandle.synchronize()
-            try? fileHandle.close()
-            fileHandle = nil
+            handle = try FileHandle(forWritingTo: fileURL)
+        } catch {
+            throw FileError.openingForWritingFailed(at: fileURL)
         }
     }
 
