@@ -27,36 +27,8 @@ final class BaseLoggerTests: XCTestCase {
         log.remove(baseLogger)
     }
 
-    func testMockLoggerSynchronous() throws {
-        let mockLogger = MockLogger("com.example.yourapp.mocklogger.sync", asynchronous: false)
-        XCTAssertNil(mockLogger.queue)
-
-        let log = Puppy()
-        log.add(mockLogger, withLevel: .debug)
-        log.trace("TRACE message")
-        log.verbose("VERBOSE message")
-        log.debug("DEBUG message")
-        log.info("INFO message")
-
-        mockLogger.enabled = false
-        log.notice("NOTICE message")
-        log.warning("WARNING message")
-        mockLogger.enabled = true
-        log.error("ERROR message")
-        log.critical("CRITICAL message")
-
-        let expectedLogLevels: [LogLevel] = [.debug, .info, .error, .critical]
-        let expectedLogStrings: [String] = ["DEBUG message", "INFO message", "ERROR message", "CRITICAL message"]
-        XCTAssertEqual(mockLogger.invokedLogCount, 4)
-        XCTAssertEqual(mockLogger.invokedLogLevels, expectedLogLevels)
-        XCTAssertEqual(mockLogger.invokedLogStrings, expectedLogStrings)
-
-        log.remove(mockLogger)
-    }
-
-    func testMockLoggerAsynchronous() throws {
+    func testMockLogger() throws {
         let mockLogger = MockLogger("com.example.yourapp.mocklogger.async")
-        XCTAssertNotNil(mockLogger.queue)
 
         let log = Puppy()
         log.add(mockLogger, withLevel: .debug)
@@ -64,7 +36,7 @@ final class BaseLoggerTests: XCTestCase {
         log.warning("WARNING message")
 
         let exp = XCTestExpectation(description: "MockLogger Asynchronous")
-        mockLogger.queue!.async {
+        mockLogger.queue.async {
             XCTAssertEqual(mockLogger.invokedLogCount, 2)
             XCTAssertEqual(mockLogger.invokedLogLevels, [.debug, .warning])
             XCTAssertEqual(mockLogger.invokedLogStrings, ["DEBUG message", "WARNING message"])
@@ -87,7 +59,7 @@ final class BaseLoggerTests: XCTestCase {
         log.error("ERROR message", tag: "error-tag")
 
         let exp = XCTestExpectation(description: "MockLogger LogFormatter")
-        mockLogger.queue!.async {
+        mockLogger.queue.async {
             XCTAssertEqual(mockLogger.invokedLogCount, 2)
             XCTAssertEqual(mockLogger.invokedLogLevels, [.warning, .error])
             XCTAssertEqual(mockLogger.invokedLogStrings, [

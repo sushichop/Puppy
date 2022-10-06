@@ -5,6 +5,7 @@
 - Update to Xcode 14.0.1 and Swift 5.6 or later. [#56](https://github.com/sushichop/Puppy/pull/56)
 - Still use Xcode 13.4.1 for executing `pod lib lint`. [#57](https://github.com/sushichop/Puppy/pull/57)
 - Remove a property of type FileHandle. [#58](https://github.com/sushichop/Puppy/pull/58)
+- Remove the argument named `asynchronous`. [#59](https://github.com/sushichop/Puppy/pull/59)
 
 ## [0.5.1](https://github.com/sushichop/Puppy/releases/tag/0.5.1) (2022-09-24)
 

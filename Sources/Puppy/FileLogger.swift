@@ -50,7 +50,7 @@ public class FileLogger: BaseLogger {
     }
 
     public func delete(_ url: URL) -> Result<URL, FileError> {
-        queue!.sync {
+        queue.sync {
             Result { try FileManager.default.removeItem(at: url) }
                 .map { url }
                 .mapError { _ in
@@ -60,7 +60,7 @@ public class FileLogger: BaseLogger {
     }
 
     public func delete(_ url: URL, completion: @escaping (Result<URL, FileError>) -> Void) {
-        queue!.async {
+        queue.async {
             let result = Result { try FileManager.default.removeItem(at: url) }
                 .map { url }
                 .mapError { _ in
@@ -71,7 +71,7 @@ public class FileLogger: BaseLogger {
     }
 
     public func flush(_ url: URL) {
-        queue!.sync {
+        queue.sync {
             let handle = try? FileHandle(forWritingTo: url)
             try? handle?.synchronize()
             try? handle?.close()
@@ -79,7 +79,7 @@ public class FileLogger: BaseLogger {
     }
 
     public func flush(_ url: URL, completion: @escaping () -> Void) {
-        queue!.async {
+        queue.async {
             let handle = try? FileHandle(forWritingTo: url)
             try? handle?.synchronize()
             try? handle?.close()
