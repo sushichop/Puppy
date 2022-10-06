@@ -8,7 +8,7 @@ public class OSLogger: BaseLogger {
 
     public init(_ label: String, asynchronous: Bool = true, category: String = "Puppy") {
         self.osLog = OSLog(subsystem: label, category: category)
-        super.init(label, asynchronous: asynchronous)
+        super.init(label)
     }
 
     public override func log(_ level: LogLevel, string: String) {
