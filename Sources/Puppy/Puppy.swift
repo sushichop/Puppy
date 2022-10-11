@@ -82,7 +82,7 @@ public class Puppy {
         let threadID = currentThreadID()
 
         for logger in loggers {
-            logger.formatMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: logger.label, date: date, threadID: threadID)
+            logger.pickMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: logger.label, date: date, threadID: threadID)
         }
     }
 
