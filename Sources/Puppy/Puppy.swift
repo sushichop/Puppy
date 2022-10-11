@@ -7,11 +7,8 @@ import func WinSDK.GetCurrentThreadId
 #else
 #endif // canImport(Darwin)
 
-typealias Log = Puppy
-
 public class Puppy {
 
-    public static let `default` = Puppy()
     public private(set) var loggers = Set<BaseLogger>()
 
     public init() {}

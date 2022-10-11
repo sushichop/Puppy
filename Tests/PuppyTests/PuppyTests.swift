@@ -3,22 +3,21 @@ import Puppy
 
 final class PuppyTests: XCTestCase {
 
-    let log = Puppy.default
-
     override func setUpWithError() throws {
         try super.setUpWithError()
-        log.removeAll()
     }
 
     override func tearDownWithError() throws {
-        log.removeAll()
         try super.tearDownWithError()
     }
 
     func testEmojiAndColor() throws {
         let consoleLogger = ConsoleLogger("com.example.yourapp.consolelogger.emojicolor")
         consoleLogger.logLevel = .trace
+
+        let log = Puppy()
         log.add(consoleLogger)
+
         log.trace("\(LogLevel.trace.emoji) TRACE message with emoji and color".colorize(LogLevel.trace.color))
         log.verbose("\(LogLevel.verbose.emoji) VERBOSE message with emoji and color".colorize(LogLevel.verbose.color))
         log.debug("\(LogLevel.debug.emoji) DEBUG message with emoji and color".colorize(LogLevel.debug.color))
@@ -27,6 +26,8 @@ final class PuppyTests: XCTestCase {
         log.warning("\(LogLevel.warning.emoji) WARNING message with emoji and color".colorize(LogLevel.warning.color))
         log.error("\(LogLevel.error.emoji) ERROR message with emoji and color".colorize(LogLevel.error.color))
         log.critical("\(LogLevel.critical.emoji) CRITICAL message with emoji and color".colorize(LogLevel.critical.color))
+
+        log.removeAll()
     }
 
     func testAllColors() {
