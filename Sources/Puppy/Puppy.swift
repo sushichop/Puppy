@@ -7,11 +7,8 @@ import func WinSDK.GetCurrentThreadId
 #else
 #endif // canImport(Darwin)
 
-typealias Log = Puppy
-
 public class Puppy {
 
-    public static let `default` = Puppy()
     public private(set) var loggers = Set<BaseLogger>()
 
     public init() {}
@@ -84,9 +81,8 @@ public class Puppy {
         let date = Date()
         let threadID = currentThreadID()
 
-        let targetedLoggers = loggers.filter { $0.isLogging(level) }
-        for logger in targetedLoggers {
-            logger.formatMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: logger.label, date: date, threadID: threadID)
+        for logger in loggers {
+            logger.pickMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: logger.label, date: date, threadID: threadID)
         }
     }
 

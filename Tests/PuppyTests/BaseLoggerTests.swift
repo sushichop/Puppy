@@ -21,8 +21,6 @@ final class BaseLoggerTests: XCTestCase {
         baseLogger.logLevel = .notice
         log.info("🐛 INFO message but THIS MESSAGE MUST NOT DISPLAYED using BaseLogger")
         log.notice("NOTICE message using BaseLogger")
-        baseLogger.enabled = false
-        log.notice("🐛 NOTICE message but THIS MESSAGE MUST NOT DISPLAYED using BaseLogger")
 
         log.remove(baseLogger)
     }
@@ -51,7 +49,7 @@ final class BaseLoggerTests: XCTestCase {
         let mockLogger = MockLogger("com.example.yourapp.mocklogger.logformatter")
         mockLogger.logLevel = .info
         let mockLogFormatter = MockLogFormatter()
-        mockLogger.format = mockLogFormatter
+        mockLogger.logFormat = mockLogFormatter
         let log = Puppy()
         log.add(mockLogger)
         log.debug("DEBUG message")

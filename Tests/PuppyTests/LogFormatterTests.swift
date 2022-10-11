@@ -4,7 +4,7 @@ import Puppy
 import Logging
 #endif // canImport(Logging)
 
-final class FormatterTests: XCTestCase {
+final class LogFormatterTests: XCTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -16,7 +16,7 @@ final class FormatterTests: XCTestCase {
 
     func testFormatter() throws {
         let consoleLogger = ConsoleLogger("com.example.yourapp.consolelogger.logformatter")
-        consoleLogger.format = LogFormatter()
+        consoleLogger.logFormat = LogFormatter()
         let log = Puppy()
         log.add(consoleLogger, withLevel: .trace)
         log.trace("TRACE message")
@@ -31,7 +31,7 @@ final class FormatterTests: XCTestCase {
     }
 }
 
-class LogFormatter: LogFormattable {
+fileprivate final class LogFormatter: LogFormattable {
     func formatMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64) -> String {
         let date = dateFormatter(date)
         let file = shortFileName(file)

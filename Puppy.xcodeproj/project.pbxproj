@@ -34,7 +34,7 @@
 		C7ED71A8252DBEC70065B955 /* Puppy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ED719E252DBEC70065B955 /* Puppy.framework */; };
 		C7ED71FC252DC0C50065B955 /* FileRotationLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F0252DC0C50065B955 /* FileRotationLogger.swift */; };
 		C7ED71FD252DC0C50065B955 /* SystemLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F1252DC0C50065B955 /* SystemLogger.swift */; };
-		C7ED71FE252DC0C50065B955 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F2252DC0C50065B955 /* Formatter.swift */; };
+		C7ED71FE252DC0C50065B955 /* LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F2252DC0C50065B955 /* LogFormatter.swift */; };
 		C7ED71FF252DC0C50065B955 /* BaseLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F3252DC0C50065B955 /* BaseLogger.swift */; };
 		C7ED7200252DC0C50065B955 /* PuppyLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F4252DC0C50065B955 /* PuppyLogHandler.swift */; };
 		C7ED7201252DC0C50065B955 /* LogColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F5252DC0C50065B955 /* LogColor.swift */; };
@@ -45,7 +45,7 @@
 		C7ED7206252DC0C50065B955 /* OSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71FA252DC0C50065B955 /* OSLogger.swift */; };
 		C7ED7207252DC0C50065B955 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71FB252DC0C50065B955 /* LogLevel.swift */; };
 		C7ED7219252DC1590065B955 /* PuppyLogHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7210252DC1590065B955 /* PuppyLogHandlerTests.swift */; };
-		C7ED721A252DC1590065B955 /* FormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7211252DC1590065B955 /* FormatterTests.swift */; };
+		C7ED721A252DC1590065B955 /* LogFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7211252DC1590065B955 /* LogFormatterTests.swift */; };
 		C7ED721B252DC1590065B955 /* OSLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7212252DC1590065B955 /* OSLoggerTests.swift */; };
 		C7ED721C252DC1590065B955 /* FileLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7213252DC1590065B955 /* FileLoggerTests.swift */; };
 		C7ED721D252DC1590065B955 /* SystemLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED7214252DC1590065B955 /* SystemLoggerTests.swift */; };
@@ -98,7 +98,7 @@
 		C7ED71AE252DBEC70065B955 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7ED71F0252DC0C50065B955 /* FileRotationLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileRotationLogger.swift; sourceTree = "<group>"; };
 		C7ED71F1252DC0C50065B955 /* SystemLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemLogger.swift; sourceTree = "<group>"; };
-		C7ED71F2252DC0C50065B955 /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		C7ED71F2252DC0C50065B955 /* LogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogFormatter.swift; sourceTree = "<group>"; };
 		C7ED71F3252DC0C50065B955 /* BaseLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLogger.swift; sourceTree = "<group>"; };
 		C7ED71F4252DC0C50065B955 /* PuppyLogHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuppyLogHandler.swift; sourceTree = "<group>"; };
 		C7ED71F5252DC0C50065B955 /* LogColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogColor.swift; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 		C7ED71FA252DC0C50065B955 /* OSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogger.swift; sourceTree = "<group>"; };
 		C7ED71FB252DC0C50065B955 /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
 		C7ED7210252DC1590065B955 /* PuppyLogHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuppyLogHandlerTests.swift; sourceTree = "<group>"; };
-		C7ED7211252DC1590065B955 /* FormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatterTests.swift; sourceTree = "<group>"; };
+		C7ED7211252DC1590065B955 /* LogFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogFormatterTests.swift; sourceTree = "<group>"; };
 		C7ED7212252DC1590065B955 /* OSLoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLoggerTests.swift; sourceTree = "<group>"; };
 		C7ED7213252DC1590065B955 /* FileLoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileLoggerTests.swift; sourceTree = "<group>"; };
 		C7ED7214252DC1590065B955 /* SystemLoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemLoggerTests.swift; sourceTree = "<group>"; };
@@ -240,7 +240,7 @@
 				C7ED71F9252DC0C50065B955 /* FileLogger.swift */,
 				C71A59F127CA57CD00A577EC /* FileManager+Windows.swift */,
 				C7ED71F0252DC0C50065B955 /* FileRotationLogger.swift */,
-				C7ED71F2252DC0C50065B955 /* Formatter.swift */,
+				C7ED71F2252DC0C50065B955 /* LogFormatter.swift */,
 				C7ED71F5252DC0C50065B955 /* LogColor.swift */,
 				C7ED71FB252DC0C50065B955 /* LogLevel.swift */,
 				C7ED71FA252DC0C50065B955 /* OSLogger.swift */,
@@ -276,7 +276,7 @@
 				C7ED7213252DC1590065B955 /* FileLoggerTests.swift */,
 				C71A59F327CA580100A577EC /* FileManager+WindowsTests.swift */,
 				C7ED7216252DC1590065B955 /* FileRotationLoggerTests.swift */,
-				C7ED7211252DC1590065B955 /* FormatterTests.swift */,
+				C7ED7211252DC1590065B955 /* LogFormatterTests.swift */,
 				C7695BB32533303900E0CA22 /* MockLogger.swift */,
 				C7ED7212252DC1590065B955 /* OSLoggerTests.swift */,
 				C7ED7210252DC1590065B955 /* PuppyLogHandlerTests.swift */,
@@ -529,7 +529,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7ED71FE252DC0C50065B955 /* Formatter.swift in Sources */,
+				C7ED71FE252DC0C50065B955 /* LogFormatter.swift in Sources */,
 				C71A59F227CA57CD00A577EC /* FileManager+Windows.swift in Sources */,
 				C7ED71FD252DC0C50065B955 /* SystemLogger.swift in Sources */,
 				C7ED7201252DC0C50065B955 /* LogColor.swift in Sources */,
@@ -549,7 +549,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7ED721A252DC1590065B955 /* FormatterTests.swift in Sources */,
+				C7ED721A252DC1590065B955 /* LogFormatterTests.swift in Sources */,
 				C71A59F427CA580100A577EC /* FileManager+WindowsTests.swift in Sources */,
 				C7ED721C252DC1590065B955 /* FileLoggerTests.swift in Sources */,
 				C7ED721D252DC1590065B955 /* SystemLoggerTests.swift in Sources */,
