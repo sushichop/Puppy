@@ -6,10 +6,10 @@ Pod::Spec.new do |s|
   s.license           = { :type => "MIT", :file => "LICENSE" }
   s.author            = { "Koichi Yokota" => "sushifarm2012@gmail.com" }
 
-  s.osx.deployment_target     = "11.0"
-  s.ios.deployment_target     = "14.0"
-  s.tvos.deployment_target    = "14.0"
-  s.watchos.deployment_target = "7.0"
+  s.osx.deployment_target     = "10.15"
+  s.ios.deployment_target     = "13.0"
+  s.tvos.deployment_target    = "13.0"
+  s.watchos.deployment_target = "6.0"
 
   s.source            = { :git => "https://github.com/sushichop/Puppy.git", :tag => "#{s.version}" }
   

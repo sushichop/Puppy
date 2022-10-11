@@ -37,10 +37,10 @@ public class FileLogger: BaseLogger {
             }
 
             handle = try FileHandle(forWritingTo: fileURL)
-            _ = try handle?.seekToEnd()
+            _ = try handle?.seekToEndCompatible()
             if let data = (string + "\r\n").data(using: .utf8) {
                 // swiftlint:disable force_try
-                try! handle?.write(contentsOf: data)
+                try! handle?.writeCompatible(contentsOf: data)
                 // swiftlint:enable force_try
 
             }
@@ -131,6 +131,24 @@ public class FileLogger: BaseLogger {
         if let uintPermission = UInt16(filePermission, radix: 8), uintPermission >= min, uintPermission <= max {
         } else {
             throw FileError.invalidPermission(at: url, filePermission: filePermission)
+        }
+    }
+}
+
+extension FileHandle {
+    func seekToEndCompatible() throws -> UInt64 {
+        if #available(macOS 10.15.4, iOS 13.4, tvOS 13.4, watchOS 6.2, *) {
+            return try seekToEnd()
+        } else {
+            return seekToEndOfFile()
+        }
+    }
+
+    func writeCompatible(contentsOf data: Data) throws {
+        if #available(macOS 10.15.4, iOS 13.4, tvOS 13.4, watchOS 6.2, *) {
+            try write(contentsOf: data)
+        } else {
+            write(data)
         }
     }
 }
