@@ -81,8 +81,7 @@ public class Puppy {
         let date = Date()
         let threadID = currentThreadID()
 
-        let targetedLoggers = loggers.filter { $0.isLogging(level) }
-        for logger in targetedLoggers {
+        for logger in loggers {
             logger.formatMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: logger.label, date: date, threadID: threadID)
         }
     }

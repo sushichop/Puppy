@@ -18,20 +18,16 @@ public extension Loggerable {
 }
 
 open class BaseLogger: Loggerable {
-    public var enabled: Bool = true
     public var logLevel: LogLevel = .trace
-
-    public func isLogging(_ level: LogLevel) -> Bool {
-        return level.rawValue >= logLevel.rawValue
-    }
 
     public var format: LogFormattable?
 
     @inlinable
     func formatMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64) {
-        if !enabled { return }
-
         queue.async {
+            if level.rawValue < self.logLevel.rawValue {
+                return
+            }
             var formattedMessage = message
             if let format = self.format {
                 formattedMessage = format.formatMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: label, date: date, threadID: threadID)
