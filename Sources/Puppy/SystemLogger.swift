@@ -1,10 +1,22 @@
 #if os(Linux)
+@preconcurrency import Dispatch
 import Foundation
 import func CPuppy.cpuppy_syslog
 
-public class SystemLogger: BaseLogger {
+public final class SystemLogger: Loggerable, Sendable {
+    public let label: String
+    public let queue: DispatchQueue
+    public let logLevel: LogLevel
+    public let logFormat: LogFormattable?
 
-    public override func log(_ level: LogLevel, string: String) {
+    public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil) {
+        self.label = label
+        self.queue = DispatchQueue(label: label)
+        self.logLevel = logLevel
+        self.logFormat = logFormat
+    }
+
+    public func log(_ level: LogLevel, string: String) {
         string.withCString {
             let priority = logPriority(level)
             cpuppy_syslog(priority, $0)
