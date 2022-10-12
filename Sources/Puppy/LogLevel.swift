@@ -1,6 +1,6 @@
 import Foundation
 
-public enum LogLevel: UInt8 {
+public enum LogLevel: UInt8, Sendable {
     case trace      = 1
     case verbose    = 2
     case debug      = 3
