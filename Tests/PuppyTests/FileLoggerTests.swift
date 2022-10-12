@@ -15,8 +15,8 @@ final class FileLoggerTests: XCTestCase {
         let fileURL = URL(fileURLWithPath: "./foo/bar.log").absoluteURL
         let directoryURL = URL(fileURLWithPath: "./foo").absoluteURL
 
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger", fileURL: fileURL)
-        let log = Puppy()
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger", fileURL: fileURL)
+        var log = Puppy()
         log.add(fileLogger)
         log.trace("\(Date()): TRACE message using FileLogger")
         log.verbose("\(Date()): VERBOSE message using FileLogger")
@@ -27,13 +27,17 @@ final class FileLoggerTests: XCTestCase {
 
     func testTildeFileLogger() throws {
         #if os(macOS) || os(Linux)
+        // Skips in bazel test.
+        if ProcessInfo.processInfo.environment["TEST_WORKSPACE"] != nil {
+            return
+        }
         let directoryName = "~/puppy_" + UUID().uuidString.lowercased()
         let fileName = directoryName + "/foo.log"
         let directoryURL = URL(fileURLWithPath: (directoryName as NSString).expandingTildeInPath).absoluteURL
         let fileURL = URL(fileURLWithPath: (fileName as NSString).expandingTildeInPath).absoluteURL
 
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.tilde", fileURL: fileURL)
-        let log = Puppy()
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.tilde", fileURL: fileURL)
+        var log = Puppy()
         log.add(fileLogger)
         log.trace("Tilde, TRACE message using FileLogger")
         log.verbose("Tilde, VERBOSE message using FileLogger")
@@ -59,8 +63,8 @@ final class FileLoggerTests: XCTestCase {
 
     func testFilePermission() throws {
         let fileURL = URL(fileURLWithPath: "./permission600.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.permission600", fileURL: fileURL, filePermission: "600")
-        let log = Puppy()
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.permission600", fileURL: fileURL, filePermission: "600")
+        var log = Puppy()
         log.add(fileLogger)
         log.trace("permission, TRACE message using FileLogger")
         log.verbose("permission, VERBOSE message using FileLogger")
@@ -116,8 +120,8 @@ final class FileLoggerTests: XCTestCase {
     func testAppendingErrorCatch() throws {
         #if canImport(Darwin)
         let fileURL = URL(fileURLWithPath: "./readonly.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.appendingerrorcatch", fileURL: fileURL)
-        let log = Puppy()
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.appendingerrorcatch", fileURL: fileURL)
+        var log = Puppy()
         log.add(fileLogger)
         _ = fileLogger.delete(fileURL)
         log.trace("appendingErrorCatch, TRACE message using FileLogger")
@@ -147,7 +151,7 @@ final class FileLoggerTests: XCTestCase {
     func testDeletingFile() throws {
         let existentFileURL = URL(fileURLWithPath: "./existent.log").absoluteURL
         let noExistentFileURL = URL(fileURLWithPath: "./no-existent.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.deleting", fileURL: existentFileURL)
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.deleting", fileURL: existentFileURL)
 
         let resultSuccess = fileLogger.delete(existentFileURL)
         switch resultSuccess {
@@ -167,10 +171,11 @@ final class FileLoggerTests: XCTestCase {
         }
     }
 
+    @available(*, deprecated, message: "Use delete(_:) instead")
     func testDeletingFileAsync() throws {
         let existentFileURL = URL(fileURLWithPath: "./existent-async.log").absoluteURL
         let noExistentFileURL = URL(fileURLWithPath: "./no-existent-async.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.deletingasync", fileURL: existentFileURL)
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.deletingasync", fileURL: existentFileURL)
 
         let expSuccess = expectation(description: "expSuccessAsyncResult")
         fileLogger.delete(existentFileURL) { result in
@@ -201,7 +206,7 @@ final class FileLoggerTests: XCTestCase {
     func testDeletingFileResultConversion() throws {
         let existentFileURL = URL(fileURLWithPath: "./existent-result-conversion.log").absoluteURL
         let noExistentFileURL = URL(fileURLWithPath: "./no-existent-result-conversion.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.deletingresultconversion", fileURL: existentFileURL)
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.deletingresultconversion", fileURL: existentFileURL)
 
         do {
             let url = try fileLogger.delete(existentFileURL).get()
@@ -219,10 +224,11 @@ final class FileLoggerTests: XCTestCase {
         }
     }
 
+    @available(*, deprecated, message: "Use delete(_:) instead")
     func testDeletingFileAsyncResultConversion() throws {
         let existentFileURL = URL(fileURLWithPath: "./existent-async-result-conversion.log").absoluteURL
         let noExistentFileURL = URL(fileURLWithPath: "./no-existent-async-result-conversion.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.deletingasyncresultconversion", fileURL: existentFileURL)
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.deletingasyncresultconversion", fileURL: existentFileURL)
 
         let expSuccess = expectation(description: "expSuccessAsync")
         fileLogger.delete(existentFileURL) { result in
@@ -250,10 +256,34 @@ final class FileLoggerTests: XCTestCase {
         wait(for: [expSuccess, expFailure], timeout: 5.0)
     }
 
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    func testDeletingFileAsyncAwait() async throws {
+        #if (compiler(>=5.5.2) && !os(Windows)) || compiler(>=5.7)
+        let existentFileURL = URL(fileURLWithPath: "./existent-async-await.log").absoluteURL
+        let noExistentFileURL = URL(fileURLWithPath: "./no-existent-async-await.log").absoluteURL
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.deletingasyncawait", fileURL: existentFileURL)
+
+        do {
+            let url = try await fileLogger.delete(existentFileURL)
+            XCTAssertEqual(url, existentFileURL)
+        } catch {
+            XCTFail("error should not be thrown, but it was thrown: \(error.localizedDescription)")
+        }
+
+        do {
+            _ = try await fileLogger.delete(noExistentFileURL)
+            XCTFail("error should be thrown while awaiting, but it was not thrown")
+        } catch {
+            XCTAssertEqual(error as? FileError, .deletingFailed(at: noExistentFileURL))
+            XCTAssertEqual(error.localizedDescription, "failed to delete a file: \(noExistentFileURL)")
+        }
+        #endif // (compiler(>=5.5.2) && !os(Windows)) || compiler(>=5.7)
+    }
+
     func testFlushFile() throws {
         let fileURL = URL(fileURLWithPath: "./flush.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.flush", fileURL: fileURL, flushMode: .manual)
-        let log = Puppy()
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.flush", fileURL: fileURL, flushMode: .manual)
+        var log = Puppy()
         log.add(fileLogger)
         log.trace("flush, TRACE message using FileLogger")
         log.verbose("flush, VERBOSE message using FileLogger")
@@ -263,10 +293,11 @@ final class FileLoggerTests: XCTestCase {
         log.remove(fileLogger)
     }
 
+    @available(*, deprecated, message: "Use flush(_:) instead")
     func testFlushFileAsync() throws {
         let fileURL = URL(fileURLWithPath: "./flush-async.log").absoluteURL
-        let fileLogger = try FileLogger("com.example.yourapp.filelogger.flushasync", fileURL: fileURL, flushMode: .manual)
-        let log = Puppy()
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.flushasync", fileURL: fileURL, flushMode: .manual)
+        var log = Puppy()
         log.add(fileLogger)
         log.trace("flushAsync, TRACE message using FileLogger")
         log.verbose("flushAsync, VERBOSE message using FileLogger")
@@ -275,12 +306,27 @@ final class FileLoggerTests: XCTestCase {
         fileLogger.flush(fileURL) {
             // Do NOT add a task into the same queue synchronously.
             // _ = fileLogger.delete(fileURL)
-            fileLogger.delete(fileURL) { _ in
-                log.remove(fileLogger)
-                exp.fulfill()
-            }
+            exp.fulfill()
         }
-
         wait(for: [exp], timeout: 5.0)
+
+        _ = fileLogger.delete(fileURL)
+        log.remove(fileLogger)
+    }
+
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    func testFlushFileAsyncAwait() async throws {
+        #if (compiler(>=5.5.2) && !os(Windows)) || compiler(>=5.7)
+        let fileURL = URL(fileURLWithPath: "./flush-async-await.log").absoluteURL
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.flushasyncawait", fileURL: fileURL, flushMode: .manual)
+        var log = Puppy()
+        log.add(fileLogger)
+        log.trace("flushAsyncAwait, TRACE message using FileLogger")
+        log.verbose("flushAsyncAwait, VERBOSE message using FileLogger")
+
+        await fileLogger.flush(fileURL)
+        _ = try await fileLogger.delete(fileURL)
+        log.remove(fileLogger)
+        #endif // (compiler(>=5.5.2) && !os(Windows)) || compiler(>=5.7)
     }
 }

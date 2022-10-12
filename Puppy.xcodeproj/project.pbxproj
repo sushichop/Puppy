@@ -28,12 +28,12 @@
 		C74F94C326777E1D003A88BE /* CPuppy.h in Headers */ = {isa = PBXBuildFile; fileRef = C712BB09266F31A60016A768 /* CPuppy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C74F94C826778428003A88BE /* CPuppy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C74F94A926777D38003A88BE /* CPuppy.framework */; };
 		C7695BB42533303900E0CA22 /* MockLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7695BB32533303900E0CA22 /* MockLogger.swift */; };
-		C7695BC2253332DF00E0CA22 /* BaseLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7695BC1253332DF00E0CA22 /* BaseLoggerTests.swift */; };
 		C7756CE928F5C25700BB26F3 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = C7756CE828F5C25700BB26F3 /* Logging */; };
 		C789CB8E27A81146001C7589 /* CPuppy.c in Sources */ = {isa = PBXBuildFile; fileRef = C712BB0B266F31C80016A768 /* CPuppy.c */; };
 		C7CF79DB28F6DA0900CF55C3 /* Loggerable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF79DA28F6DA0900CF55C3 /* Loggerable.swift */; };
 		C7CF79DD28F6DB1B00CF55C3 /* FileLoggerable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF79DC28F6DB1B00CF55C3 /* FileLoggerable.swift */; };
 		C7CF79DF28F6DE8600CF55C3 /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF79DE28F6DE8600CF55C3 /* Compatibility.swift */; };
+		C7CF79E128F6E24300CF55C3 /* LoggerableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF79E028F6E24300CF55C3 /* LoggerableTests.swift */; };
 		C7ED71A8252DBEC70065B955 /* Puppy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ED719E252DBEC70065B955 /* Puppy.framework */; };
 		C7ED71FC252DC0C50065B955 /* FileRotationLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F0252DC0C50065B955 /* FileRotationLogger.swift */; };
 		C7ED71FD252DC0C50065B955 /* SystemLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED71F1252DC0C50065B955 /* SystemLogger.swift */; };
@@ -92,11 +92,11 @@
 		C74F94C526777ECC003A88BE /* StaticFramework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StaticFramework.xcconfig; sourceTree = "<group>"; };
 		C74F94C626777EE9003A88BE /* StaticFrameworkTests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StaticFrameworkTests.xcconfig; sourceTree = "<group>"; };
 		C7695BB32533303900E0CA22 /* MockLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLogger.swift; sourceTree = "<group>"; };
-		C7695BC1253332DF00E0CA22 /* BaseLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLoggerTests.swift; sourceTree = "<group>"; };
 		C78B9212252DCA3E0026B9B1 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		C7CF79DA28F6DA0900CF55C3 /* Loggerable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loggerable.swift; sourceTree = "<group>"; };
 		C7CF79DC28F6DB1B00CF55C3 /* FileLoggerable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoggerable.swift; sourceTree = "<group>"; };
 		C7CF79DE28F6DE8600CF55C3 /* Compatibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compatibility.swift; sourceTree = "<group>"; };
+		C7CF79E028F6E24300CF55C3 /* LoggerableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerableTests.swift; sourceTree = "<group>"; };
 		C7ED719E252DBEC70065B955 /* Puppy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Puppy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7ED71A2252DBEC70065B955 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7ED71A7252DBEC70065B955 /* PuppyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PuppyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,11 +278,11 @@
 		C7ED720F252DC1590065B955 /* PuppyTests */ = {
 			isa = PBXGroup;
 			children = (
-				C7695BC1253332DF00E0CA22 /* BaseLoggerTests.swift */,
 				C7ED7213252DC1590065B955 /* FileLoggerTests.swift */,
 				C71A59F327CA580100A577EC /* FileManager+WindowsTests.swift */,
 				C7ED7216252DC1590065B955 /* FileRotationLoggerTests.swift */,
 				C7ED7211252DC1590065B955 /* LogFormatterTests.swift */,
+				C7CF79E028F6E24300CF55C3 /* LoggerableTests.swift */,
 				C7695BB32533303900E0CA22 /* MockLogger.swift */,
 				C7ED7212252DC1590065B955 /* OSLoggerTests.swift */,
 				C7ED7210252DC1590065B955 /* PuppyLogHandlerTests.swift */,
@@ -562,8 +562,8 @@
 				C7ED721C252DC1590065B955 /* FileLoggerTests.swift in Sources */,
 				C7ED721D252DC1590065B955 /* SystemLoggerTests.swift in Sources */,
 				C7ED721F252DC1590065B955 /* FileRotationLoggerTests.swift in Sources */,
+				C7CF79E128F6E24300CF55C3 /* LoggerableTests.swift in Sources */,
 				C7ED7219252DC1590065B955 /* PuppyLogHandlerTests.swift in Sources */,
-				C7695BC2253332DF00E0CA22 /* BaseLoggerTests.swift in Sources */,
 				C7695BB42533303900E0CA22 /* MockLogger.swift in Sources */,
 				C7ED721B252DC1590065B955 /* OSLoggerTests.swift in Sources */,
 				C7ED721E252DC1590065B955 /* PuppyTests.swift in Sources */,
