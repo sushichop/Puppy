@@ -6,8 +6,9 @@ add_library(Puppy
   FileLoggerable.swift
   FileManager+Windows.swift
   FileRotationLogger.swift
-  LogFormatter.swift
   LogColor.swift
+  LogFormatter.swift
+  Loggerable.swift
   LogLevel.swift
   OSLogger.swift
   Puppy.swift
