@@ -89,7 +89,6 @@ class ViewController: UIViewController {
                                         maxFileSize: 10 * 1024 * 1024,
                                         maxArchivedFilesCount: 5)                                        
     let delegate = SampleFileRotationDelegate()
-
     let fileRotation = try! FileRotationLogger("com.example.yourapp.filerotation",
                                                 fileURL: "./logs/foo.log",
                                                 rotationConfig: rotationConfig,
@@ -97,7 +96,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         var log = Puppy()
         log.add(fileRotation)
         log.info("INFO message")
@@ -130,7 +128,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         var log = Puppy()
         log.add(oslog)
         log.info("INFO message")
@@ -156,7 +153,7 @@ You can also create your own custom logger. The custom logger needs to conform t
 ```swift
 import Puppy
 
-public final class ConsoleLogger: Loggerable {
+public class CustomLogger: Loggerable {
     public let label: String
     public let queue: DispatchQueue
     public let logLevel: LogLevel
