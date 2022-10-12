@@ -5,7 +5,7 @@ import Foundation
 /// Reference:
 /// [ANSI escape code](https://en.wikipedia.org/wiki/ANSI_escape_code)
 /// [256 COLORS - CHEAT SHEET](https://jonasjacek.github.io/colors/)
-public enum LogColor {
+public enum LogColor: Sendable {
     case black
     case red
     case green
@@ -71,6 +71,7 @@ public enum LogColor {
 }
 
 extension String {
+    @Sendable
     public func colorize(_ color: LogColor) -> String {
         return color.foregroundCode + self + color.resetCode
     }

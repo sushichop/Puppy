@@ -1,26 +1,39 @@
+@preconcurrency import Dispatch
 import Foundation
 
-public class FileRotationLogger: FileLogger {
+public final class FileRotationLogger: FileLoggerable {
+    public let label: String
+    public let queue: DispatchQueue
+    public let logLevel: LogLevel
+    public let logFormat: LogFormattable?
 
-    public enum SuffixExtension {
-        case numbering
-        case date_uuid
+    public let fileURL: URL
+    public let filePermission: String
+
+    let rotationConfig: RotationConfig
+    private unowned let delegate: FileRotationLoggerDelegate?
+
+    public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil, fileURL: URL, filePermission: String = "640", rotationConfig: RotationConfig, delegate: FileRotationLoggerDelegate? = nil) throws {
+        self.label = label
+        self.queue = DispatchQueue(label: label)
+        self.logLevel = logLevel
+        self.logFormat = logFormat
+
+        self.fileURL = fileURL
+        puppyDebug("initialized, fileURL: \(fileURL)")
+        self.filePermission = filePermission
+
+        self.rotationConfig = rotationConfig
+        self.delegate = delegate
+
+        try validateFileURL(fileURL)
+        try validateFilePermission(fileURL, filePermission: filePermission)
+        try openFile()
     }
-    public var suffixExtension: SuffixExtension = .numbering
 
-    public typealias ByteCount = UInt64
-    public var maxFileSize: ByteCount = 10 * 1024 * 1024
-    public var maxArchivedFilesCount: UInt8 = 5
-
-    public weak var delegate: FileRotationLoggerDelegate?
-
-    public init(_ label: String, fileURL: URL, filePermission: String = "640") throws {
-        try super.init(label, fileURL: fileURL, filePermission: filePermission)
-    }
-
-    public override func log(_ level: LogLevel, string: String) {
+    public func log(_ level: LogLevel, string: String) {
         rotateFiles()
-        super.log(level, string: string)
+        append(level, string: string)
         rotateFiles()
     }
 
@@ -36,10 +49,46 @@ public class FileRotationLogger: FileLogger {
     }
 
     private func rotateFiles() {
-        guard let size = try? fileSize(fileURL), size > maxFileSize else { return }
+        guard let size = try? fileSize(fileURL), size > rotationConfig.maxFileSize else { return }
 
         // Rotates old archived files.
-        switch suffixExtension {
+        rotateOldArchivedFiles()
+
+        // Archives the target file.
+        archiveTargetFiles()
+
+        // Removes extra archived files.
+        removeArchivedFiles(fileURL, maxArchivedFilesCount: rotationConfig.maxArchivedFilesCount)
+
+        // Opens a new target file.
+        do {
+            puppyDebug("will openFile in rotateFiles")
+            try openFile()
+        } catch {
+            print("error in openFile while rotating, error: \(error.localizedDescription)")
+        }
+    }
+
+    private func archiveTargetFiles() {
+        do {
+            var archivedFileURL: URL
+            switch rotationConfig.suffixExtension {
+            case .numbering:
+                archivedFileURL = fileURL.appendingPathExtension("1")
+            case .date_uuid:
+                archivedFileURL = fileURL.appendingPathExtension(dateFormatter(Date(), dateFormat: "yyyyMMdd'T'HHmmssZZZZZ", timeZone: "UTC") + "_" + UUID().uuidString.lowercased())
+            }
+            try FileManager.default.moveItem(at: fileURL, to: archivedFileURL)
+            if let delegate = delegate {
+                delegate.fileRotationLogger(self, didArchiveFileURL: fileURL, toFileURL: archivedFileURL)
+            }
+        } catch {
+            print("error in archiving the target file, error: \(error.localizedDescription)")
+        }
+    }
+
+    private func rotateOldArchivedFiles() {
+        switch rotationConfig.suffixExtension {
         case .numbering:
             do {
                 let oldArchivedFileURLs = ascArchivedFileURLs(fileURL)
@@ -56,32 +105,6 @@ public class FileRotationLogger: FileLogger {
             }
         case .date_uuid:
             break
-        }
-
-        // Archives the target file.
-        do {
-            var archivedFileURL: URL
-            switch suffixExtension {
-            case .numbering:
-                archivedFileURL = fileURL.appendingPathExtension("1")
-            case .date_uuid:
-                archivedFileURL = fileURL.appendingPathExtension(dateFormatter(Date(), dateFormat: "yyyyMMdd'T'HHmmssZZZZZ", timeZone: "UTC") + "_" + UUID().uuidString.lowercased())
-            }
-            try FileManager.default.moveItem(at: fileURL, to: archivedFileURL)
-            delegate?.fileRotationLogger(self, didArchiveFileURL: fileURL, toFileURL: archivedFileURL)
-        } catch {
-            print("error in archiving the target file, error: \(error.localizedDescription)")
-        }
-
-        // Removes extra archived files.
-        removeArchivedFiles(fileURL, maxArchivedFilesCount: maxArchivedFilesCount)
-
-        // Opens a new target file.
-        do {
-            puppyDebug("will openFile in rotateFiles")
-            try openFile()
-        } catch {
-            print("error in openFile while rotating, error: \(error.localizedDescription)")
         }
     }
 
@@ -121,7 +144,9 @@ public class FileRotationLogger: FileLogger {
                     puppyDebug("\(archivedFileURLs[index]) will be removed...")
                     try FileManager.default.removeItem(at: archivedFileURLs[index])
                     puppyDebug("\(archivedFileURLs[index]) has been removed")
-                    delegate?.fileRotationLogger(self, didRemoveArchivedFileURL: archivedFileURLs[index])
+                    if let delegate = delegate {
+                        delegate.fileRotationLogger(self, didRemoveArchivedFileURL: archivedFileURLs[index])
+                    }
                 }
             }
         } catch {
@@ -130,7 +155,25 @@ public class FileRotationLogger: FileLogger {
     }
 }
 
-public protocol FileRotationLoggerDelegate: AnyObject {
+public struct RotationConfig: Sendable {
+    public enum SuffixExtension: Sendable {
+        case numbering
+        case date_uuid
+    }
+    public var suffixExtension: SuffixExtension
+
+    public typealias ByteCount = UInt64
+    public var maxFileSize: ByteCount
+    public var maxArchivedFilesCount: UInt8
+
+    public init(suffixExtension: SuffixExtension = .numbering, maxFileSize: ByteCount = 10 * 1024 * 1024, maxArchivedFilesCount: UInt8 = 5) {
+        self.suffixExtension = suffixExtension
+        self.maxFileSize = maxFileSize
+        self.maxArchivedFilesCount = maxArchivedFilesCount
+    }
+}
+
+public protocol FileRotationLoggerDelegate: AnyObject, Sendable {
     func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didArchiveFileURL: URL, toFileURL: URL)
     func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveArchivedFileURL: URL)
 }

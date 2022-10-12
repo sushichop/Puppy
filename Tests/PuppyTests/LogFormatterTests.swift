@@ -14,11 +14,11 @@ final class LogFormatterTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func testFormatter() throws {
-        let consoleLogger = ConsoleLogger("com.example.yourapp.consolelogger.logformatter")
-        consoleLogger.logFormat = LogFormatter()
-        let log = Puppy()
-        log.add(consoleLogger, withLevel: .trace)
+    func testLogFormatter() throws {
+        let logFormat: LogFormatter = .init()
+        let consoleLogger = ConsoleLogger("com.example.yourapp.consolelogger.logformatter", logFormat: logFormat)
+        var log = Puppy()
+        log.add(consoleLogger)
         log.trace("TRACE message")
         log.verbose("VERBOSE message")
         log.debug("DEBUG message")
@@ -31,7 +31,7 @@ final class LogFormatterTests: XCTestCase {
     }
 }
 
-fileprivate final class LogFormatter: LogFormattable {
+fileprivate final class LogFormatter: LogFormattable, Sendable {
     func formatMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64) -> String {
         let date = dateFormatter(date)
         let file = shortFileName(file)

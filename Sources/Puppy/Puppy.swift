@@ -7,32 +7,25 @@ import func WinSDK.GetCurrentThreadId
 #else
 #endif // canImport(Darwin)
 
-public class Puppy {
+public struct Puppy: Sendable {
 
-    public private(set) var loggers = Set<BaseLogger>()
+    public private(set) var loggers: [any Loggerable] = []
 
-    public init() {}
+    public init(loggers: [any Loggerable] = []) {
+        self.loggers = loggers
+    }
 
-    public func add(_ logger: BaseLogger) {
-        if !(loggers.contains(logger)) {
-            loggers.insert(logger)
+    public mutating func add(_ logger: any Loggerable) {
+        if !(loggers.contains(where: { $0.label == logger.label })) {
+            loggers.append(logger)
         }
     }
 
-    public func add(_ logger: BaseLogger, withLevel: LogLevel) {
-        if !(loggers.contains(logger)) {
-            logger.logLevel = withLevel
-            loggers.insert(logger)
-        }
+    public mutating func remove(_ logger: any Loggerable) {
+        loggers.removeAll(where: { $0.label == logger.label })
     }
 
-    public func remove(_ logger: BaseLogger) {
-        if loggers.contains(logger) {
-            loggers.remove(logger)
-        }
-    }
-
-    public func removeAll() {
+    public mutating func removeAll() {
         loggers.removeAll()
     }
 

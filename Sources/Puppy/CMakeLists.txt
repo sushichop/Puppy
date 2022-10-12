@@ -1,12 +1,14 @@
 add_library(Puppy
-  BaseLogger.swift
+  Compatibility.swift
   ConsoleLogger.swift
   FileError.swift
   FileLogger.swift
+  FileLoggerable.swift
   FileManager+Windows.swift
   FileRotationLogger.swift
-  LogFormatter.swift
   LogColor.swift
+  LogFormatter.swift
+  Loggerable.swift
   LogLevel.swift
   OSLogger.swift
   Puppy.swift

@@ -13,8 +13,8 @@ final class OSLoggerTests: XCTestCase {
 
     func testOSLogger() throws {
         #if canImport(Darwin)
-        let osLogger = OSLogger("com.example.yourapp.oslogger")
-        let log = Puppy()
+        let osLogger: OSLogger = .init("com.example.yourapp.oslogger")
+        var log = Puppy()
         log.add(osLogger)
         log.trace("TRACE message using OSLogger")
         log.verbose("VERBOSE message using OSLogger")

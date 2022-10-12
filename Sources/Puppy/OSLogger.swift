@@ -1,17 +1,26 @@
 #if canImport(Darwin)
+@preconcurrency import Dispatch
+@preconcurrency import os
 import Foundation
-import os.log
 
-public class OSLogger: BaseLogger {
+public final class OSLogger: Loggerable, Sendable {
+    public let label: String
+    public let queue: DispatchQueue
+    public let logLevel: LogLevel
+    public let logFormat: LogFormattable?
 
     private let osLog: OSLog
 
-    public init(_ label: String, asynchronous: Bool = true, category: String = "Puppy") {
+    public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil,
+                category: String = "Puppy") {
+        self.label = label
+        self.queue = DispatchQueue(label: label)
+        self.logLevel = logLevel
+        self.logFormat = logFormat
         self.osLog = OSLog(subsystem: label, category: category)
-        super.init(label)
     }
 
-    public override func log(_ level: LogLevel, string: String) {
+    public func log(_ level: LogLevel, string: String) {
         let type = logType(level)
         os_log("%{public}@", log: osLog, type: type, string)
     }

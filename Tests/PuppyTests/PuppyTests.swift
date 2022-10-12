@@ -11,11 +11,18 @@ final class PuppyTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func testEmojiAndColor() throws {
-        let consoleLogger = ConsoleLogger("com.example.yourapp.consolelogger.emojicolor")
-        consoleLogger.logLevel = .trace
+    func testAddSameLoggerTwice() throws {
+        let consoleLogger: ConsoleLogger = .init("com.example.yourapp.consolelogger.twice", logLevel: .info)
+        var puppy = Puppy(loggers: [consoleLogger])
+        XCTAssertEqual(puppy.loggers.count, 1)
+        puppy.add(consoleLogger)
+        XCTAssertEqual(puppy.loggers.count, 1)
+        puppy.remove(consoleLogger)
+    }
 
-        let log = Puppy()
+    func testEmojiAndColor() throws {
+        let consoleLogger: ConsoleLogger = .init("com.example.yourapp.consolelogger.emojicolor", logLevel: .info)
+        var log = Puppy()
         log.add(consoleLogger)
 
         log.trace("\(LogLevel.trace.emoji) TRACE message with emoji and color".colorize(LogLevel.trace.color))

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum FileError: Error, Equatable, LocalizedError {
+public enum FileError: Error, Equatable, LocalizedError, Sendable {
     case isNotFile(url: URL)
     case invalidPermission(at: URL, filePermission: String)
     case creatingDirectoryFailed(at: URL)

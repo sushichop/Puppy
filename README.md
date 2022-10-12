@@ -33,18 +33,19 @@ Logging to mutliple transports(e.g. console and file). It is recommended that th
 ```Swift
 import Puppy
 
-let console = ConsoleLogger("com.example.yourapp.console")
+let console = ConsoleLogger("com.example.yourapp.console", logLevel: .info)
 let fileURL = URL(fileURLWithPath: "./foo.log").absoluteURL
 let file = FileLogger("com.example.yourapp.file",
+                      logLevel: .info,
                       fileURL: fileURL,
                       filePermission: "600")  // Default permission is "640". 
 
-let log = Puppy()
-// Set the logging level.
-log.add(console, withLevel: .warning)
-log.add(file, withLevel: .warning)
+var log = Puppy()
+log.add(console)
+log.add(file)
 
 log.debug("DEBUG message")  // Will NOT be logged.
+log.info("INFO message")    // Will be logged.
 log.error("ERROR message")  // Will be logged.
 ```
 
@@ -59,7 +60,7 @@ import Logging
 let console = ConsoleLogger("com.example.yourapp.console")
 let syslog = SystemLogger("com.example.yourapp.syslog")
 
-let puppy = Puppy.default
+var puppy = Puppy.default
 puppy.add(console)
 puppy.add(syslog)
 
@@ -70,7 +71,7 @@ LoggingSystem.bootstrap {
     return handler
 }
 
-let log = Logger(label: "com.example.yourapp.swiftlog")
+var log = Logger(label: "com.example.yourapp.swiftlog")
 
 log.trace("TRACE message")  // Will be logged.
 log.debug("DEBUG message")  // Will be logged.
@@ -84,16 +85,20 @@ Logging to file and use log rotation feature.
 import Puppy
 
 class ViewController: UIViewController {
+    let rotationConfig = RotationConfig(suffixExtension: .date_uuid,
+                                        maxFileSize: 10 * 1024 * 1024,
+                                        maxArchivedFilesCount: 5)                                        
     let delegate = SampleFileRotationDelegate()
+
+    let fileRotation = try! FileRotationLogger("com.example.yourapp.filerotation",
+                                                fileURL: "./logs/foo.log",
+                                                rotationConfig: rotationConfig,
+                                                delegate: delegate)
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let fileRotation = try! FileRotationLogger("com.example.yourapp.filerotation",
-                                                   fileURL: "./logs/foo.log")
-        fileRotation.suffixExtension = .date_uuid   // Default option is `.numbering`.
-        fileRotation.maxFileSize = 10 * 1024 * 1024
-        fileRotation.maxArchivedFilesCount = 5
-        fileRotation.delegate = delegate
-        let log = Puppy()
+
+        var log = Puppy()
         log.add(fileRotation)
         log.info("INFO message")
         log.warning("WARNING message")
@@ -120,11 +125,13 @@ Customize the log format using `Formattable` protocol. Logging to oslog for exam
 import Puppy
 
 class ViewController: UIViewController {
+    let logFormat = LogFormatter()
+    let oslog = OSLogger("com.yourapp.oslog", logFormat: logFormat)
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let oslog = OSLogger("com.yourapp.oslog")
-        oslog.format = LogFormatter()
-        let log = Puppy()
+
+        var log = Puppy()
         log.add(oslog)
         log.info("INFO message")
         log.warning("WARNING message")
@@ -144,13 +151,25 @@ class LogFormatter: LogFormattable {
 
 ### Create a custom logger
 
-You can create your own custom logger. All you have to do is inherit `BaseLogger` class and override `log(_:string:)` method.
+You can also create your own custom logger. The custom logger needs to conform to `Loggerable` protocol.
 
 ```swift
 import Puppy
 
-class CustomLogger: BaseLogger {
-    override func log(_ level: LogLevel, string: String) {
+public final class ConsoleLogger: Loggerable {
+    public let label: String
+    public let queue: DispatchQueue
+    public let logLevel: LogLevel
+    public let logFormat: LogFormattable?
+
+    public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil) {
+        self.label = label
+        self.queue = DispatchQueue(label: label)
+        self.logLevel = logLevel
+        self.logFormat = logFormat
+    }
+
+    public func log(_ level: LogLevel, string: String) {
         // Implements the logging feature here.
     }
 }

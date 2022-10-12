@@ -13,8 +13,8 @@ final class SystemLoggerTests: XCTestCase {
 
     func testSystemLogger() throws {
         #if os(Linux)
-        let systemLogger = SystemLogger("com.example.yourapp.systemlogger")
-        let log = Puppy()
+        let systemLogger: SystemLogger = .init("com.example.yourapp.systemlogger")
+        var log = Puppy()
         log.add(systemLogger)
         log.trace("TRACE message using SystemLogger")
         log.verbose("VERBOSE message using SystemLogger")

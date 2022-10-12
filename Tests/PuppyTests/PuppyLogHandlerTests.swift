@@ -21,9 +21,8 @@ final class PuppyLogHandlerTests: XCTestCase {
         // let bool2 = ["a": ""].isEmpty   // false
         // let bool3 = ["b": nil].isEmpty  // false
 
-        let consoleLogger = ConsoleLogger("com.example.yourapp.consolelogger.swiftlog")
-        consoleLogger.logLevel = .trace
-        let puppy = Puppy()
+        let consoleLogger: ConsoleLogger = .init("com.example.yourapp.consolelogger.swiftlog", logLevel: .trace)
+        var puppy = Puppy()
         puppy.add(consoleLogger)
 
         LoggingSystem.bootstrap {
@@ -32,7 +31,7 @@ final class PuppyLogHandlerTests: XCTestCase {
             return handler
         }
 
-        var logger = Logger(label: "com.example.yourapp.swiftlog")
+        var logger: Logger = .init(label: "com.example.yourapp.swiftlog")
         logger.trace("TRACE message using PuppyLogHandler")
         logger.debug("DEBUG message using PuppyLogHandler")
         logger[metadataKey: "keyA"] = "1"
@@ -48,6 +47,7 @@ final class PuppyLogHandlerTests: XCTestCase {
         logger.critical("CRITICAL message using PuppyLogHandler")
 
         puppy.remove(consoleLogger)
+
         #endif // canImport(Logging)
     }
 }
