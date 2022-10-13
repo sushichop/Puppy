@@ -74,7 +74,8 @@ public final class FileRotationLogger: FileLoggerable {
             var archivedFileURL: URL
             switch rotationConfig.suffixExtension {
             case .numbering:
-                archivedFileURL = fileURL.appendingPathExtension("1")
+                let fileExtension = fileURL.pathExtension
+                archivedFileURL = fileURL.deletingPathExtension().appendingPathExtension("1").appendingPathExtension(fileExtension)
             case .date_uuid:
                 archivedFileURL = fileURL.appendingPathExtension(dateFormatter(Date(), dateFormat: "yyyyMMdd'T'HHmmssZZZZZ", timeZone: "UTC") + "_" + UUID().uuidString.lowercased())
             }
@@ -94,7 +95,9 @@ public final class FileRotationLogger: FileLoggerable {
                 let oldArchivedFileURLs = ascArchivedFileURLs(fileURL)
                 for (index, oldArchivedFileURL) in oldArchivedFileURLs.enumerated() {
                     let generationNumber = oldArchivedFileURLs.count + 1 - index
-                    let rotatedFileURL = oldArchivedFileURL.deletingPathExtension().appendingPathExtension("\(generationNumber)")
+                    let fileExtension = fileURL.pathExtension
+
+                    let rotatedFileURL = oldArchivedFileURL.deletingPathExtension().deletingPathExtension().appendingPathExtension("\(generationNumber)").appendingPathExtension(fileExtension)
                     puppyDebug("generationNumber: \(generationNumber), rotatedFileURL: \(rotatedFileURL)")
                     if !FileManager.default.fileExists(atPath: rotatedFileURL.path) {
                         try FileManager.default.moveItem(at: oldArchivedFileURL, to: rotatedFileURL)
