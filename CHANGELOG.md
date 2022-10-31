@@ -9,6 +9,7 @@
 - Remove and change the properties. [#60](https://github.com/sushichop/Puppy/pull/60)
 - Change minimum platform versions. [#61](https://github.com/sushichop/Puppy/pull/61)
 - Adopt `Sendable` and `Loggerable`. [#62](https://github.com/sushichop/Puppy/pull/62)
+- Remove the dependency in podspec. [#66](https://github.com/sushichop/Puppy/pull/66)
 
 ## [0.5.1](https://github.com/sushichop/Puppy/releases/tag/0.5.1) (2022-09-24)
 

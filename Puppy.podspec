@@ -13,12 +13,7 @@ Pod::Spec.new do |s|
 
   s.source            = { :git => "https://github.com/sushichop/Puppy.git", :tag => "#{s.version}" }
   
-  s.default_subspec   = "Default"
-
-  s.subspec "Default" do |default|
-    default.dependency "Puppy/Core"
-    default.dependency "Logging", "~> 1.4"
-  end
+  s.default_subspec   = "Core"
 
   s.subspec "Core" do |core|
     core.header_mappings_dir = "Sources/CPuppy/include"
