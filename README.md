@@ -103,7 +103,7 @@ class ViewController: UIViewController {
     }
 }
 
-class SampleFileRotationDelegate: FileRotationLoggerDeletate {
+class SampleFileRotationDelegate: FileRotationLoggerDelegate {
     func fileRotationLogger(_ fileRotationLogger: FileRotationLogger,
                             didArchiveFileURL: URL, toFileURL: URL) {
         print("didArchiveFileURL: \(didArchiveFileURL), toFileURL: \(toFileURL)")
