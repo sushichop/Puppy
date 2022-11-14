@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         os: ['macos-12', 'ubuntu-latest', 'windows-latest']
-        swift-version: ['5.6', '5.7']
+        swift-version: ['5.6', '5.7.1']
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
@@ -26,7 +26,7 @@ jobs:
         run: |
           ls -al
           if [ '${{ matrix.swift-version }}' = '5.6' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.3.app >> $GITHUB_ENV; fi
-          if [ '${{ matrix.swift-version }}' = '5.7' ]; then echo DEVELOPER_DIR=/Applications/Xcode_14.0.1.app >> $GITHUB_ENV; fi
+          if [ '${{ matrix.swift-version }}' = '5.7.1' ]; then echo DEVELOPER_DIR=/Applications/Xcode_14.1.app >> $GITHUB_ENV; fi
       - uses: sushichop/gha-swift-env@v1
         with:
           swift-version: ${{ matrix.swift-version }}
@@ -41,7 +41,7 @@ jobs:
     strategy:
       matrix:
         os: ['macos-12', 'ubuntu-latest', 'windows-latest']
-        swift-version: ['5.7']
+        swift-version: ['5.7.1']
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
@@ -50,7 +50,7 @@ jobs:
         run: |
           ls -al
           if [ '${{ matrix.swift-version }}' = '5.6' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.3.app >> $GITHUB_ENV; fi
-          if [ '${{ matrix.swift-version }}' = '5.7' ]; then echo DEVELOPER_DIR=/Applications/Xcode_14.0.1.app >> $GITHUB_ENV; fi
+          if [ '${{ matrix.swift-version }}' = '5.7.1' ]; then echo DEVELOPER_DIR=/Applications/Xcode_14.1.app >> $GITHUB_ENV; fi
       - uses: sushichop/gha-swift-env@v1
         with:
           swift-version: ${{ matrix.swift-version }}
@@ -63,7 +63,7 @@ jobs:
     runs-on: macos-12
     strategy:
       matrix:
-        xcode: ['14.0.1']
+        xcode: ['14.1']
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -90,7 +90,7 @@ jobs:
             carthage-build-workaround,
             carthage-build-xcframeworks,
           ]
-        xcode: ['14.0.1']
+        xcode: ['14.1']
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -103,17 +103,15 @@ jobs:
     runs-on: macos-12
     strategy:
       matrix:
-        make-target:
-          [
-            pod-lib-lint,
-          ]
-        xcode: ['13.4.1']
+        xcode: ['14.1']
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
     steps:
       - uses: actions/checkout@v2
-      - run: make ${{ matrix.make-target }}
+      # See https://github.com/CocoaPods/CocoaPods/issues/11558.
+      - run: |
+          pod lib lint --platforms=macos,ios,tvos --verbose --allow-warnings
 
   bazel:
     name: Bazel - Swift ${{ matrix.swift-version }} on ${{ matrix.os }}
@@ -121,7 +119,7 @@ jobs:
     strategy:
       matrix:
         os: ['macos-12', 'ubuntu-latest']
-        swift-version: ['5.7']
+        swift-version: ['5.7.1']
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
@@ -130,7 +128,7 @@ jobs:
         run: |
           ls -al
           if [ '${{ matrix.swift-version }}' = '5.6' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.3.app >> $GITHUB_ENV; fi
-          if [ '${{ matrix.swift-version }}' = '5.7' ]; then echo DEVELOPER_DIR=/Applications/Xcode_14.0.1.app >> $GITHUB_ENV; fi
+          if [ '${{ matrix.swift-version }}' = '5.7.1' ]; then echo DEVELOPER_DIR=/Applications/Xcode_14.1.app >> $GITHUB_ENV; fi
       - uses: sushichop/gha-swift-env@v1
         with:
           swift-version: ${{ matrix.swift-version }}

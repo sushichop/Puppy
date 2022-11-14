@@ -10,6 +10,7 @@
 - Change minimum platform versions. [#61](https://github.com/sushichop/Puppy/pull/61)
 - Adopt `Sendable` and `Loggerable`. [#62](https://github.com/sushichop/Puppy/pull/62)
 - Remove the dependency in podspec. [#66](https://github.com/sushichop/Puppy/pull/66)
+- Update to `Xcode 14.1`. [#69](https://github.com/sushichop/Puppy/pull/69)
 
 ## [0.5.1](https://github.com/sushichop/Puppy/releases/tag/0.5.1) (2022-09-24)
 
