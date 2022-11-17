@@ -60,7 +60,7 @@ import Logging
 let console = ConsoleLogger("com.example.yourapp.console")
 let syslog = SystemLogger("com.example.yourapp.syslog")
 
-var puppy = Puppy.default
+var puppy = Puppy()
 puppy.add(console)
 puppy.add(syslog)
 

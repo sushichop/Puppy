@@ -21,10 +21,6 @@ Pod::Spec.new do |s|
     core.source_files        = "Sources/CPuppy/**/*.{h,c}", "Sources/Puppy/**/*.{swift}"
   end
 
-  s.test_spec "UnitTests" do |unit_tests|
-    unit_tests.source_files  = "Tests/PuppyTests/**/*.{swift}"
-  end
-
   s.cocoapods_version = ">= 1.7.0"
   s.swift_versions    = ["5.0"]
 end
