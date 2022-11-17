@@ -32,6 +32,8 @@ final class MockLogFormatter: LogFormattable, @unchecked Sendable {
     var invokedFormatMessageLevels: [LogLevel] = []
     var invokedFormatMessageMessages: [String] = []
     var invokedFormatMessageTags: [String] = []
+    var invokedFormatMessageModuleNames: [String] = []
+    var invokedFormatMessageFileNames: [String] = []
     var invokedFormatMessageSwiftLogInfo: [String: String] = [:]
     var invokedFormatMessageLabel = ""
 
@@ -49,6 +51,8 @@ final class MockLogFormatter: LogFormattable, @unchecked Sendable {
         invokedFormatMessageLevels.append(level)
         invokedFormatMessageMessages.append(message)
         invokedFormatMessageTags.append(tag)
+        invokedFormatMessageModuleNames.append(moduleName(file))
+        invokedFormatMessageFileNames.append(fileName(file))
         invokedFormatMessageSwiftLogInfo = swiftLogInfo
         invokedFormatMessageLabel = label
         return "MockLogFormatter \(message)"

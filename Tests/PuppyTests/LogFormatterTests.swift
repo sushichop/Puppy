@@ -34,7 +34,8 @@ final class LogFormatterTests: XCTestCase {
 fileprivate final class LogFormatter: LogFormattable, Sendable {
     func formatMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64) -> String {
         let date = dateFormatter(date)
-        let file = shortFileName(file)
-        return "\(date) \(threadID) [\(level.emoji) \(level)] \(swiftLogInfo) \(file)#L.\(line) \(function) \(message)".colorize(level.color)
+        let fileName = fileName(file)
+        let moduleName = moduleName(file)
+        return "\(date) \(threadID) [\(level.emoji) \(level)] \(swiftLogInfo) \(moduleName)/\(fileName)#L.\(line) \(function) \(message)".colorize(level.color)
     }
 }

@@ -30,42 +30,42 @@ public struct Puppy: Sendable {
     }
 
     @inlinable
-    public func trace(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
+    public func trace(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #fileID, line: UInt = #line) {
         logMessage(.trace, message: message(), tag: tag, function: function, file: file, line: line)
     }
 
     @inlinable
-    public func verbose(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
+    public func verbose(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #fileID, line: UInt = #line) {
         logMessage(.verbose, message: message(), tag: tag, function: function, file: file, line: line)
     }
 
     @inlinable
-    public func debug(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
+    public func debug(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #fileID, line: UInt = #line) {
         logMessage(.debug, message: message(), tag: tag, function: function, file: file, line: line)
     }
 
     @inlinable
-    public func info(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
+    public func info(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #fileID, line: UInt = #line) {
         logMessage(.info, message: message(), tag: tag, function: function, file: file, line: line)
     }
 
     @inlinable
-    public func notice(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
+    public func notice(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #fileID, line: UInt = #line) {
         logMessage(.notice, message: message(), tag: tag, function: function, file: file, line: line)
     }
 
     @inlinable
-    public func warning(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
+    public func warning(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #fileID, line: UInt = #line) {
         logMessage(.warning, message: message(), tag: tag, function: function, file: file, line: line)
     }
 
     @inlinable
-    public func error(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
+    public func error(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #fileID, line: UInt = #line) {
         logMessage(.error, message: message(), tag: tag, function: function, file: file, line: line)
     }
 
     @inlinable
-    public func critical(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
+    public func critical(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #fileID, line: UInt = #line) {
         logMessage(.critical, message: message(), tag: tag, function: function, file: file, line: line)
     }
 

@@ -5,8 +5,12 @@ public protocol LogFormattable: Sendable {
 }
 
 extension LogFormattable {
-    public func shortFileName(_ file: String) -> String {
-        return URL(fileURLWithPath: file).lastPathComponent
+    public func moduleName(_ file: String) -> String {
+        return file.components(separatedBy: "/").first!
+    }
+
+    public func fileName(_ file: String) -> String {
+        return file.components(separatedBy: "/").last!
     }
 }
 
