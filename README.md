@@ -148,7 +148,7 @@ try configure(app)
 try app.run()
 ```
 
-### Customize the log format
+### Customize the logging format
 
 Customize the log format using `Formattable` protocol. Logging to oslog for example.
 
@@ -173,8 +173,9 @@ class LogFormatter: LogFormattable {
                        file: String, line: UInt, swiftLogInfo: [String : String],
                        label: String, date: Date, threadID: UInt64) -> String {
         let date = dateFormatter(date)
-        let file = shortFileName(file)
-        return "\(date) \(threadID) [\(level.emoji) \(level)] \(file)#L.\(line) \(function) \(message)"
+        let fileName = fileName(file)
+        let moduleName = moduleName(file)
+        return "\(date) \(threadID) [\(level.emoji) \(level)] \(swiftLogInfo) \(moduleName)/\(fileName)#L.\(line) \(function) \(message)".colorize(level.color)
     }
 }
 ```
