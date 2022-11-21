@@ -49,9 +49,48 @@ log.info("INFO message")    // Will be logged.
 log.error("ERROR message")  // Will be logged.
 ```
 
+### Use file log rotation
+
+Logging to file and use log rotation feature.
+
+```swift
+import Puppy
+
+class ViewController: UIViewController {
+    let fileURL = URL(fileURLWithPath: "./logs/foo.log").absoluteURL
+    let rotationConfig = RotationConfig(suffixExtension: .date_uuid,
+                                        maxFileSize: 10 * 1024 * 1024,
+                                        maxArchivedFilesCount: 3)
+    let delegate = SampleFileRotationDelegate()
+    let fileRotation = try! FileRotationLogger("com.example.yourapp.filerotation",
+                                                fileURL: fileURL,
+                                                rotationConfig: rotationConfig,
+                                                delegate: delegate)
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        var log = Puppy()
+        log.add(fileRotation)
+        log.info("INFO message")
+        log.warning("WARNING message")
+    }
+}
+
+class SampleFileRotationDelegate: FileRotationLoggerDelegate {
+    func fileRotationLogger(_ fileRotationLogger: FileRotationLogger,
+                            didArchiveFileURL: URL, toFileURL: URL) {
+        print("didArchiveFileURL: \(didArchiveFileURL), toFileURL: \(toFileURL)")
+    }
+    func fileRotationLogger(_ fileRotationLogger: FileRotationLogger,
+                            didRemoveArchivedFileURL: URL) {
+        print("didRemoveArchivedFileURL: \(didRemoveArchivedFileURL)")
+    }
+}
+```
+
 ### Use with [apple/swift-log](https://github.com/apple/swift-log/)
 
-Logging to mutliple transports(e.g. console and syslog) as a backend for `apple/swift-log`.
+Logging to multiple transports(e.g. console and syslog) as a backend for `apple/swift-log`.
 
 ```swift
 import Puppy
@@ -77,42 +116,36 @@ log.trace("TRACE message")  // Will be logged.
 log.debug("DEBUG message")  // Will be logged.
 ```
 
-### Use file log rotation
-
-Logging to file and use log rotation feature.
+Here is a practical example of using `Puppy` with [Vapor](https://vapor.codes), which uses `apple/swift-log` internally.
 
 ```swift
+import App
+import Vapor  // Vapor 4.67.4
 import Puppy
 
-class ViewController: UIViewController {
-    let rotationConfig = RotationConfig(suffixExtension: .date_uuid,
-                                        maxFileSize: 10 * 1024 * 1024,
-                                        maxArchivedFilesCount: 5)                                        
-    let delegate = SampleFileRotationDelegate()
-    let fileRotation = try! FileRotationLogger("com.example.yourapp.filerotation",
-                                                fileURL: "./logs/foo.log",
-                                                rotationConfig: rotationConfig,
-                                                delegate: delegate)
+let fileURL = URL(fileURLWithPath: "./server-logs/bar.log").absoluteURL
+let rotationConfig = RotationConfig(suffixExtension: .numbering,
+                                    maxFileSize: 30 * 1024 * 1024,
+                                    maxArchivedFilesCount: 5)
+let fileRotation = try FileRotationLogger("com.example.yourapp.server",
+                                          fileURL: fileURL,
+                                          rotationConfig: rotationConfig)
+var puppy = Puppy()
+puppy.add(fileRotation)
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        var log = Puppy()
-        log.add(fileRotation)
-        log.info("INFO message")
-        log.warning("WARNING message")
+// https://docs.vapor.codes/basics/logging/
+var env = try Environment.detect()
+try LoggingSystem.bootstrap(from: &env) { (logLevel) -> (String) -> LogHandler in
+    return { label -> LogHandler in
+        var handler = PuppyLogHandler(label: label, puppy: puppy)
+        handler.logLevel = .info
+        return handler
     }
 }
-
-class SampleFileRotationDelegate: FileRotationLoggerDelegate {
-    func fileRotationLogger(_ fileRotationLogger: FileRotationLogger,
-                            didArchiveFileURL: URL, toFileURL: URL) {
-        print("didArchiveFileURL: \(didArchiveFileURL), toFileURL: \(toFileURL)")
-    }
-    func fileRotationLogger(_ fileRotationLogger: FileRotationLogger,
-                            didRemoveArchivedFileURL: URL) {
-        print("didRemoveArchivedFileURL: \(didRemoveArchivedFileURL)")
-    }
-}
+let app = Application(env)
+defer { app.shutdown() }
+try configure(app)
+try app.run()
 ```
 
 ### Customize the log format
