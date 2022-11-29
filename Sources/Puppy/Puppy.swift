@@ -8,7 +8,6 @@ import func WinSDK.GetCurrentThreadId
 #endif // canImport(Darwin)
 
 public struct Puppy: Sendable {
-
     public private(set) var loggers: [any Loggerable] = []
 
     public init(loggers: [any Loggerable] = []) {

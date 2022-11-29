@@ -3,7 +3,7 @@
 import Foundation
 import func CPuppy.cpuppy_syslog
 
-public final class SystemLogger: Loggerable, Sendable {
+public struct SystemLogger: Loggerable, Sendable {
     public let label: String
     public let queue: DispatchQueue
     public let logLevel: LogLevel

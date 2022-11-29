@@ -168,7 +168,7 @@ class ViewController: UIViewController {
     }
 }
 
-class LogFormatter: LogFormattable {
+struct LogFormatter: LogFormattable {
     func formatMessage(_ level: LogLevel, message: String, tag: String, function: String,
                        file: String, line: UInt, swiftLogInfo: [String : String],
                        label: String, date: Date, threadID: UInt64) -> String {
@@ -185,9 +185,10 @@ class LogFormatter: LogFormattable {
 You can also create your own custom logger. The custom logger needs to conform to `Loggerable` protocol.
 
 ```swift
+@preconcurrency import Dispatch
 import Puppy
 
-public class CustomLogger: Loggerable {
+public struct CustomLogger: Loggerable {
     public let label: String
     public let queue: DispatchQueue
     public let logLevel: LogLevel

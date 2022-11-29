@@ -31,7 +31,7 @@ final class LogFormatterTests: XCTestCase {
     }
 }
 
-fileprivate final class LogFormatter: LogFormattable, Sendable {
+private struct LogFormatter: LogFormattable, Sendable {
     func formatMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64) -> String {
         let date = dateFormatter(date)
         let fileName = fileName(file)

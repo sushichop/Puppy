@@ -13,6 +13,7 @@
 - Update to `Xcode 14.1`. [#69](https://github.com/sushichop/Puppy/pull/69)
 - Use `#fileID` instead of `#file`. [#70](https://github.com/sushichop/Puppy/pull/70)
 - Add another example of using `Puppy` with [Vapor](https://vapor.codes). [#71](https://github.com/sushichop/Puppy/pull/71)
+- Use `struct` instead of `class`. [#72](https://github.com/sushichop/Puppy/pull/72)
 
 ## [0.5.1](https://github.com/sushichop/Puppy/releases/tag/0.5.1) (2022-09-24)
 

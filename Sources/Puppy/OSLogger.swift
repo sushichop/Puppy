@@ -3,7 +3,7 @@
 @preconcurrency import os
 import Foundation
 
-public final class OSLogger: Loggerable, Sendable {
+public struct OSLogger: Loggerable, Sendable {
     public let label: String
     public let queue: DispatchQueue
     public let logLevel: LogLevel

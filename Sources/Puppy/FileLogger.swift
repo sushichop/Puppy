@@ -1,7 +1,7 @@
 @preconcurrency import Dispatch
 import Foundation
 
-public final class FileLogger: FileLoggerable {
+public struct FileLogger: FileLoggerable {
     public let label: String
     public let queue: DispatchQueue
     public let logLevel: LogLevel

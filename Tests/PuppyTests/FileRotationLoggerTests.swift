@@ -74,7 +74,7 @@ final class FileRotationLoggerTests: XCTestCase {
     }
 }
 
-fileprivate final class FileRotationDelegate: FileRotationLoggerDelegate {
+private final class FileRotationDelegate: FileRotationLoggerDelegate {
     func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didArchiveFileURL: URL, toFileURL: URL) {
         print("didArchive! didArchiveFileURL: \(didArchiveFileURL), toFileURL: \(toFileURL)")
     }
