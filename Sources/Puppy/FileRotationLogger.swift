@@ -1,7 +1,7 @@
 @preconcurrency import Dispatch
 import Foundation
 
-public final class FileRotationLogger: FileLoggerable {
+public struct FileRotationLogger: FileLoggerable {
     public let label: String
     public let queue: DispatchQueue
     public let logLevel: LogLevel
@@ -11,7 +11,7 @@ public final class FileRotationLogger: FileLoggerable {
     public let filePermission: String
 
     let rotationConfig: RotationConfig
-    private unowned let delegate: FileRotationLoggerDelegate?
+    private weak var delegate: FileRotationLoggerDelegate?
 
     public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil, fileURL: URL, filePermission: String = "640", rotationConfig: RotationConfig, delegate: FileRotationLoggerDelegate? = nil) throws {
         self.label = label
@@ -79,9 +79,7 @@ public final class FileRotationLogger: FileLoggerable {
                 archivedFileURL = fileURL.appendingPathExtension(dateFormatter(Date(), dateFormat: "yyyyMMdd'T'HHmmssZZZZZ", timeZone: "UTC") + "_" + UUID().uuidString.lowercased())
             }
             try FileManager.default.moveItem(at: fileURL, to: archivedFileURL)
-            if let delegate = delegate {
-                delegate.fileRotationLogger(self, didArchiveFileURL: fileURL, toFileURL: archivedFileURL)
-            }
+            delegate?.fileRotationLogger(self, didArchiveFileURL: fileURL, toFileURL: archivedFileURL)
         } catch {
             print("error in archiving the target file, error: \(error.localizedDescription)")
         }
@@ -144,9 +142,7 @@ public final class FileRotationLogger: FileLoggerable {
                     puppyDebug("\(archivedFileURLs[index]) will be removed...")
                     try FileManager.default.removeItem(at: archivedFileURLs[index])
                     puppyDebug("\(archivedFileURLs[index]) has been removed")
-                    if let delegate = delegate {
-                        delegate.fileRotationLogger(self, didRemoveArchivedFileURL: archivedFileURLs[index])
-                    }
+                    delegate?.fileRotationLogger(self, didRemoveArchivedFileURL: archivedFileURLs[index])
                 }
             }
         } catch {

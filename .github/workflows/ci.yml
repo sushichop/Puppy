@@ -16,11 +16,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['macos-12', 'ubuntu-latest', 'windows-latest']
+        os: ['macos-12', 'ubuntu-20.04', 'windows-latest']
         swift-version: ['5.6', '5.7.1']
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
         if: runner.os == 'macOS'
         run: |
@@ -40,11 +40,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['macos-12', 'ubuntu-latest', 'windows-latest']
+        os: ['macos-12', 'ubuntu-20.04', 'windows-latest']
         swift-version: ['5.7.1']
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
         if: runner.os == 'macOS'
         run: |
@@ -68,7 +68,7 @@ jobs:
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: export-codecov
         run: make export-codecov
       - name: codecov
@@ -95,7 +95,7 @@ jobs:
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: make ${{ matrix.make-target }}
 
   cocoapods:
@@ -108,7 +108,7 @@ jobs:
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       # See https://github.com/CocoaPods/CocoaPods/issues/11558.
       - run: |
           pod lib lint --platforms=macos,ios,tvos --verbose --allow-warnings
@@ -118,11 +118,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['macos-12', 'ubuntu-latest']
+        os: ['macos-12', 'ubuntu-20.04']
         swift-version: ['5.7.1']
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
         if: runner.os == 'macOS'
         run: |
