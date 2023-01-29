@@ -11,8 +11,9 @@ public struct FileLogger: FileLoggerable {
     public let filePermission: String
 
     public let flushMode: FlushMode
+    public let writeMode: FileWritingErrorHandlingMode
 
-    public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil, fileURL: URL, filePermission: String = "640", flushMode: FlushMode = .always) throws {
+    public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil, fileURL: URL, filePermission: String = "640", flushMode: FlushMode = .always, writeMode: FileWritingErrorHandlingMode = .force) throws {
         self.label = label
         self.queue = DispatchQueue(label: label)
         self.logLevel = logLevel
@@ -23,6 +24,7 @@ public struct FileLogger: FileLoggerable {
         self.filePermission = filePermission
 
         self.flushMode = flushMode
+        self.writeMode = writeMode
 
         try validateFileURL(fileURL)
         try validateFilePermission(fileURL, filePermission: filePermission)
@@ -30,6 +32,6 @@ public struct FileLogger: FileLoggerable {
     }
 
     public func log(_ level: LogLevel, string: String) {
-        append(level, string: string, flushMode: flushMode)
+        append(level, string: string, flushMode: flushMode, writeMode: writeMode)
     }
 }

@@ -5,6 +5,17 @@ public enum FlushMode: Sendable {
     case manual
 }
 
+/// Writing the file log to the disk can fail e.g. if the disk is full.
+/// The `FileWritingErrorHandlingMode` enum specifies how errors should be handled.
+/// - assert uses assertionFailure to stop execution for debug builds and ignores failures in release builds
+/// - print only prints the error message to the standard output
+/// - force crashes for all builds, if logging fails by force trying to write the file. Default behavior, if no other option is specified
+public enum FileWritingErrorHandlingMode: Sendable {
+    case assert
+    case print
+    case force
+}
+
 public protocol FileLoggerable: Loggerable, Sendable {
     var fileURL: URL { get }
     var filePermission: String { get }
@@ -132,7 +143,7 @@ extension FileLoggerable {
         }
     }
 
-    func append(_ level: LogLevel, string: String, flushMode: FlushMode = .always) {
+    func append(_ level: LogLevel, string: String, flushMode: FlushMode = .always, writeMode: FileWritingErrorHandlingMode = .force) {
         var handle: FileHandle!
         do {
             defer {
@@ -144,9 +155,24 @@ extension FileLoggerable {
             handle = try FileHandle(forWritingTo: fileURL)
             _ = try handle?.seekToEndCompatible()
             if let data = (string + "\r\n").data(using: .utf8) {
-                // swiftlint:disable force_try
-                try! handle?.writeCompatible(contentsOf: data)
-                // swiftlint:enable force_try
+
+                switch writeMode {
+                case .force:
+                    // swiftlint:disable force_try
+                    try! handle?.writeCompatible(contentsOf: data)
+                    // swiftlint:enable force_try
+                case .assert, .print:
+                    do {
+                        try handle?.writeCompatible(contentsOf: data)
+                    } catch {
+                        let message = "error in appending data in a file, error: \(error.localizedDescription), file: \(fileURL)"
+                        if writeMode == .assert {
+                            assertionFailure(message)
+                        } else {
+                            print(message)
+                        }
+                    }
+                }
             }
         } catch {
             print("error in appending data in a file, error: \(error.localizedDescription), file: \(fileURL)")
