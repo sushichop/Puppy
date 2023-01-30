@@ -1,3 +1,7 @@
+## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+
+- Add different error handling behaviors for disk writing errors. [#75](https://github.com/sushichop/Puppy/pull/75)
+
 ## [0.6.0](https://github.com/sushichop/Puppy/releases/tag/0.6.0) (2022-11-29)
 
 - Disable bitcode. [#54](https://github.com/sushichop/Puppy/pull/54)
