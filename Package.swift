@@ -1,4 +1,4 @@
-// swift-tools-version:5.6
+// swift-tools-version:5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -12,7 +12,8 @@ let package = Package(
         .library(name: "Puppy", targets: ["Puppy"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-log.git", .upToNextMinor(from: "1.4.4")),
+        // TODO: point back to apple/swift-log if async is accepted
+        .package(url: "https://github.com/doozMen/swift-log.git", .upToNextMinor(from: "1.5.3")),
     ],
     targets: [
         .target(name: "CPuppy",

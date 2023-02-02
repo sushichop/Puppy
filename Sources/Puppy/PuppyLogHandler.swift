@@ -2,7 +2,7 @@
 import Foundation
 import Logging
 
-public struct PuppyLogHandler: LogHandler, Sendable {
+public struct PuppyLogHandler: LogHandler {
     public var logLevel: Logger.Level = .info
     public var metadata: Logger.Metadata
 
@@ -24,11 +24,22 @@ public struct PuppyLogHandler: LogHandler, Sendable {
         self.metadata = metadata
     }
 
+    public func logAsync(level: Logger.Level, message: Logger.Message, metadata: Logger.Metadata?, source: String, file: String, function: String, line: UInt) async {
+        let metadata = !mergedMetadata(metadata).isEmpty ? "\(mergedMetadata(metadata))" : ""
+        let swiftLogInfo = ["label": label, "source": source, "metadata": metadata]
+        await puppy.logMessage(level.toPuppy(), message: "\(message)", tag: "swiftlog", function: function, file: file, line: line, swiftLogInfo: swiftLogInfo)
+    }
+
     public func log(level: Logger.Level, message: Logger.Message, metadata: Logger.Metadata?, source: String, file: String, function: String, line: UInt) {
 
         let metadata = !mergedMetadata(metadata).isEmpty ? "\(mergedMetadata(metadata))" : ""
         let swiftLogInfo = ["label": label, "source": source, "metadata": metadata]
-        puppy.logMessage(level.toPuppy(), message: "\(message)", tag: "swiftlog", function: function, file: file, line: line, swiftLogInfo: swiftLogInfo)
+        let semaphore = DispatchSemaphore(value: 0)
+        Task {
+            await puppy.logMessage(level.toPuppy(), message: "\(message)", tag: "swiftlog", function: function, file: file, line: line, swiftLogInfo: swiftLogInfo)
+            semaphore.signal()
+        }
+        _ = semaphore.wait(timeout: .now() + 3)
     }
 
     private func mergedMetadata(_ metadata: Logger.Metadata?) -> Logger.Metadata {

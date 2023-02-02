@@ -26,75 +26,26 @@ extension FileLoggerable {
         return UInt16(filePermission, radix: 8)!
     }
 
-    public func delete(_ url: URL) -> Result<URL, FileError> {
-        queue.sync {
-            Result { try FileManager.default.removeItem(at: url) }
-                .map { url }
-                .mapError { _ in
-                    FileError.deletingFailed(at: url)
-                }
-        }
-    }
-
-    @available(*, deprecated, message: "Use delete(_:) instead")
-    public func delete(_ url: URL, completion: @escaping @Sendable (Result<URL, FileError>) -> Void) {
-        queue.async {
-            let result = Result { try FileManager.default.removeItem(at: url) }
-                .map { url }
-                .mapError { _ in
-                    FileError.deletingFailed(at: url)
-                }
-            completion(result)
-        }
-    }
-
-    #if (compiler(>=5.5.2) && !os(Windows)) || compiler(>=5.7)
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     public func delete(_ url: URL) async throws -> URL {
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<URL, Error>) in
-            queue.async {
-                do {
-                    try FileManager.default.removeItem(at: url)
-                    continuation.resume(returning: url)
-                } catch {
-                    continuation.resume(throwing: FileError.deletingFailed(at: url))
-                }
-            }
+        let task = Task(priority: .utility) {
+          do {
+            try FileManager.default.removeItem(at: url)
+          } catch {
+            throw FileError.deletingFailed(at: url)
+          }
+          return url
         }
-    }
-    #endif // (compiler(>=5.5.2) && !os(Windows)) || compiler(>=5.7)
-
-    public func flush(_ url: URL) {
-        queue.sync {
-            let handle = try? FileHandle(forWritingTo: url)
-            try? handle?.synchronize()
-            try? handle?.close()
-        }
+        return try await task.value
     }
 
-    @available(*, deprecated, message: "Use flush(_:) instead")
-    public func flush(_ url: URL, completion: @escaping @Sendable () -> Void) {
-        queue.async {
-            let handle = try? FileHandle(forWritingTo: url)
-            try? handle?.synchronize()
-            try? handle?.close()
-            completion()
-        }
-    }
-
-    #if (compiler(>=5.5.2) && !os(Windows)) || compiler(>=5.7)
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     public func flush(_ url: URL) async {
-        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-            queue.async {
-                let handle = try? FileHandle(forWritingTo: url)
-                try? handle?.synchronize()
-                try? handle?.close()
-                continuation.resume()
-            }
-        }
+      let task = Task(priority: .utility) {
+        let handle = try? FileHandle(forWritingTo: url)
+        try? handle?.synchronize()
+        try? handle?.close()
+      }
+      await task.value
     }
-    #endif // (compiler(>=5.5.2) && !os(Windows)) || compiler(>=5.7)
 
     func openFile() throws {
         let directoryURL = fileURL.deletingLastPathComponent()

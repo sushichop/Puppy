@@ -2,18 +2,17 @@ import Foundation
 
 public protocol Loggerable: Sendable {
     var label: String { get }
-    var queue: DispatchQueue { get }
     var logLevel: LogLevel { get }
     var logFormat: LogFormattable? { get }
 
-    func pickMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64)
+    func pickMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64) async
 
-    func log(_ level: LogLevel, string: String)
+    func log(_ level: LogLevel, string: String) async
 }
 
 extension Loggerable {
-    public func pickMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64) {
-        queue.async {
+    public func pickMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64) async {
+      let task = Task(priority: .utility) {
             if level.rawValue < logLevel.rawValue {
                 return
             }
@@ -21,7 +20,8 @@ extension Loggerable {
             if let format = logFormat {
                 formattedMessage = format.formatMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: label, date: date, threadID: threadID)
             }
-            log(level, string: formattedMessage)
+            await log(level, string: formattedMessage)
         }
+        await task.value
     }
 }

@@ -10,17 +10,17 @@ final class LoggerableTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func testLoggerableLogLevel() throws {
+    func testLoggerableLogLevel() async throws {
         let mockLogger: MockLogger = .init("com.example.yourapp.mocklogger.loglevel", logLevel: .debug)
         var log = Puppy()
         log.add(mockLogger)
 
-        log.trace("TRACE message")
-        log.verbose("VERBOSE message")
+        await log.trace("TRACE message")
+        await log.verbose("VERBOSE message")
 
-        log.debug("DEBUG message")
-        log.info("INFO message")
-        log.notice("NOTICE message")
+        await log.debug("DEBUG message")
+        await log.info("INFO message")
+        await log.notice("NOTICE message")
 
         let exp = XCTestExpectation(description: "MockLogger LogLevel")
         mockLogger.queue.async {
@@ -35,16 +35,16 @@ final class LoggerableTests: XCTestCase {
         log.remove(mockLogger)
     }
 
-    func testLoggerableLogFormat() throws {
+    func testLoggerableLogFormat() async throws {
         let mockLogFormatter: MockLogFormatter = .init()
         let mockLogger: MockLogger = .init("com.example.yourapp.mocklogger.logformat", logLevel: .error, logFormat: mockLogFormatter)
         var log = Puppy(loggers: [mockLogger])
 
-        log.notice("NOTICE message")
-        log.warning("WARNING message")
+        await log.notice("NOTICE message")
+        await log.warning("WARNING message")
 
-        log.error("ERROR message")
-        log.critical("CRITICAL message", tag: "critical-tag")
+        await log.error("ERROR message")
+        await log.critical("CRITICAL message", tag: "critical-tag")
 
         let exp = XCTestExpectation(description: "MockLogger LogFormatter")
         mockLogger.queue.async {

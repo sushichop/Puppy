@@ -14,19 +14,19 @@ final class LogFormatterTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func testLogFormatter() throws {
+    func testLogFormatter() async throws {
         let logFormat: LogFormatter = .init()
         let consoleLogger = ConsoleLogger("com.example.yourapp.consolelogger.logformatter", logFormat: logFormat)
         var log = Puppy()
         log.add(consoleLogger)
-        log.trace("TRACE message")
-        log.verbose("VERBOSE message")
-        log.debug("DEBUG message")
-        log.info("INFO message")
-        log.notice("NOTICE message")
-        log.warning("WARNING message")
-        log.error("ERROR message")
-        log.critical("CRITICAL message")
+        await log.trace("TRACE message")
+        await log.verbose("VERBOSE message")
+        await log.debug("DEBUG message")
+        await log.info("INFO message")
+        await log.notice("NOTICE message")
+        await log.warning("WARNING message")
+        await log.error("ERROR message")
+        await log.critical("CRITICAL message")
         log.remove(consoleLogger)
     }
 }
