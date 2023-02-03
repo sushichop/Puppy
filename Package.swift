@@ -12,7 +12,8 @@ let package = Package(
         .library(name: "Puppy", targets: ["Puppy"]),
     ],
     dependencies: [
-        // TODO: point back to apple/swift-log if async is accepted
+        /// TODO: point back to apple/swift-log if async is accepted discussed in forum
+        /// [Swift-log API add async await to avoid problems in async code - Evolution / Pitches - Swift Forums](https://forums.swift.org/t/swift-log-api-add-async-await-to-avoid-problems-in-async-code/62913)
         .package(url: "https://github.com/doozMen/swift-log.git", .upToNextMinor(from: "1.5.4")),
     ],
     targets: [
