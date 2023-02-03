@@ -13,7 +13,7 @@ let package = Package(
     ],
     dependencies: [
         // TODO: point back to apple/swift-log if async is accepted
-        .package(url: "https://github.com/doozMen/swift-log.git", .upToNextMinor(from: "1.5.3")),
+        .package(url: "https://github.com/doozMen/swift-log.git", .upToNextMinor(from: "1.5.4")),
     ],
     targets: [
         .target(name: "CPuppy",

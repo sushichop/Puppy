@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/doozMen/swift-log.git",
       "state" : {
-        "revision" : "730b07d40cab2eb0c700051cd6831502957a3869",
-        "version" : "1.5.3"
+        "revision" : "89522b256cf305f6c5b66ce3e5d35a1d76ba69f3",
+        "version" : "1.5.4"
       }
     }
   ],
