@@ -1,6 +1,7 @@
 #if canImport(Logging)
 import Foundation
 import Logging
+import AsyncQueue
 
 public struct PuppyLogHandler: LogHandler {
     public var logLevel: Logger.Level = .info
@@ -24,22 +25,13 @@ public struct PuppyLogHandler: LogHandler {
         self.metadata = metadata
     }
 
-    public func logAsync(level: Logger.Level, message: Logger.Message, metadata: Logger.Metadata?, source: String, file: String, function: String, line: UInt) async {
-        let metadata = !mergedMetadata(metadata).isEmpty ? "\(mergedMetadata(metadata))" : ""
-        let swiftLogInfo = ["label": label, "source": source, "metadata": metadata]
-        await puppy.logMessage(level.toPuppy(), message: "\(message)", tag: "swiftlog", function: function, file: file, line: line, swiftLogInfo: swiftLogInfo)
-    }
-
+    /// Will continue immediately without waiting for the log to have happened. Messages are queued. Use ``Puppy/wait()``
+    /// to gracefully wait for all logs to have finished.
+    /// > Note: This was suggested in the swift forum: [Swift-log API add async await to avoid problems in async code - Evolution / Pitches - Swift Forums](https://forums.swift.org/t/swift-log-api-add-async-await-to-avoid-problems-in-async-code/62913)
     public func log(level: Logger.Level, message: Logger.Message, metadata: Logger.Metadata?, source: String, file: String, function: String, line: UInt) {
-
         let metadata = !mergedMetadata(metadata).isEmpty ? "\(mergedMetadata(metadata))" : ""
         let swiftLogInfo = ["label": label, "source": source, "metadata": metadata]
-        let semaphore = DispatchSemaphore(value: 0)
-        Task {
-            await puppy.logMessage(level.toPuppy(), message: "\(message)", tag: "swiftlog", function: function, file: file, line: line, swiftLogInfo: swiftLogInfo)
-            semaphore.signal()
-        }
-        _ = semaphore.wait(timeout: .now() + 3)
+        puppy.logMessage(level.toPuppy(), message: "\(message)", tag: "swiftlog", function: function, file: file, line: line, swiftLogInfo: swiftLogInfo)
     }
 
     private func mergedMetadata(_ metadata: Logger.Metadata?) -> Logger.Metadata {

@@ -12,14 +12,16 @@ let package = Package(
         .library(name: "Puppy", targets: ["Puppy"]),
     ],
     dependencies: [
-        /// TODO: point back to apple/swift-log if async is accepted discussed in forum
-        /// [Swift-log API add async await to avoid problems in async code - Evolution / Pitches - Swift Forums](https://forums.swift.org/t/swift-log-api-add-async-await-to-avoid-problems-in-async-code/62913)
-        .package(url: "https://github.com/doozMen/swift-log.git", .upToNextMinor(from: "1.5.4")),
+      .package(url: "https://github.com/apple/swift-log.git", .upToNextMinor(from: "1.4.4")),
+      .package(url: "https://github.com/dfed/swift-async-queue", from: "0.1.0"),
     ],
     targets: [
         .target(name: "CPuppy",
                 exclude: ["CMakeLists.txt"]),
-        .target(name: "Puppy", dependencies: [.product(name: "Logging", package: "swift-log")],
+        .target(name: "Puppy",
+                dependencies: [
+                  .product(name: "Logging", package: "swift-log"),
+                  .product(name: "AsyncQueue", package: "swift-async-queue")],
                 exclude: ["CMakeLists.txt"]),
         .testTarget(name: "PuppyTests", dependencies: ["Puppy"]),
     ],

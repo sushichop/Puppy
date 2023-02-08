@@ -1,12 +1,21 @@
 {
   "pins" : [
     {
+      "identity" : "swift-async-queue",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dfed/swift-async-queue",
+      "state" : {
+        "revision" : "d08ed0272d4c5f4133b3bb447fc05fc03a2b02f9",
+        "version" : "0.1.0"
+      }
+    },
+    {
       "identity" : "swift-log",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/doozMen/swift-log.git",
+      "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "89522b256cf305f6c5b66ce3e5d35a1d76ba69f3",
-        "version" : "1.5.4"
+        "revision" : "6fe203dc33195667ce1759bf0182975e4653ba1c",
+        "version" : "1.4.4"
       }
     }
   ],

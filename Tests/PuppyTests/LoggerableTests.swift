@@ -15,12 +15,13 @@ final class LoggerableTests: XCTestCase {
         var log = Puppy()
         log.add(mockLogger)
 
-        await log.trace("TRACE message")
-        await log.verbose("VERBOSE message")
+        log.trace("TRACE message")
+        log.verbose("VERBOSE message")
+        log.debug("DEBUG message")
+        log.info("INFO message")
+        log.notice("NOTICE message")
 
-        await log.debug("DEBUG message")
-        await log.info("INFO message")
-        await log.notice("NOTICE message")
+        await log.wait()
 
         let exp = XCTestExpectation(description: "MockLogger LogLevel")
         mockLogger.queue.async {
@@ -40,11 +41,12 @@ final class LoggerableTests: XCTestCase {
         let mockLogger: MockLogger = .init("com.example.yourapp.mocklogger.logformat", logLevel: .error, logFormat: mockLogFormatter)
         var log = Puppy(loggers: [mockLogger])
 
-        await log.notice("NOTICE message")
-        await log.warning("WARNING message")
+        log.notice("NOTICE message")
+        log.warning("WARNING message")
+        log.error("ERROR message")
+        log.critical("CRITICAL message", tag: "critical-tag")
 
-        await log.error("ERROR message")
-        await log.critical("CRITICAL message", tag: "critical-tag")
+        await log.wait()
 
         let exp = XCTestExpectation(description: "MockLogger LogFormatter")
         mockLogger.queue.async {

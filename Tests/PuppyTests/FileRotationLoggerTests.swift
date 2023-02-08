@@ -20,13 +20,11 @@ final class FileRotationLoggerTests: XCTestCase {
 
         let log = Puppy(loggers: [fileRotation])
 
-        await withTaskGroup(of: Void.self) { group in
-            for num in 0...3_000 {
-                group.addTask {
-                    await log.info("\(num) numbering")
-                }
-            }
+        for num in 0...3_000 {
+            log.info("\(num) numbering")
         }
+
+        await log.wait()
 
         _ = try await fileRotation.delete(rotationDirectoryURL)
     }
@@ -38,16 +36,14 @@ final class FileRotationLoggerTests: XCTestCase {
         let delegate: FileRotationDelegate = .init()
         let fileRotation: FileRotationLogger = try .init("com.example.yourapp.filerotationlogger.date_uuid", fileURL: rotationFileURL, rotationConfig: rotationConfig, delegate: delegate)
 
-        let log = Puppy(loggers: [fileRotation])
+        var log = Puppy()
+        log.add(fileRotation)
 
-        await withTaskGroup(of: Void.self) { group in
-            for num in 0...1_000 {
-                group.addTask {
-                    await log.info("\(num) date_uuid")
-                }
-
-            }
+        for num in 0...1_000 {
+            log.info("\(num) date_uuid")
         }
+
+        await log.wait()
 
         _ = try await fileRotation.delete(rotationDirectoryURL)
     }
@@ -61,13 +57,11 @@ final class FileRotationLoggerTests: XCTestCase {
         let log = Puppy(loggers: [fileRotation])
 
         _ = try await fileRotation.delete(rotationDirectoryURL)
-        await withTaskGroup(of: Void.self) { group in
-            for num in 0...2 {
-                group.addTask {
-                    await log.info("\(num) error-catch")
-                }
-            }
+        for num in 0...2 {
+          log.info("\(num) error-catch")
         }
+
+        await log.wait()
 
         do {
             _ = try await fileRotation.delete(rotationDirectoryURL)

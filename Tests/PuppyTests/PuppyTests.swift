@@ -25,14 +25,16 @@ final class PuppyTests: XCTestCase {
         var log = Puppy()
         log.add(consoleLogger)
 
-        await log.trace("\(LogLevel.trace.emoji) TRACE message with emoji and color".colorize(LogLevel.trace.color))
-        await log.verbose("\(LogLevel.verbose.emoji) VERBOSE message with emoji and color".colorize(LogLevel.verbose.color))
-        await log.debug("\(LogLevel.debug.emoji) DEBUG message with emoji and color".colorize(LogLevel.debug.color))
-        await log.info("\(LogLevel.info.emoji) INFO message with emoji and color".colorize(LogLevel.info.color))
-        await log.notice("\(LogLevel.notice.emoji) NOTICE message with emoji and color".colorize(LogLevel.notice.color))
-        await log.warning("\(LogLevel.warning.emoji) WARNING message with emoji and color".colorize(LogLevel.warning.color))
-        await log.error("\(LogLevel.error.emoji) ERROR message with emoji and color".colorize(LogLevel.error.color))
-        await log.critical("\(LogLevel.critical.emoji) CRITICAL message with emoji and color".colorize(LogLevel.critical.color))
+        log.trace("\(LogLevel.trace.emoji) TRACE message with emoji and color".colorize(LogLevel.trace.color))
+        log.verbose("\(LogLevel.verbose.emoji) VERBOSE message with emoji and color".colorize(LogLevel.verbose.color))
+        log.debug("\(LogLevel.debug.emoji) DEBUG message with emoji and color".colorize(LogLevel.debug.color))
+        log.info("\(LogLevel.info.emoji) INFO message with emoji and color".colorize(LogLevel.info.color))
+        log.notice("\(LogLevel.notice.emoji) NOTICE message with emoji and color".colorize(LogLevel.notice.color))
+        log.warning("\(LogLevel.warning.emoji) WARNING message with emoji and color".colorize(LogLevel.warning.color))
+        log.error("\(LogLevel.error.emoji) ERROR message with emoji and color".colorize(LogLevel.error.color))
+        log.critical("\(LogLevel.critical.emoji) CRITICAL message with emoji and color".colorize(LogLevel.critical.color))
+
+        await log.wait()
 
         log.removeAll()
     }
