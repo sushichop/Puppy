@@ -38,7 +38,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Check repository permission for user
-        uses: sushichop/action-repository-permission@v1
+        uses: sushichop/action-repository-permission@v2
         with:
           required-permission: write
           reaction-permitted: rocket

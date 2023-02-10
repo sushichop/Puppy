@@ -10,8 +10,8 @@ trailing_comma:
   mandatory_comma: true
 
 line_length:
-  warning: 230
-  error: 250
+  warning: 240
+  error: 260
   ignores_comments: true
 
 type_body_length:
