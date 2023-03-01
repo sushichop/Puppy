@@ -1,9 +1,10 @@
 import Foundation
 #if canImport(Darwin)
+import Darwin
 #elseif os(Linux)
-import func CPuppy.cpuppy_sys_gettid
+import Glibc
 #elseif os(Windows)
-import func WinSDK.GetCurrentThreadId
+import WinSDK
 #else
 #endif // canImport(Darwin)
 
@@ -114,9 +115,9 @@ public struct Puppy: Sendable {
             return .timeout
         }
     }
-}
 
-open class LoggerGroup: DispatchGroup, @unchecked Sendable {}
+    private final class LoggerGroup: DispatchGroup, @unchecked Sendable {}
+}
 
 public enum WaitingResult {
     case success
