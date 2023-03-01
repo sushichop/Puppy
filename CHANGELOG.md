@@ -2,6 +2,7 @@
 
 - Add different error handling behaviors for disk writing errors. [#75](https://github.com/sushichop/Puppy/pull/75)
 - Make `logMessage` method public. [#77](https://github.com/sushichop/Puppy/pull/77)
+- Add method to support flushing log message. [#79](https://github.com/sushichop/Puppy/pull/79)
 
 ## [0.6.0](https://github.com/sushichop/Puppy/releases/tag/0.6.0) (2022-11-29)
 

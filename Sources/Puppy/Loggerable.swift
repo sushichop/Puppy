@@ -9,6 +9,8 @@ public protocol Loggerable: Sendable {
     func pickMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64)
 
     func log(_ level: LogLevel, string: String)
+
+    func flush(completion: @escaping @Sendable () -> Void)
 }
 
 extension Loggerable {
@@ -22,6 +24,12 @@ extension Loggerable {
                 formattedMessage = format.formatMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: label, date: date, threadID: threadID)
             }
             log(level, string: formattedMessage)
+        }
+    }
+
+    public func flush(completion: @escaping @Sendable () -> Void) {
+        queue.async {
+            completion()
         }
     }
 }
