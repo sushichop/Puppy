@@ -1,10 +1,10 @@
+@preconcurrency import Dispatch
 import Foundation
 #if canImport(Darwin)
-import Darwin
 #elseif os(Linux)
-import Glibc
+import func CPuppy.cpuppy_sys_gettid
 #elseif os(Windows)
-import WinSDK
+import func WinSDK.GetCurrentThreadId
 #else
 #endif // canImport(Darwin)
 
@@ -79,25 +79,11 @@ public struct Puppy: Sendable {
         }
     }
 
-    @usableFromInline
-    func currentThreadID() -> UInt64 {
-        var threadID: UInt64 = 0
-        #if canImport(Darwin)
-        pthread_threadid_np(nil, &threadID)
-        #elseif os(Linux)
-        threadID = cpuppy_sys_gettid()
-        #elseif os(Windows)
-        threadID = UInt64(GetCurrentThreadId())
-        #else
-        #endif // canImport(Darwin)
-        return threadID
-    }
-
     public func flush(_ timeout: Double = 3.0) -> WaitingResult {
         let date = Date()
         let threadID = currentThreadID()
 
-        let group = LoggerGroup()
+        let group = DispatchGroup()
         for logger in loggers {
             group.enter()
             logger.flush {
@@ -116,7 +102,19 @@ public struct Puppy: Sendable {
         }
     }
 
-    private final class LoggerGroup: DispatchGroup, @unchecked Sendable {}
+    @usableFromInline
+    func currentThreadID() -> UInt64 {
+        var threadID: UInt64 = 0
+        #if canImport(Darwin)
+        pthread_threadid_np(nil, &threadID)
+        #elseif os(Linux)
+        threadID = cpuppy_sys_gettid()
+        #elseif os(Windows)
+        threadID = UInt64(GetCurrentThreadId())
+        #else
+        #endif // canImport(Darwin)
+        return threadID
+    }
 }
 
 public enum WaitingResult {
