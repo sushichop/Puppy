@@ -114,9 +114,9 @@ public struct Puppy: Sendable {
             return .timeout
         }
     }
-
-    private final class LoggerGroup: DispatchGroup, @unchecked Sendable {}
 }
+
+open class LoggerGroup: DispatchGroup, @unchecked Sendable {}
 
 public enum WaitingResult {
     case success
