@@ -56,4 +56,23 @@ final class PuppyTests: XCTestCase {
               "42".colorize(.colorNumber(42))
         )
     }
+
+    func testFlush() {
+        let consoleLogger: ConsoleLogger = .init("com.example.yourapp.consolelogger.wait", logLevel: .info)
+        var log = Puppy()
+        log.add(consoleLogger)
+
+        log.info("INFO message for testFlush")
+        log.notice("NOTICE message for testFlush")
+        XCTAssertEqual(log.flush(3.0), .success)
+
+        log.warning("WARNING message for testFlush")
+        log.error("ERROR message for testFlush")
+        consoleLogger.flush {
+            Thread.sleep(forTimeInterval: 1.0)
+        }
+        XCTAssertEqual(log.flush(0.5), .timeout)
+
+        log.removeAll()
+    }
 }

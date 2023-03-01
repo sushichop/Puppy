@@ -91,6 +91,36 @@ public struct Puppy: Sendable {
         #endif // canImport(Darwin)
         return threadID
     }
+
+    public func flush(_ timeout: Double = 3.0) -> WaitingResult {
+        let date = Date()
+        let threadID = currentThreadID()
+
+        let group = LoggerGroup()
+        for logger in loggers {
+            group.enter()
+            logger.flush {
+                puppyDebug("before group.leave, date: \(date), threadID: \(threadID)")
+                group.leave()
+                puppyDebug("after group.leave, date: \(date), threadID: \(threadID)")
+            }
+        }
+
+        let result = group.wait(timeout: .now() + .seconds(Int(timeout)))
+        switch result {
+        case .success:
+            return .success
+        case .timedOut:
+            return .timeout
+        }
+    }
+
+    private final class LoggerGroup: DispatchGroup, @unchecked Sendable {}
+}
+
+public enum WaitingResult {
+    case success
+    case timeout
 }
 
 @inlinable
