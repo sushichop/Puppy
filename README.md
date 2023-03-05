@@ -169,10 +169,12 @@ class ViewController: UIViewController {
 }
 
 struct LogFormatter: LogFormattable {
+    private let dateFormat = DateFormatter()
+
     func formatMessage(_ level: LogLevel, message: String, tag: String, function: String,
                        file: String, line: UInt, swiftLogInfo: [String : String],
                        label: String, date: Date, threadID: UInt64) -> String {
-        let date = dateFormatter(date)
+        let date = dateFormatter(date, withFormatter: dateFormat)
         let fileName = fileName(file)
         let moduleName = moduleName(file)
         return "\(date) \(threadID) [\(level.emoji) \(level)] \(swiftLogInfo) \(moduleName)/\(fileName)#L.\(line) \(function) \(message)".colorize(level.color)
