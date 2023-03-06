@@ -2,14 +2,15 @@ include(FetchContent)
 
 FetchContent_Declare(swift-log
   GIT_REPOSITORY https://github.com/apple/swift-log.git
-  GIT_TAG 1.4.4
+  GIT_TAG 1.5.2
 )
 FetchContent_MakeAvailable(swift-log)
 
 add_library(Logging
   ${swift-log_SOURCE_DIR}/Sources/Logging/Locks.swift
+  ${swift-log_SOURCE_DIR}/Sources/Logging/LogHandler.swift
   ${swift-log_SOURCE_DIR}/Sources/Logging/Logging.swift
-  ${swift-log_SOURCE_DIR}/Sources/Logging/LogHandler.swift)
+  ${swift-log_SOURCE_DIR}/Sources/Logging/MetadataProvider.swift)
 
 target_link_libraries(Logging PRIVATE
   $<$<NOT:$<PLATFORM_ID:Darwin>>:Foundation>)

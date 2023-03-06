@@ -35,7 +35,7 @@ final class LogFormatterTests: XCTestCase {
             private let dateFormat = DateFormatter()
 
             func formatMessage(_ level: LogLevel, message: String, tag: String, function: String,
-                               file: String, line: UInt, swiftLogInfo: [String : String],
+                               file: String, line: UInt, swiftLogInfo: [String: String],
                                label: String, date: Date, threadID: UInt64) -> String {
                 let date = dateFormatter(date, withFormatter: dateFormat)
                 return "\(date) \(message)"
