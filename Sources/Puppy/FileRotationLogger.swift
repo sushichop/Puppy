@@ -13,11 +13,18 @@ public struct FileRotationLogger: FileLoggerable {
     let rotationConfig: RotationConfig
     private weak var delegate: FileRotationLoggerDelegate?
 
+    private var dateFormat: DateFormatter
+
     public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil, fileURL: URL, filePermission: String = "640", rotationConfig: RotationConfig, delegate: FileRotationLoggerDelegate? = nil) throws {
         self.label = label
         self.queue = DispatchQueue(label: label)
         self.logLevel = logLevel
         self.logFormat = logFormat
+
+        self.dateFormat = DateFormatter()
+        self.dateFormat.dateFormat = "yyyyMMdd'T'HHmmssZZZZZ"
+        self.dateFormat.timeZone = TimeZone(identifier: "UTC")
+        self.dateFormat.locale = Locale(identifier: "en_US_POSIX")
 
         self.fileURL = fileURL
         puppyDebug("initialized, fileURL: \(fileURL)")
@@ -76,7 +83,7 @@ public struct FileRotationLogger: FileLoggerable {
             case .numbering:
                 archivedFileURL = fileURL.appendingPathExtension("1")
             case .date_uuid:
-                archivedFileURL = fileURL.appendingPathExtension(dateFormatter(Date(), dateFormat: "yyyyMMdd'T'HHmmssZZZZZ", timeZone: "UTC") + "_" + UUID().uuidString.lowercased())
+                archivedFileURL = fileURL.appendingPathExtension(dateFormatter(Date(), withFormatter: self.dateFormat) + "_" + UUID().uuidString.lowercased())
             }
             try FileManager.default.moveItem(at: fileURL, to: archivedFileURL)
             delegate?.fileRotationLogger(self, didArchiveFileURL: fileURL, toFileURL: archivedFileURL)
