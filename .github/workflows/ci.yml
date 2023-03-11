@@ -16,17 +16,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['macos-12', 'ubuntu-20.04', 'windows-latest']
-        swift-version: ['5.6', '5.7.1']
+        os: ['macos-latest', 'ubuntu-latest', 'windows-latest']
+        swift-version: ['5.6', '5.7.2']
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
       - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
         if: runner.os == 'macOS'
         run: |
-          ls -al
+          ls -al /Applications
           if [ '${{ matrix.swift-version }}' = '5.6' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.3.app >> $GITHUB_ENV; fi
-          if [ '${{ matrix.swift-version }}' = '5.7.1' ]; then echo DEVELOPER_DIR=/Applications/Xcode_14.1.app >> $GITHUB_ENV; fi
+          if [ '${{ matrix.swift-version }}' = '5.7.2' ]; then echo DEVELOPER_DIR=/Applications/Xcode_14.2.app >> $GITHUB_ENV; fi
       - uses: sushichop/gha-swift-env@v1
         with:
           swift-version: ${{ matrix.swift-version }}
@@ -40,17 +40,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['macos-12', 'ubuntu-20.04', 'windows-latest']
-        swift-version: ['5.7.1']
+        os: ['macos-latest', 'ubuntu-latest', 'windows-latest']
+        swift-version: ['5.7.2']
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
       - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
         if: runner.os == 'macOS'
         run: |
-          ls -al
+          ls -al /Applications
           if [ '${{ matrix.swift-version }}' = '5.6' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.3.app >> $GITHUB_ENV; fi
-          if [ '${{ matrix.swift-version }}' = '5.7.1' ]; then echo DEVELOPER_DIR=/Applications/Xcode_14.1.app >> $GITHUB_ENV; fi
+          if [ '${{ matrix.swift-version }}' = '5.7.2' ]; then echo DEVELOPER_DIR=/Applications/Xcode_14.2.app >> $GITHUB_ENV; fi
       - uses: sushichop/gha-swift-env@v1
         with:
           swift-version: ${{ matrix.swift-version }}
@@ -60,10 +60,10 @@ jobs:
 
   codecov:
     name: codecov - Xcode ${{ matrix.xcode }}
-    runs-on: macos-12
+    runs-on: macos-latest
     strategy:
       matrix:
-        xcode: ['14.1']
+        xcode: ['14.2']
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -80,7 +80,7 @@ jobs:
 
   xcode:
     name: ${{ matrix.make-target }} - Xcode ${{ matrix.xcode }}
-    runs-on: macos-12
+    runs-on: macos-latest
     strategy:
       matrix:
         make-target:
@@ -90,7 +90,7 @@ jobs:
             carthage-build-workaround,
             carthage-build-xcframeworks,
           ]
-        xcode: ['14.1']
+        xcode: ['14.2']
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -100,10 +100,10 @@ jobs:
 
   cocoapods:
     name: CocoaPods - Xcode ${{ matrix.xcode }}
-    runs-on: macos-12
+    runs-on: macos-latest
     strategy:
       matrix:
-        xcode: ['14.1']
+        xcode: ['14.2']
       fail-fast: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
@@ -118,17 +118,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['macos-12', 'ubuntu-20.04']
-        swift-version: ['5.7.1']
+        os: ['macos-latest', 'ubuntu-latest']
+        swift-version: ['5.7.2']
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
       - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
         if: runner.os == 'macOS'
         run: |
-          ls -al
+          ls -al /Applications
           if [ '${{ matrix.swift-version }}' = '5.6' ]; then echo DEVELOPER_DIR=/Applications/Xcode_13.3.app >> $GITHUB_ENV; fi
-          if [ '${{ matrix.swift-version }}' = '5.7.1' ]; then echo DEVELOPER_DIR=/Applications/Xcode_14.1.app >> $GITHUB_ENV; fi
+          if [ '${{ matrix.swift-version }}' = '5.7.2' ]; then echo DEVELOPER_DIR=/Applications/Xcode_14.2.app >> $GITHUB_ENV; fi
       - uses: sushichop/gha-swift-env@v1
         with:
           swift-version: ${{ matrix.swift-version }}
