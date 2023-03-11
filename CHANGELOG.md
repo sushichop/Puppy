@@ -6,6 +6,7 @@
 - Make `dateFormat` function more efficient. [#81](https://github.com/sushichop/Puppy/pull/81)
 - Update `Logging` module to 1.5.2 or later. [#82](https://github.com/sushichop/Puppy/pull/82)
 - Export `Logging` module. [#83](https://github.com/sushichop/Puppy/pull/83)
+- Use Swift 5.7.2 and Xcode 14.2. [#84](https://github.com/sushichop/Puppy/pull/84)
 
 ## [0.6.0](https://github.com/sushichop/Puppy/releases/tag/0.6.0) (2022-11-29)
 

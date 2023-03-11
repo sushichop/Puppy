@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := help
 HELP_INDENT := 28
 
-SWIFT_VERSION := 5.7.1
-DISTRIBUTION := focal
+SWIFT_VERSION := 5.7.2
+DISTRIBUTION := jammy
 
 .PHONY: help
 help:
