@@ -1,6 +1,6 @@
 #if canImport(Logging)
 import Foundation
-import Logging
+@_exported import Logging
 
 public struct PuppyLogHandler: LogHandler, Sendable {
     public var logLevel: Logger.Level = .info

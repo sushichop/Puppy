@@ -1,8 +1,5 @@
 import XCTest
 import Puppy
-#if canImport(Logging)
-import Logging
-#endif // canImport(Logging)
 
 final class PuppyLogHandlerTests: XCTestCase {
 

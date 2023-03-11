@@ -94,7 +94,6 @@ Logging to multiple transports(e.g. console and syslog) as a backend for `apple/
 
 ```swift
 import Puppy
-import Logging
 
 let console = ConsoleLogger("com.example.yourapp.console")
 let syslog = SystemLogger("com.example.yourapp.syslog")
