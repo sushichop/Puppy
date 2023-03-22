@@ -87,6 +87,7 @@ jobs:
           [
             xcode-test,
             xcode-build,
+            pod-lib-lint,
             carthage-build-workaround,
             carthage-build-xcframeworks,
           ]
@@ -97,21 +98,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: make ${{ matrix.make-target }}
-
-  cocoapods:
-    name: CocoaPods - Xcode ${{ matrix.xcode }}
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        xcode: ['14.2']
-      fail-fast: false
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
-    steps:
-      - uses: actions/checkout@v3
-      # See https://github.com/CocoaPods/CocoaPods/issues/11558.
-      - run: |
-          pod lib lint --platforms=macos,ios,tvos --verbose --allow-warnings
 
   bazel:
     name: Bazel - Swift ${{ matrix.swift-version }} on ${{ matrix.os }}
