@@ -1,3 +1,7 @@
+## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+
+- Workaround for `pod lib lint` on watchOS is no longer needed. [#86](https://github.com/sushichop/Puppy/pull/86)
+
 ## [0.7.0](https://github.com/sushichop/Puppy/releases/tag/0.7.0) (2023-03-13)
 
 - Add different error handling behaviors for disk writing errors. [#75](https://github.com/sushichop/Puppy/pull/75)
