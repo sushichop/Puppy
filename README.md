@@ -170,6 +170,10 @@ class ViewController: UIViewController {
 struct LogFormatter: LogFormattable {
     private let dateFormat = DateFormatter()
 
+    init() {
+        dateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+    }
+
     func formatMessage(_ level: LogLevel, message: String, tag: String, function: String,
                        file: String, line: UInt, swiftLogInfo: [String : String],
                        label: String, date: Date, threadID: UInt64) -> String {
