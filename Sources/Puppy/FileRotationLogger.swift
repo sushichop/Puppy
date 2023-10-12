@@ -39,7 +39,6 @@ public struct FileRotationLogger: FileLoggerable {
     }
 
     public func log(_ level: LogLevel, string: String) {
-        rotateFiles()
         append(level, string: string)
         rotateFiles()
     }
