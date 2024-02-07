@@ -9,13 +9,23 @@ public struct FileRotationLogger: FileLoggerable {
 
     public let fileURL: URL
     public let filePermission: String
+    public var fileProtectionType: FileProtectionType?
+    public var isExcludedFromBackup: Bool
 
     let rotationConfig: RotationConfig
     private weak var delegate: FileRotationLoggerDelegate?
 
     private var dateFormat: DateFormatter
 
-    public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil, fileURL: URL, filePermission: String = "640", rotationConfig: RotationConfig, delegate: FileRotationLoggerDelegate? = nil) throws {
+    public init(_ label: String,
+                logLevel: LogLevel = .trace,
+                logFormat: LogFormattable? = nil,
+                fileURL: URL,
+                filePermission: String = "640",
+                fileProtectionType: FileProtectionType? = nil,
+                isExcludedFromBackup: Bool = false,
+                rotationConfig: RotationConfig,
+                delegate: FileRotationLoggerDelegate? = nil) throws {
         self.label = label
         self.queue = DispatchQueue(label: label)
         self.logLevel = logLevel
@@ -29,6 +39,8 @@ public struct FileRotationLogger: FileLoggerable {
         self.fileURL = fileURL
         puppyDebug("initialized, fileURL: \(fileURL)")
         self.filePermission = filePermission
+        self.fileProtectionType = fileProtectionType
+        self.isExcludedFromBackup = isExcludedFromBackup
 
         self.rotationConfig = rotationConfig
         self.delegate = delegate

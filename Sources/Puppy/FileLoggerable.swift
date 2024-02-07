@@ -19,6 +19,8 @@ public enum FileWritingErrorHandlingMode: Sendable {
 public protocol FileLoggerable: Loggerable, Sendable {
     var fileURL: URL { get }
     var filePermission: String { get }
+    var fileProtectionType: FileProtectionType? { get }
+    var isExcludedFromBackup: Bool { get }
 }
 
 extension FileLoggerable {
@@ -107,6 +109,18 @@ extension FileLoggerable {
 
         if !FileManager.default.fileExists(atPath: fileURL.path) {
             let successful = FileManager.default.createFile(atPath: fileURL.path, contents: nil, attributes: [FileAttributeKey.posixPermissions: uintPermission])
+
+            if let fileProtectionType = fileProtectionType {
+                try FileManager.default.setAttributes([.protectionKey: fileProtectionType], ofItemAtPath: fileURL.path)
+            }
+
+            if isExcludedFromBackup {
+                var resourceValues = URLResourceValues()
+                resourceValues.isExcludedFromBackup = true
+                var fileURL = fileURL
+                try fileURL.setResourceValues(resourceValues)
+            }
+
             if successful {
                 puppyDebug("succeeded in creating filePath")
             } else {
