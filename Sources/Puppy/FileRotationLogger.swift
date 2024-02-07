@@ -12,6 +12,9 @@ public struct FileRotationLogger: FileLoggerable {
     public var fileProtectionType: FileProtectionType?
     public var isExcludedFromBackup: Bool
 
+    public let flushMode: FlushMode
+    public let writeMode: FileWritingErrorHandlingMode
+
     let rotationConfig: RotationConfig
     private weak var delegate: FileRotationLoggerDelegate?
 
@@ -25,6 +28,8 @@ public struct FileRotationLogger: FileLoggerable {
                 fileProtectionType: FileProtectionType? = nil,
                 isExcludedFromBackup: Bool = false,
                 rotationConfig: RotationConfig,
+                flushMode: FlushMode = .always,
+                writeMode: FileWritingErrorHandlingMode = .force,
                 delegate: FileRotationLoggerDelegate? = nil) throws {
         self.label = label
         self.queue = DispatchQueue(label: label)
@@ -42,6 +47,9 @@ public struct FileRotationLogger: FileLoggerable {
         self.fileProtectionType = fileProtectionType
         self.isExcludedFromBackup = isExcludedFromBackup
 
+        self.flushMode = flushMode
+        self.writeMode = writeMode
+
         self.rotationConfig = rotationConfig
         self.delegate = delegate
 
@@ -52,7 +60,7 @@ public struct FileRotationLogger: FileLoggerable {
 
     public func log(_ level: LogLevel, string: String) {
         rotateFiles()
-        append(level, string: string)
+        append(level, string: string, flushMode: flushMode, writeMode: writeMode)
         rotateFiles()
     }
 
