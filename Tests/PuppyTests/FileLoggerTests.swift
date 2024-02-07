@@ -88,6 +88,46 @@ final class FileLoggerTests: XCTestCase {
         log.remove(fileLogger)
     }
 
+    func testFileProtection() throws {
+        #if os(iOS) || os(macOS)
+        let fileURL = URL(fileURLWithPath: "./protected.log").absoluteURL
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.protected", fileURL: fileURL, fileProtectionType: .completeUntilFirstUserAuthentication)
+        var log = Puppy()
+        log.add(fileLogger)
+        log.trace("protection, TRACE message using FileLogger")
+        log.verbose("protection, VERBOSE message using FileLogger")
+        fileLogger.flush(fileURL)
+
+        let attributes = try FileManager.default.attributesOfItem(atPath: fileURL.path)
+        // swiftlint:disable force_cast
+        let protection = attributes[FileAttributeKey.protectionKey] as! FileProtectionType
+        // swiftlint:enable force_cast
+
+        XCTAssertEqual(protection, FileProtectionType.completeUntilFirstUserAuthentication)
+
+        _ = fileLogger.delete(fileURL)
+        log.remove(fileLogger)
+        #endif
+    }
+
+    func testExcludeFromBackup() throws {
+        #if os(iOS) || os(macOS)
+        let fileURL = URL(fileURLWithPath: "./exclude-from-backup.log").absoluteURL
+        let fileLogger: FileLogger = try .init("com.example.yourapp.filelogger.exclude-from-backup", fileURL: fileURL, isExcludedFromBackup: true)
+        var log = Puppy()
+        log.add(fileLogger)
+        log.trace("exclude from backup, TRACE message using FileLogger")
+        log.verbose("exclude from backup, VERBOSE message using FileLogger")
+        fileLogger.flush(fileURL)
+
+        let resourceValues = try fileURL.resourceValues(forKeys: [.isExcludedFromBackupKey])
+        XCTAssertTrue(resourceValues.isExcludedFromBackup == true)
+
+        _ = fileLogger.delete(fileURL)
+        log.remove(fileLogger)
+        #endif
+    }
+
     func testFilePermissionError() throws {
         let permission800FileURL = URL(fileURLWithPath: "./permission800.log").absoluteURL
         let filePermission800 = "800"

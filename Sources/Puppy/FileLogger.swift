@@ -9,11 +9,20 @@ public struct FileLogger: FileLoggerable {
 
     public let fileURL: URL
     public let filePermission: String
+    public let fileProtectionType: FileProtectionType?
+    public let isExcludedFromBackup: Bool
 
     public let flushMode: FlushMode
     public let writeMode: FileWritingErrorHandlingMode
 
-    public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil, fileURL: URL, filePermission: String = "640", flushMode: FlushMode = .always, writeMode: FileWritingErrorHandlingMode = .force) throws {
+    public init(_ label: String,
+                logLevel: LogLevel = .trace,
+                logFormat: LogFormattable? = nil,
+                fileURL: URL, filePermission: String = "640",
+                fileProtectionType: FileProtectionType? = nil,
+                isExcludedFromBackup: Bool = false,
+                flushMode: FlushMode = .always,
+                writeMode: FileWritingErrorHandlingMode = .force) throws {
         self.label = label
         self.queue = DispatchQueue(label: label)
         self.logLevel = logLevel
@@ -22,6 +31,8 @@ public struct FileLogger: FileLoggerable {
         self.fileURL = fileURL
         puppyDebug("initialized, fileURL: \(fileURL)")
         self.filePermission = filePermission
+        self.fileProtectionType = fileProtectionType
+        self.isExcludedFromBackup = isExcludedFromBackup
 
         self.flushMode = flushMode
         self.writeMode = writeMode
