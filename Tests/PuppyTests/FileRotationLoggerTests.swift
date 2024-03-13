@@ -72,6 +72,162 @@ final class FileRotationLoggerTests: XCTestCase {
 
         log.remove(fileRotation)
     }
+
+    @available(macOS 13.0, *)
+    func testFileRotationArchieveCompression() throws {
+        final class CompressorDelegate: FileRotationLoggerDelegate {
+            var compressionDelegateWasCalled = false
+
+            func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didArchiveFileURL: URL, toFileURL: URL) {
+                print("didArchive! didArchiveFileURL: \(didArchiveFileURL), toFileURL: \(toFileURL)")
+            }
+
+            func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveArchivedFileURL: URL) {
+                print("didRemove! didRemoveArchivedFileURL: \(didRemoveArchivedFileURL)")
+            }
+
+            func fileRotationLogger(_ fileRotationlogger: FileRotationLogger, didCompressArchivedFileURL: URL, toFileGzip: URL) {
+                compressionDelegateWasCalled = true
+            }
+
+            func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveGzipFileURL: URL) {
+                print("didRemove! didRemoveGzipFileURL: \(didRemoveGzipFileURL)")
+            }
+        }
+
+        let dirPath = NSTemporaryDirectory()
+        let logPath = URL(filePath: dirPath + "rotation-compression.log")
+        defer {
+            try? FileManager.default.removeItem(atPath: dirPath)
+        }
+
+        let rotationConfig: RotationConfig = .init(suffixExtension: .numbering, maxFileSize: 512, maxArchivedFilesCount: 4) // // default case
+        let delegate: CompressorDelegate = .init()
+        let fileRotation: FileRotationLogger = try .init("com.example.yourapp.filerotationlogger.numbering", fileURL: logPath, rotationConfig: rotationConfig, delegate: delegate, compressArchived: true)
+
+        var log = Puppy()
+        log.add(fileRotation)
+
+        for num in 0...100 {
+            log.info("\(num) numbering")
+        }
+
+        sleep(5)
+        
+        XCTAssertTrue(delegate.compressionDelegateWasCalled)
+
+        _ = fileRotation.delete(logPath)
+        log.remove(fileRotation)
+    }
+
+    @available(macOS 13.0, *)
+    func testGzipRotation() throws {
+        final class RotationDelegate: FileRotationLoggerDelegate {
+            var logRotationCounter = 0
+            var gzipDeleteCounter = 0
+
+            var compressionDelegateWasCalled = false
+            func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didArchiveFileURL: URL, toFileURL: URL) {
+                logRotationCounter += 1
+            }
+
+            func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveArchivedFileURL: URL) {
+            }
+
+            func fileRotationLogger(_ fileRotationlogger: FileRotationLogger, didCompressArchivedFileURL: URL, toFileGzip: URL) {
+            }
+
+            func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveGzipFileURL: URL) {
+                gzipDeleteCounter += 1
+            }
+        }
+
+        let tempPath = NSTemporaryDirectory()
+        let logPath = URL(filePath: tempPath + "rotation-compression.log")
+        defer {
+            try? FileManager.default.removeItem(atPath: tempPath)
+        }
+
+        let expectedGzipCount = UInt8(3)
+        var rotationConfig: RotationConfig = .init()
+        rotationConfig.maxArchivedFilesCount = expectedGzipCount
+        rotationConfig.maxFileSize = 50
+        let delegate = RotationDelegate()
+        let fileRotation: FileRotationLogger = try .init("com.example.yourapp.filerotationlogger.errorcatch", fileURL: logPath, rotationConfig: rotationConfig, delegate: delegate, compressArchived: true)
+
+        var log = Puppy()
+        log.add(fileRotation)
+
+        for num in 0...10 {
+            log.info("\(num) very long string")
+        }
+
+        sleep(5)
+
+        let archivedGzips = try FileManager.default.contentsOfDirectory(atPath: tempPath)
+            .map { logPath.deletingLastPathComponent().appendingPathComponent($0) }
+            .filter { $0.pathExtension == "gzip" }
+
+        XCTAssertEqual(archivedGzips.count, Int(expectedGzipCount))
+        XCTAssertEqual(delegate.logRotationCounter-delegate.gzipDeleteCounter, Int(expectedGzipCount))
+
+        log.remove(fileRotation)
+    }
+
+    @available(macOS 13.0, *)
+    func testFileRotationWithoutCompression() throws {
+        final class RotationDelegate: FileRotationLoggerDelegate {
+            var logRotationCounter = 0
+            var archiveDeleteCounter = 0
+
+            var compressionDelegateWasCalled = false
+            func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didArchiveFileURL: URL, toFileURL: URL) {
+                logRotationCounter += 1
+            }
+
+            func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveArchivedFileURL: URL) {
+                archiveDeleteCounter += 1
+            }
+
+            func fileRotationLogger(_ fileRotationlogger: FileRotationLogger, didCompressArchivedFileURL: URL, toFileGzip: URL) {
+            }
+
+            func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveGzipFileURL: URL) {
+            }
+        }
+
+        let tempPath = NSTemporaryDirectory()
+        let logPath = URL(filePath: tempPath + "rotation.log")
+        defer {
+            try? FileManager.default.removeItem(atPath: tempPath)
+        }
+
+        let expectedArchiveCount = UInt8(5)
+        var rotationConfig: RotationConfig = .init()
+        rotationConfig.maxArchivedFilesCount = expectedArchiveCount
+        rotationConfig.maxFileSize = 10
+        let delegate = RotationDelegate()
+        let fileRotation: FileRotationLogger = try .init("com.example.yourapp.filerotationlogger.errorcatch", fileURL: logPath, rotationConfig: rotationConfig, delegate: delegate, compressArchived: false)
+
+        var log = Puppy()
+        log.add(fileRotation)
+
+        for num in 0...10 {
+            log.info("\(num) very long string")
+        }
+
+        sleep(5)
+
+        let tempDirURL = logPath.deletingLastPathComponent()
+        let archives = try FileManager.default.contentsOfDirectory(atPath: tempPath)
+            .map { tempDirURL.appendingPathComponent($0) }
+            .filter { $0 != logPath && $0.deletingPathExtension() == logPath }
+
+        XCTAssertEqual(archives.count, Int(expectedArchiveCount))
+        XCTAssertEqual(delegate.logRotationCounter-delegate.archiveDeleteCounter, Int(expectedArchiveCount))
+
+        log.remove(fileRotation)
+    }
 }
 
 private final class FileRotationDelegate: FileRotationLoggerDelegate {
@@ -81,5 +237,13 @@ private final class FileRotationDelegate: FileRotationLoggerDelegate {
 
     func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveArchivedFileURL: URL) {
         print("didRemove! didRemoveArchivedFileURL: \(didRemoveArchivedFileURL)")
+    }
+
+    func fileRotationLogger(_ fileRotationlogger: FileRotationLogger, didCompressArchivedFileURL: URL, toFileGzip: URL) {
+        print("didCompress! didCompressArchivedFileURL: \(didCompressArchivedFileURL) toFileGzip: \(toFileGzip)")
+    }
+
+    func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveGzipFileURL: URL) {
+        print("didRemove! didRemoveGzipFileURL: \(didRemoveGzipFileURL)")
     }
 }

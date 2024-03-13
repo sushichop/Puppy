@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		144BEDBA2B9FBFC600517B50 /* Gzip in Frameworks */ = {isa = PBXBuildFile; productRef = 144BEDB92B9FBFC600517B50 /* Gzip */; };
 		C71A59F227CA57CD00A577EC /* FileManager+Windows.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71A59F127CA57CD00A577EC /* FileManager+Windows.swift */; };
 		C71A59F427CA580100A577EC /* FileManager+WindowsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71A59F327CA580100A577EC /* FileManager+WindowsTests.swift */; };
 		C74F94B226777D38003A88BE /* CPuppy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C74F94A926777D38003A88BE /* CPuppy.framework */; };
@@ -146,6 +147,7 @@
 			files = (
 				C77B4C0729B62CE000F94C0E /* Logging in Frameworks */,
 				C74F94C826778428003A88BE /* CPuppy.framework in Frameworks */,
+				144BEDBA2B9FBFC600517B50 /* Gzip in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +388,7 @@
 			name = Puppy;
 			packageProductDependencies = (
 				C77B4C0629B62CE000F94C0E /* Logging */,
+				144BEDB92B9FBFC600517B50 /* Gzip */,
 			);
 			productName = Puppy;
 			productReference = C7ED719E252DBEC70065B955 /* Puppy.framework */;
@@ -447,6 +450,7 @@
 			mainGroup = C7ED7194252DBEC70065B955;
 			packageReferences = (
 				C77B4C0529B62CE000F94C0E /* XCRemoteSwiftPackageReference "swift-log" */,
+				144BEDB82B9FBF7E00517B50 /* XCRemoteSwiftPackageReference "GzipSwift" */,
 			);
 			productRefGroup = C7ED719F252DBEC70065B955 /* Products */;
 			projectDirPath = "";
@@ -903,6 +907,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		144BEDB82B9FBF7E00517B50 /* XCRemoteSwiftPackageReference "GzipSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/1024jp/GzipSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.1;
+			};
+		};
 		C77B4C0529B62CE000F94C0E /* XCRemoteSwiftPackageReference "swift-log" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-log.git";
@@ -914,6 +926,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		144BEDB92B9FBFC600517B50 /* Gzip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 144BEDB82B9FBF7E00517B50 /* XCRemoteSwiftPackageReference "GzipSwift" */;
+			productName = Gzip;
+		};
 		C77B4C0629B62CE000F94C0E /* Logging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C77B4C0529B62CE000F94C0E /* XCRemoteSwiftPackageReference "swift-log" */;
