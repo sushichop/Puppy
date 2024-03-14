@@ -13,6 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-log.git", .upToNextMinor(from: "1.5.2")),
+        .package(url: "https://github.com/1024jp/GzipSwift", .upToNextMinor(from: "6.0.1")),
     ],
     targets: [
         .target(name: "CPuppy",
