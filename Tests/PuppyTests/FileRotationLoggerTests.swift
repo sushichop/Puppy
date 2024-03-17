@@ -123,18 +123,18 @@ final class FileRotationLoggerTests: XCTestCase {
     @available(macOS 13.0, *)
     func testGzipRotation() throws {
         final class RotationDelegate: FileRotationLoggerDelegate {
-            var logRotationCounter = 0
+            var gzipRotationCounter = 0
             var gzipDeleteCounter = 0
 
             var compressionDelegateWasCalled = false
             func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didArchiveFileURL: URL, toFileURL: URL) {
-                logRotationCounter += 1
             }
 
             func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveArchivedFileURL: URL) {
             }
 
             func fileRotationLogger(_ fileRotationlogger: FileRotationLogger, didCompressArchivedFileURL: URL, toFileGzip: URL) {
+                gzipRotationCounter += 1
             }
 
             func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveGzipFileURL: URL) {
@@ -160,16 +160,18 @@ final class FileRotationLoggerTests: XCTestCase {
 
         for num in 0...10 {
             log.info("\(num) very long string")
+            sleep(1)
         }
 
-        sleep(5)
+        sleep(3)
 
         let archivedGzips = try FileManager.default.contentsOfDirectory(atPath: tempPath)
             .map { logPath.deletingLastPathComponent().appendingPathComponent($0) }
             .filter { $0.pathExtension == "gzip" }
+        print(archivedGzips)
 
         XCTAssertEqual(archivedGzips.count, Int(expectedGzipCount))
-        XCTAssertEqual(delegate.logRotationCounter-delegate.gzipDeleteCounter, Int(expectedGzipCount))
+        XCTAssertEqual(delegate.gzipRotationCounter-delegate.gzipDeleteCounter, Int(expectedGzipCount))
 
         log.remove(fileRotation)
     }

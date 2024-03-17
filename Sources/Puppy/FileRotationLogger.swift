@@ -18,7 +18,14 @@ public struct FileRotationLogger: FileLoggerable {
 
     private var dateFormat: DateFormatter
 
-    public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil, fileURL: URL, filePermission: String = "640", rotationConfig: RotationConfig, delegate: FileRotationLoggerDelegate? = nil, compressArchived: Bool = false) throws {
+    public init(_ label: String,
+                logLevel: LogLevel = .trace,
+                logFormat: LogFormattable? = nil,
+                fileURL: URL,
+                filePermission: String = "640",
+                rotationConfig: RotationConfig,
+                delegate: FileRotationLoggerDelegate? = nil,
+                compressArchived: Bool = false) throws {
         self.label = label
         self.queue = DispatchQueue(label: label)
         self.logLevel = logLevel
@@ -99,7 +106,7 @@ public struct FileRotationLogger: FileLoggerable {
                     do {
                         let data = try Data(contentsOf: archivedFileURL)
                         let optimizedData = try data.gzipped(level: .bestCompression)
-                        let gzipPath = uniqueGzipArchive(fileName: archivedFileURL.toPath())
+                        let gzipPath = uniqueGzipArchive(fileName: archivedFileURL.deletingPathExtension().toPath())
                         FileManager.default.createFile(atPath: gzipPath, contents: optimizedData)
                         try FileManager.default.removeItem(atPath: archivedFileURL.toPath())
 
@@ -203,8 +210,7 @@ public struct FileRotationLogger: FileLoggerable {
     }
 
     private func uniqueGzipArchive(fileName: String) -> String {
-        let id = Date().timeIntervalSince1970.description.replacingOccurrences(of: ".", with: "")
-        return "\(fileName).\(id).gzip"
+        return "\(fileName).\(Int(Date().timeIntervalSince1970)).gzip"
     }
 }
 
