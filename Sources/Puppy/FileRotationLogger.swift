@@ -1,6 +1,5 @@
 @preconcurrency import Dispatch
 import Foundation
-import Gzip
 
 public struct FileRotationLogger: FileLoggerable {
     public let label: String
@@ -78,7 +77,7 @@ public struct FileRotationLogger: FileLoggerable {
         // Removes extra archived files.
         removeArchivedFiles(fileURL, maxArchivedFilesCount: rotationConfig.maxArchivedFilesCount)
         if self.compressArchived {
-            removeArchivedGzips(fileURL, maxArchivedFilesCount: rotationConfig.maxArchivedFilesCount)
+            removeCompressedArchives(fileURL, maxArchivedFilesCount: rotationConfig.maxArchivedFilesCount)
         }
         // Opens a new target file.
         do {
@@ -104,13 +103,11 @@ public struct FileRotationLogger: FileLoggerable {
             if self.compressArchived {
                 Task.detached { [archivedFileURL] in
                     do {
-                        let data = try Data(contentsOf: archivedFileURL)
-                        let optimizedData = try data.gzipped(level: .bestCompression)
-                        let gzipPath = uniqueGzipArchive(fileName: archivedFileURL.deletingPathExtension().toPath())
-                        FileManager.default.createFile(atPath: gzipPath, contents: optimizedData)
+                        let archivePath = Compressor.uniqueName(file: archivedFileURL.deletingPathExtension().toPath())
+                        try Compressor.lzfse(src: archivedFileURL.toPath(), dst: archivePath)
                         try FileManager.default.removeItem(atPath: archivedFileURL.toPath())
 
-                        delegate?.fileRotationLogger(self, didCompressArchivedFileURL: archivedFileURL, toFileGzip: URL(path: gzipPath))
+                        delegate?.fileRotationLogger(self, didCompressArchivedFileURL: archivedFileURL, toCompressedFile: URL(path: archivePath))
                     } catch {
                         puppyDebug("compressing rotated log file: \(error.localizedDescription)")
                     }
@@ -191,26 +188,22 @@ public struct FileRotationLogger: FileLoggerable {
         }
     }
     
-    private func removeArchivedGzips(_ fileURL: URL, maxArchivedFilesCount: UInt8) {
+    private func removeCompressedArchives(_ fileURL: URL, maxArchivedFilesCount: UInt8) {
         do {
             let archivedFileURLs = ascArchivedFileURLs(fileURL, isIncluded: {
-                $0.pathExtension == "gzip"
+                $0.pathExtension == "archive"
             })
             if archivedFileURLs.count > maxArchivedFilesCount {
                 for index in 0 ..< archivedFileURLs.count - Int(maxArchivedFilesCount) {
                     puppyDebug("\(archivedFileURLs[index]) will be removed...")
                     try FileManager.default.removeItem(at: archivedFileURLs[index])
                     puppyDebug("\(archivedFileURLs[index]) has been removed")
-                    delegate?.fileRotationLogger(self, didRemoveGzipFileURL: archivedFileURLs[index])
+                    delegate?.fileRotationLogger(self, didRemoveCompressedFileURL: archivedFileURLs[index])
                 }
             }
         } catch {
             print("error in removing extra archived files, error: \(error.localizedDescription)")
         }
-    }
-
-    private func uniqueGzipArchive(fileName: String) -> String {
-        return "\(fileName).\(Int(Date().timeIntervalSince1970)).gzip"
     }
 }
 
@@ -235,8 +228,8 @@ public struct RotationConfig: Sendable {
 public protocol FileRotationLoggerDelegate: AnyObject, Sendable {
     func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didArchiveFileURL: URL, toFileURL: URL)
     func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveArchivedFileURL: URL)
-    func fileRotationLogger(_ fileRotationlogger: FileRotationLogger, didCompressArchivedFileURL: URL, toFileGzip: URL)
-    func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveGzipFileURL: URL)
+    func fileRotationLogger(_ fileRotationlogger: FileRotationLogger, didCompressArchivedFileURL: URL, toCompressedFile: URL)
+    func fileRotationLogger(_ fileRotationLogger: FileRotationLogger, didRemoveCompressedFileURL: URL)
 }
 
 extension URL {
