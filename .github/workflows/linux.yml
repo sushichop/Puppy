@@ -1,0 +1,32 @@
+name: Linux
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "**"
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  swiftpm:
+    name: SwiftPM - Swift ${{ matrix.swift-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-24.04']
+        swift-version: ['6.1']
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Swift ${{ matrix.swift-version }}
+        shell: bash
+        run: SWIFT_VERSION=${{ matrix.swift-version }} ./actions/gha-swift-linux.sh
+      - name: Show Swift version
+        run: swift --version
+      - name: Build Swift package
+        run: swift build -v -c release
+      - name: Test Swift package
+        run: swift test -v -Xswiftc -DPUPPY_DEBUG

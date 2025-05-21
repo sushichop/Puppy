@@ -1,4 +1,4 @@
-name: CI
+name: Dwarin
 
 on:
   push:
@@ -26,32 +26,12 @@ jobs:
         run: |
           ls -al /Applications | grep Xcode
           if [ '${{ matrix.swift-version }}' = '6.1' ]; then echo DEVELOPER_DIR=/Applications/Xcode_16.3.app >> $GITHUB_ENV; fi
-      - uses: sushichop/gha-swift-env@main
-        with:
-          swift-version: ${{ matrix.swift-version }}
+      - name: Set up Swift ${{ matrix.swift-version }}
+        shell: bash
+        run: SWIFT_VERSION=${{ matrix.swift-version }} ./actions/gha-swift-macos.sh
       - name: Show Swift version
         run: swift --version
       - name: Build Swift package
         run: swift build -v -c release
       - name: Test Swift package
         run: swift test -v -Xswiftc -DPUPPY_DEBUG
-
-  codecov:
-    name: codecov - Xcode ${{ matrix.xcode }}
-    runs-on: macos-15
-    strategy:
-      matrix:
-        xcode: ['16.3']
-      fail-fast: false
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
-    steps:
-      - uses: actions/checkout@v4
-      - name: export-codecov
-        run: make export-codecov
-      - name: codecov
-        if: success()
-        uses: codecov/codecov-action@v3
-        with:
-          file: coverage.lcov
-          token: ${{ secrets.CODECOV_TOKEN }}

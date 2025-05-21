@@ -3,14 +3,6 @@ import XCTest
 
 class FileManagerWindowsTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-    }
-
     func testWindowsCreationTime() throws {
         #if os(Windows)
         let fileURL = URL(fileURLWithPath: "./windows-creation-time.log").absoluteURL
@@ -20,7 +12,6 @@ class FileManagerWindowsTests: XCTestCase {
         let creationTime = try FileManager.default.windowsCreationTime(atPath: fileURL.path)
         let creationDateByFileManager = try FileManager.default.attributesOfItem(atPath: fileURL.path)[.creationDate] as! Date // swiftlint:disable:this force_cast
 
-        // NOTE: `attributesOfItem(atPath:)[.creationDate]` has only a second precision information.
         XCTAssertEqual(Int(creationTime), Int(creationDateByFileManager.timeIntervalSince1970))
         try FileManager.default.removeItem(atPath: fileURL.path)
         #endif // os(Windows)
@@ -35,7 +26,6 @@ class FileManagerWindowsTests: XCTestCase {
         let modificationTime = try FileManager.default.windowsModificationTime(atPath: fileURL.path)
         let modificationDateByFileManager = try FileManager.default.attributesOfItem(atPath: fileURL.path)[.modificationDate] as! Date // swiftlint:disable:this force_cast
 
-        // NOTE: `attributesOfItem(atPath:)[.modificationDate]` has only sub-second precision information.
         XCTAssertEqual(Int(modificationTime), Int(modificationDateByFileManager.timeIntervalSince1970))
         try FileManager.default.removeItem(atPath: fileURL.path)
         #endif // os(Windows)

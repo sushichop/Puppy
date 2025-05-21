@@ -6,14 +6,6 @@ import Logging
 
 final class LogFormatterTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-    }
-
     func testLogFormatter() throws {
         let logFormat: LogFormatter = .init()
         let consoleLogger = ConsoleLogger("com.example.yourapp.consolelogger.logformatter", logFormat: logFormat)

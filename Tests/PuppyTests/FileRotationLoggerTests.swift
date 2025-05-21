@@ -3,14 +3,6 @@ import Puppy
 
 final class FileRotationLoggerTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-    }
-
     func testFileRotationNumbering() throws {
         let rotationFileURL = URL(fileURLWithPath: "./rotation-numbering/rotation-numbering.log").absoluteURL
         let rotationDirectoryURL = URL(fileURLWithPath: "./rotation-numbering").absoluteURL
