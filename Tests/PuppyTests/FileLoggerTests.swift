@@ -67,13 +67,7 @@ final class FileLoggerTests: XCTestCase {
         let permission = attribute[FileAttributeKey.posixPermissions] as! UInt16
         // swiftlint:enable force_cast
 
-        #if os(Windows)
-        // NOTE: If the file is writable, its permission is always "700" on Windows.
-        // Reference: https://github.com/apple/swift-corelibs-foundation/blob/main/Sources/Foundation/FileManager%2BWin32.swift
-        let expectedPermission = UInt16("700", radix: 8)!
-        #else
         let expectedPermission = UInt16("600", radix: 8)!
-        #endif // os(Windows)
         XCTAssertEqual(permission, expectedPermission)
 
         _ = fileLogger.delete(fileURL)
@@ -211,7 +205,7 @@ final class FileLoggerTests: XCTestCase {
             _ = try fileLogger.delete(noExistentFileURL).get()
             XCTFail("error should be thrown while awaiting, but it was not thrown")
         } catch {
-            XCTAssertEqual(error as? FileError, .deletingFailed(at: noExistentFileURL))
+            XCTAssertEqual(error as FileError, .deletingFailed(at: noExistentFileURL))
             XCTAssertEqual(error.localizedDescription, "failed to delete a file: \(noExistentFileURL)")
         }
     }
