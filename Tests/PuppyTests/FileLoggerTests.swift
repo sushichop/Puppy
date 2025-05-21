@@ -3,14 +3,6 @@ import Puppy
 
 final class FileLoggerTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-    }
-
     func testFileLogger() throws {
         let fileURL = URL(fileURLWithPath: "./foo/bar.log").absoluteURL
         let directoryURL = URL(fileURLWithPath: "./foo").absoluteURL

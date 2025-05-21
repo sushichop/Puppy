@@ -2,13 +2,6 @@ import XCTest
 import Puppy
 
 final class LoggerableTests: XCTestCase {
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-    }
 
     func testLoggerableLogLevel() throws {
         let mockLogger: MockLogger = .init("com.example.yourapp.mocklogger.loglevel", logLevel: .debug)

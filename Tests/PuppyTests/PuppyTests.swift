@@ -3,14 +3,6 @@ import Puppy
 
 final class PuppyTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-    }
-
     func testAddSameLoggerTwice() throws {
         let consoleLogger: ConsoleLogger = .init("com.example.yourapp.consolelogger.twice", logLevel: .info)
         var puppy = Puppy(loggers: [consoleLogger])

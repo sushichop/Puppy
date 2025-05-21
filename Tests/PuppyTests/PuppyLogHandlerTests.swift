@@ -3,14 +3,6 @@ import Puppy
 
 final class PuppyLogHandlerTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-    }
-
     func testLoggingSystem() throws {
         #if canImport(Logging)
 

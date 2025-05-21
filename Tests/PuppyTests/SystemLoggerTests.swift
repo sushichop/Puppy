@@ -3,14 +3,6 @@ import Puppy
 
 final class SystemLoggerTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-    }
-
     func testSystemLogger() throws {
         #if os(Linux)
         let systemLogger: SystemLogger = .init("com.example.yourapp.systemlogger")

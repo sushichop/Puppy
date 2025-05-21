@@ -3,14 +3,6 @@ import XCTest
 
 class FileManagerWindowsTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-    }
-
     func testWindowsCreationTime() throws {
         #if os(Windows)
         let fileURL = URL(fileURLWithPath: "./windows-creation-time.log").absoluteURL

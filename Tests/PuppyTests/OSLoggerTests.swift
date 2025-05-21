@@ -3,14 +3,6 @@ import Puppy
 
 final class OSLoggerTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-    }
-
     func testOSLogger() throws {
         #if canImport(Darwin)
         let osLogger: OSLogger = .init("com.example.yourapp.oslogger")
