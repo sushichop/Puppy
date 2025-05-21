@@ -1,5 +1,6 @@
-## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+## [0.8.0](https://github.com/sushichop/Puppy/releases/tag/0.8.0) (2025-05-25)
 
+- Support Swift 5.6 or later and `apple/swift-log` 1.6.3 or later. [#99](https://github.com/sushichop/Puppy/pull/99)
 - Workaround for `pod lib lint` on watchOS is no longer needed. [#86](https://github.com/sushichop/Puppy/pull/86)
 
 ## [0.7.0](https://github.com/sushichop/Puppy/releases/tag/0.7.0) (2023-03-13)
