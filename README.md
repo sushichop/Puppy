@@ -38,9 +38,7 @@ let file = FileLogger("com.example.yourapp.file",
                       fileURL: fileURL,
                       filePermission: "600")  // Default permission is "640". 
 
-var log = Puppy()
-log.add(console)
-log.add(file)
+let puppy = Puppy(loggers: [console, file])
 
 log.debug("DEBUG message")  // Will NOT be logged.
 log.info("INFO message")    // Will be logged.
@@ -67,8 +65,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        var log = Puppy()
-        log.add(fileRotation)
+        let puppy = Puppy(loggers: [fileRotation])
         log.info("INFO message")
         log.warning("WARNING message")
     }
@@ -96,9 +93,7 @@ import Puppy
 let console = ConsoleLogger("com.example.yourapp.console")
 let syslog = SystemLogger("com.example.yourapp.syslog")
 
-var puppy = Puppy()
-puppy.add(console)
-puppy.add(syslog)
+let puppy = Puppy(loggers: [console, syslog])
 
 LoggingSystem.bootstrap {
     var handler = PuppyLogHandler(label: $0, puppy: puppy)
@@ -127,8 +122,7 @@ let rotationConfig = RotationConfig(suffixExtension: .numbering,
 let fileRotation = try FileRotationLogger("com.example.yourapp.server",
                                           fileURL: fileURL,
                                           rotationConfig: rotationConfig)
-var puppy = Puppy()
-puppy.add(fileRotation)
+let puppy = Puppy(loggers: [fileRotation])
 
 // https://docs.vapor.codes/basics/logging/
 var env = try Environment.detect()
@@ -158,8 +152,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        var log = Puppy()
-        log.add(oslog)
+        let puppy = Puppy(loggers: [oslog])
         log.info("INFO message")
         log.warning("WARNING message")
     }
