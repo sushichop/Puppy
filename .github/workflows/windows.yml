@@ -29,4 +29,23 @@ jobs:
       - name: Build Swift package
         run: swift build -v -c release
       - name: Test Swift package
-        run: swift test -v -Xswiftc -DPUPPY_DEBUG
+        run: swift test -v -Xswiftc -warnings-as-errors -Xswiftc -DPUPPY_DEBUG
+
+  cmake:
+    name: CMake - Swift ${{ matrix.swift-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['windows-2025']
+        swift-version: ['6.1.2']
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Swift ${{ matrix.swift-version }}
+        shell: pwsh
+        run: ./actions/GHASwiftWindows.ps1 -SwiftVersion ${{ matrix.swift-version }}
+      - name: Show Swift version
+        run: swift --version
+      - name: Build using CMake and Ninja
+        shell: pwsh
+        run: ./scripts/cmake-script.sh

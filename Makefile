@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := help
 HELP_INDENT := 28
 
-SWIFT_VERSION := 5.7.2
-DISTRIBUTION := jammy
+SWIFT_VERSION := 6.1.2
+DISTRIBUTION := noble
 
 .PHONY: help
 help:

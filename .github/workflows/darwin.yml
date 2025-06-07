@@ -1,4 +1,4 @@
-name: Dwarin
+name: Darwin
 
 on:
   push:
@@ -34,4 +34,29 @@ jobs:
       - name: Build Swift package
         run: swift build -v -c release
       - name: Test Swift package
-        run: swift test -v -Xswiftc -DPUPPY_DEBUG
+        run: swift test -v -Xswiftc -warnings-as-errors -Xswiftc -DPUPPY_DEBUG
+
+  cmake:
+    name: CMake - Swift ${{ matrix.swift-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['macos-15']
+        swift-version: ['6.1.2']
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
+        if: runner.os == 'macOS'
+        run: |
+          ls -al /Applications | grep Xcode
+          if [ '${{ matrix.swift-version }}' = '6.1.2' ]; then echo DEVELOPER_DIR=/Applications/Xcode_16.4.app >> $GITHUB_ENV; fi
+      - name: Set up Swift ${{ matrix.swift-version }}
+        shell: bash
+        run: SWIFT_VERSION=${{ matrix.swift-version }} ./actions/gha-swift-macos.sh
+      - name: Show Swift version
+        run: swift --version
+      - name: Build using CMake and Ninja
+        shell: bash
+        run: ./scripts/cmake-script.sh
+
