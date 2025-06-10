@@ -1,11 +1,12 @@
-SUPPORTED_PLATFORMS = macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator
-TARGETED_DEVICE_FAMILY = 1,2,3,4
+SUPPORTED_PLATFORMS = macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator xros xrsimulator catalyst
+TARGETED_DEVICE_FAMILY = 1,2,3,4,7,6
 ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES
 
 LD_RUNPATH_SEARCH_PATHS[sdk=macosx*] = $(inherited) @executable_path/../Frameworks @loader_path/../Frameworks
 LD_RUNPATH_SEARCH_PATHS[sdk=iphone*] = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
 LD_RUNPATH_SEARCH_PATHS[sdk=appletv*] = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
 LD_RUNPATH_SEARCH_PATHS[sdk=watch*] = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
+LD_RUNPATH_SEARCH_PATHS[sdk=xr*] = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
 
 CODE_SIGN_IDENTITY =
 //CODE_SIGNING_REQUIRED = NO
@@ -17,6 +18,7 @@ MACOSX_DEPLOYMENT_TARGET = 10.15
 IPHONEOS_DEPLOYMENT_TARGET = 13.0
 TVOS_DEPLOYMENT_TARGET = 13.0
 WATCHOS_DEPLOYMENT_TARGET = 6.0
+XROS_DEPLOYMENT_TARGET = 1.0
 
 SWIFT_VERSION = 5.0
 SWIFT_STRICT_CONCURRENCY = complete
@@ -25,5 +27,5 @@ MARKETING_VERSION = 0.8.0
 DYLIB_CURRENT_VERSION = 1
 CURRENT_PROJECT_VERSION = $(DYLIB_CURRENT_VERSION)
 
-SCP_COPYRIGHT = Copyright (c) 2020-2023 Koichi Yokota
+SCP_COPYRIGHT = Copyright (c) 2020-2025 Koichi Yokota
 SCP_PRODUCT_BUNDLE_IDENTIFIER_PREFIX = net.sushichop

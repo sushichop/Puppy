@@ -1,6 +1,6 @@
 # Puppy
 
-![Swift5.6+](https://img.shields.io/badge/Swift-5.6%2B-orange?logo=swift)
+![Swift5.9+](https://img.shields.io/badge/Swift-5.6%2B-orange?logo=swift)
 [![release](https://img.shields.io/github/v/release/sushichop/Puppy.svg?color=blue)](https://github.com/sushichop/Puppy/releases)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sushichop/Puppy/blob/master/LICENSE)
 [![codecov](https://codecov.io/gh/sushichop/Puppy/branch/main/graph/badge.svg)](https://codecov.io/gh/sushichop/Puppy)

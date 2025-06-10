@@ -55,3 +55,22 @@ jobs:
         with:
           files: coverage.lcov
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  xcode:
+    name: ${{ matrix.make-target }} - Xcode ${{ matrix.xcode }}
+    runs-on: macos-15
+    strategy:
+      matrix:
+        make-target:
+          [
+            xcode-test,
+            pod-lib-lint,
+            carthage-build-xcframeworks,
+          ]
+        xcode: ['16.4']
+      fail-fast: false
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
+    steps:
+      - uses: actions/checkout@v4
+      - run: make ${{ matrix.make-target }}
