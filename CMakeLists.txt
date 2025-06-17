@@ -25,7 +25,7 @@ set(CMAKE_Swift_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/swift)
 option(BUILD_SHARED_LIBS "Build shared libraries by default" YES)
 include(SwiftSupport)
 
-add_subdirectory(Externals)
+add_subdirectory(externals)
 add_subdirectory(Sources)
 
 add_subdirectory(cmake/modules)
