@@ -66,6 +66,7 @@ jobs:
             xcode-test,
             pod-lib-lint,
             carthage-build-xcframeworks,
+            bazel-test,
           ]
         xcode: ['16.4']
       fail-fast: false

@@ -55,7 +55,11 @@ final class LoggerableTests: XCTestCase {
                 "CRITICAL message",
             ])
             XCTAssertEqual(mockLogFormatter.invokedFormatMessageTags, ["", "critical-tag"])
+            #if BAZEL_TESTING
+            XCTAssertEqual(mockLogFormatter.invokedFormatMessageModuleNames, ["puppy_tests", "puppy_tests"])
+            #else
             XCTAssertEqual(mockLogFormatter.invokedFormatMessageModuleNames, ["PuppyTests", "PuppyTests"])
+            #endif
             XCTAssertEqual(mockLogFormatter.invokedFormatMessageFileNames, ["LoggerableTests.swift", "LoggerableTests.swift"])
             XCTAssertEqual(mockLogFormatter.invokedFormatMessageSwiftLogInfo, ["source": ""])
             XCTAssertEqual(mockLogFormatter.invokedFormatMessageLabel, "com.example.yourapp.mocklogger.logformat")
