@@ -1,6 +1,13 @@
+## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+
+- Support Bazel 8.0.0 or later. [#103](https://github.com/sushichop/Puppy/pull/103)
+- Support Swift 5.9 or later and `visionOS` 1.0 or later. [#101](https://github.com/sushichop/Puppy/pull/101) [#102](https://github.com/sushichop/Puppy/pull/102)
+- Fix concurrent execution in unit tests. [#100](https://github.com/sushichop/Puppy/pull/100)
+
+
 ## [0.8.0](https://github.com/sushichop/Puppy/releases/tag/0.8.0) (2025-05-25)
 
-- Support Swift 5.6 or later and `apple/swift-log` 1.6.3 or later. [#99](https://github.com/sushichop/Puppy/pull/99)
+- Support Swift 5.6 or later only and `apple/swift-log` 1.6.3 or later. [#99](https://github.com/sushichop/Puppy/pull/99)
 - Workaround for `pod lib lint` on watchOS is no longer needed. [#86](https://github.com/sushichop/Puppy/pull/86)
 
 ## [0.7.0](https://github.com/sushichop/Puppy/releases/tag/0.7.0) (2023-03-13)
