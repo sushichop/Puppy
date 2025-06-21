@@ -1,4 +1,4 @@
-## [x.y.z](https://github.com/sushichop/Puppy/releases/tag/x.y.z) (yyyy-mm-dd)
+## [0.9.0](https://github.com/sushichop/Puppy/releases/tag/0.9.0) (2025-06-21)
 
 - Support Bazel 8.0.0 or later. [#103](https://github.com/sushichop/Puppy/pull/103)
 - Support Swift 5.9 or later and `visionOS` 1.0 or later. [#101](https://github.com/sushichop/Puppy/pull/101) [#102](https://github.com/sushichop/Puppy/pull/102)

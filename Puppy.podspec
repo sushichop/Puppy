@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name              = "Puppy"
-  s.version           = "0.8.0"
+  s.version           = "0.9.0"
   s.summary           = "A flexible logging library written in Swift"
   s.homepage          = "https://github.com/sushichop/Puppy"
   s.license           = { :type => "MIT", :file => "LICENSE" }
