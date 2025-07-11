@@ -9,30 +9,78 @@ public struct FileRotationLogger: FileLoggerable {
 
     public let fileURL: URL
     public let filePermission: String
+    
+    #if os(iOS) || os(macOS)
+    public let fileProtectionType: FileProtectionType?
+    public let isExcludedFromBackup: Bool
+    #endif
+
+    public let flushMode: FlushMode
+    public let writeMode: FileWritingErrorHandlingMode
 
     let rotationConfig: RotationConfig
     private weak var delegate: FileRotationLoggerDelegate?
 
-    private var dateFormat: DateFormatter
+    private let dateFormat: DateFormatter = {
+        let dateFormat = DateFormatter()
+        dateFormat.dateFormat = "yyyyMMdd'T'HHmmssZZZZZ"
+        dateFormat.timeZone = TimeZone(identifier: "UTC")
+        dateFormat.locale = Locale(identifier: "en_US_POSIX")
+        return dateFormat
+    }()
 
-    public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil, fileURL: URL, filePermission: String = "640", rotationConfig: RotationConfig, delegate: FileRotationLoggerDelegate? = nil) throws {
+    #if os(iOS) || os(macOS)
+    public init(_ label: String,
+                logLevel: LogLevel = .trace,
+                logFormat: LogFormattable? = nil,
+                fileURL: URL,
+                filePermission: String = "640",
+                fileProtectionType: FileProtectionType? = nil,
+                isExcludedFromBackup: Bool = false,
+                rotationConfig: RotationConfig,
+                flushMode: FlushMode = .always,
+                writeMode: FileWritingErrorHandlingMode = .force,
+                delegate: FileRotationLoggerDelegate? = nil) throws {
         self.label = label
         self.queue = DispatchQueue(label: label)
         self.logLevel = logLevel
         self.logFormat = logFormat
-
-        self.dateFormat = DateFormatter()
-        self.dateFormat.dateFormat = "yyyyMMdd'T'HHmmssZZZZZ"
-        self.dateFormat.timeZone = TimeZone(identifier: "UTC")
-        self.dateFormat.locale = Locale(identifier: "en_US_POSIX")
-
         self.fileURL = fileURL
-        puppyDebug("initialized, fileURL: \(fileURL)")
         self.filePermission = filePermission
-
+        self.fileProtectionType = fileProtectionType
+        self.isExcludedFromBackup = isExcludedFromBackup
+        self.flushMode = flushMode
+        self.writeMode = writeMode
         self.rotationConfig = rotationConfig
         self.delegate = delegate
+        try commonInit()
+    }
+    #else
+    public init(_ label: String,
+                logLevel: LogLevel = .trace,
+                logFormat: LogFormattable? = nil,
+                fileURL: URL,
+                filePermission: String = "640",
+                rotationConfig: RotationConfig,
+                flushMode: FlushMode = .always,
+                writeMode: FileWritingErrorHandlingMode = .force,
+                delegate: FileRotationLoggerDelegate? = nil) throws {
+        self.label = label
+        self.queue = DispatchQueue(label: label)
+        self.logLevel = logLevel
+        self.logFormat = logFormat
+        self.fileURL = fileURL
+        self.filePermission = filePermission
+        self.flushMode = flushMode
+        self.writeMode = writeMode
+        self.rotationConfig = rotationConfig
+        self.delegate = delegate
+        try commonInit()
+    }
+    #endif
 
+    private func commonInit() throws {
+        puppyDebug("initialized, fileURL: \(fileURL)")
         try validateFileURL(fileURL)
         try validateFilePermission(fileURL, filePermission: filePermission)
         try openFile()
@@ -40,7 +88,7 @@ public struct FileRotationLogger: FileLoggerable {
 
     public func log(_ level: LogLevel, string: String) {
         rotateFiles()
-        append(level, string: string)
+        append(level, string: string, flushMode: flushMode, writeMode: writeMode)
         rotateFiles()
     }
 
