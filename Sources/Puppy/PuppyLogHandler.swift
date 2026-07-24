@@ -31,6 +31,26 @@ public struct PuppyLogHandler: LogHandler, Sendable {
         puppy.logMessage(level.toPuppy(), message: "\(message)", tag: "swiftlog", function: function, file: file, line: line, swiftLogInfo: swiftLogInfo)
     }
 
+    public func log(event: LogEvent) {
+        // Forward to existing implementation to keep behavior consistent
+        // Build metadata string the same way as in `log(level:message:metadata:source:file:function:line:)`
+        let combinedMetadata = !mergedMetadata(event.metadata).isEmpty ? "\(mergedMetadata(event.metadata))" : ""
+        let swiftLogInfo = [
+            "label": label,
+            "source": event.source,
+            "metadata": combinedMetadata
+        ]
+        puppy.logMessage(
+            event.level.toPuppy(),
+            message: "\(event.message)",
+            tag: "swiftlog",
+            function: event.function,
+            file: event.file,
+            line: event.line,
+            swiftLogInfo: swiftLogInfo
+        )
+    }
+
     private func mergedMetadata(_ metadata: Logger.Metadata?) -> Logger.Metadata {
         var mergedMetadata: Logger.Metadata
         if let metadata = metadata {
@@ -64,3 +84,4 @@ extension Logger.Level {
 }
 
 #endif // canImport(Logging)
+
