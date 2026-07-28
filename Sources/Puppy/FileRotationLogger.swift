@@ -12,10 +12,11 @@ public struct FileRotationLogger: FileLoggerable {
 
     let rotationConfig: RotationConfig
     private weak var delegate: FileRotationLoggerDelegate?
+    public let writeMode: FileWritingErrorHandlingMode
 
     private var dateFormat: DateFormatter
 
-    public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil, fileURL: URL, filePermission: String = "640", rotationConfig: RotationConfig, delegate: FileRotationLoggerDelegate? = nil) throws {
+    public init(_ label: String, logLevel: LogLevel = .trace, logFormat: LogFormattable? = nil, fileURL: URL, filePermission: String = "640", rotationConfig: RotationConfig, delegate: FileRotationLoggerDelegate? = nil, writeMode: FileWritingErrorHandlingMode = .force) throws {
         self.label = label
         self.queue = DispatchQueue(label: label)
         self.logLevel = logLevel
@@ -32,6 +33,7 @@ public struct FileRotationLogger: FileLoggerable {
 
         self.rotationConfig = rotationConfig
         self.delegate = delegate
+        self.writeMode = writeMode
 
         try validateFileURL(fileURL)
         try validateFilePermission(fileURL, filePermission: filePermission)
@@ -40,7 +42,7 @@ public struct FileRotationLogger: FileLoggerable {
 
     public func log(_ level: LogLevel, string: String) {
         rotateFiles()
-        append(level, string: string)
+        append(level, string: string, writeMode: writeMode)
         rotateFiles()
     }
 
