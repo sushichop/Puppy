@@ -70,7 +70,7 @@ public struct Puppy: Sendable {
     }
 
     @inlinable
-    public func logMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String] = ["source": ""]) {
+    public func logMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String] = [:]) {
         let date = Date()
         let threadID = currentThreadID()
 
