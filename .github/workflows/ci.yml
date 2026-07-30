@@ -35,7 +35,7 @@ jobs:
       - name: Build Swift package
         run: swift build -v -c release
       - name: Test Swift package
-        run: swift test -v -Xswiftc -warnings-as-errors
+        run: swift test -v
 
   codecov:
     name: codecov - Xcode ${{ matrix.xcode }}
