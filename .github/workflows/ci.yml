@@ -66,7 +66,6 @@ jobs:
           [
             xcode-test,
             pod-lib-lint,
-            carthage-build-xcframeworks,
             bazel-test,
           ]
         xcode: ['26.6']

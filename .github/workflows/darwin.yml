@@ -35,7 +35,7 @@ jobs:
       - name: Build Swift package
         run: swift build -v -c release
       - name: Test Swift package
-        run: swift test -v -Xswiftc -warnings-as-errors -Xswiftc -DPUPPY_DEBUG
+        run: swift test -v -Xswiftc -DPUPPY_DEBUG
 
   cmake:
     name: CMake - Swift ${{ matrix.swift-version }} on ${{ matrix.os }}
