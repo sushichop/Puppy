@@ -1,9 +1,14 @@
+## [0.10.0](https://github.com/sushichop/Puppy/releases/tag/0.10.0) (2026-08-03)
+
+- Update Swift `6.2 or later` and swift-log `1.9.1 or later`. [#112](https://github.com/sushichop/Puppy/pull/112)
+- Update Xcode to `26.6`. [#111](https://github.com/sushichop/Puppy/pull/111)
+- Add `writeMode` to `FileRotationLogger`. [#105](https://github.com/sushichop/Puppy/pull/105)
+
 ## [0.9.0](https://github.com/sushichop/Puppy/releases/tag/0.9.0) (2025-06-21)
 
 - Support Bazel 8.0.0 or later. [#103](https://github.com/sushichop/Puppy/pull/103)
 - Support Swift 5.9 or later and `visionOS` 1.0 or later. [#101](https://github.com/sushichop/Puppy/pull/101) [#102](https://github.com/sushichop/Puppy/pull/102)
 - Fix concurrent execution in unit tests. [#100](https://github.com/sushichop/Puppy/pull/100)
-
 
 ## [0.8.0](https://github.com/sushichop/Puppy/releases/tag/0.8.0) (2025-05-25)
 
