@@ -2,7 +2,7 @@
 
 set -eu
 
-SWIFT_VERSION=${SWIFT_VERSION:-'6.0.3'}   # e.g.'5.10' '6.0.3' '2025-01-10-a'
+SWIFT_VERSION=${SWIFT_VERSION:-'6.3.3'}   # e.g.'5.10' '6.0.3' '2025-01-10-a'
 
 if ! ${GITHUB_ACTIONS}; then
   exit 1

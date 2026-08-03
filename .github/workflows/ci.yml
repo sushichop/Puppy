@@ -12,24 +12,16 @@ on:
 
 jobs:
   swiftpm:
-    name: SwiftPM - Swift ${{ matrix.swift-version }} on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: SwiftPM - Xcode ${{ matrix.xcode }}
+    runs-on: macos-26
     strategy:
       matrix:
-        os: ['macos-26']
-        swift-version: ['6.3.3']
+        xcode: ['26.6']
       fail-fast: false
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
     steps:
       - uses: actions/checkout@v4
-      - name: Select Xcode if needed - Swift ${{ matrix.swift-version }} 
-        if: runner.os == 'macOS'
-        run: |
-          ls -al /Applications | grep Xcode
-          if [ '${{ matrix.swift-version }}' = '6.3.3' ]; then echo DEVELOPER_DIR=/Applications/Xcode_26.6.app >> $GITHUB_ENV; fi
-          if [ '${{ matrix.swift-version }}' = '6.1.2' ]; then echo DEVELOPER_DIR=/Applications/Xcode_16.4.app >> $GITHUB_ENV; fi
-      - uses: sushichop/gha-swift-env@main
-        with:
-          swift-version: ${{ matrix.swift-version }}
       - name: Show Swift version
         run: swift --version
       - name: Build Swift package

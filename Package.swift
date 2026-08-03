@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "Puppy", targets: ["Puppy"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-log.git", .upToNextMinor(from: "1.6.3")),
+        .package(url: "https://github.com/apple/swift-log.git", .upToNextMajor(from: "1.9.1")),
     ],
     targets: [
         .target(
@@ -32,7 +32,7 @@ let package = Package(
             path: "Tests/PuppyTests"
         ),
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageModes: [.v6]
 )
 
 if let puppy = package.targets.first(where: { $0.name == "Puppy" }) {

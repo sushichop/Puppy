@@ -3,8 +3,8 @@
 set -eu
 
 DISTRIBUTION=${DISTRIBUTION:-'noble'}
-CMAKE_VERSION=${CMAKE_VERSION:-'4.0.2'}
-NINJA_VERSION=${NINJA_VERSION:-'1.12.1'}
+CMAKE_VERSION=${CMAKE_VERSION:-'4.4.2'}
+NINJA_VERSION=${NINJA_VERSION:-'1.13.2'}
 
 # macOS
 if [ $(uname) = 'Darwin' ]; then
@@ -85,16 +85,16 @@ cmake --version
 ninja --version
 
 # Build with CMake and Ninja.
-rm -rf build
+rm -rf build_cmake
 case $(uname) in
   Darwin|Linux)
-    cmake -B ./build -D CMAKE_C_COMPILER=clang -D CMAKE_BUILD_TYPE=RelWithDebInfo -G Ninja -S .
-    ninja -C ./build -v   # or `cmake --build ./build -v`
+    cmake -B ./build_cmake -D CMAKE_C_COMPILER=clang -D CMAKE_BUILD_TYPE=RelWithDebInfo -G Ninja -S .
+    ninja -C ./build_cmake -v   # or `cmake --build ./build_cmake -v`
     ;;
   *) # Assume OS is Windows.
     export SWIFTFLAGS=$(echo "-sdk $SDKROOT" | sed 's/\\/\//g')
     echo "SWIFTFLAGS is ${SWIFTFLAGS}"
-    cmake -B ./build -D CMAKE_C_COMPILER=clang -D CMAKE_BUILD_TYPE=Release -D CMAKE_Swift_FLAGS="${SWIFTFLAGS}" -G Ninja -S .
-    ninja -C ./build -v   # or `cmake --build ./build -v`
+    cmake -B ./build_cmake -D CMAKE_C_COMPILER=clang -D CMAKE_BUILD_TYPE=Release -D CMAKE_Swift_FLAGS="${SWIFTFLAGS}" -G Ninja -S .
+    ninja -C ./build_cmake -v   # or `cmake --build ./build_cmake -v`
     ;;
 esac

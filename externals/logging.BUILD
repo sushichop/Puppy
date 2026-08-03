@@ -4,5 +4,6 @@ swift_library(
     name = "logging",
     srcs = glob(["Sources/Logging/**/*.swift"]),
     module_name = "Logging",
+    package_name = "swift-log",
     visibility = ["//visibility:public"],
 )
