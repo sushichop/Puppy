@@ -1,5 +1,5 @@
 Param(
-  [String]$SwiftVersion = '6.0.3',  # e.g.'5.10' '6.0.3' '2025-01-10-a'
+  [String]$SwiftVersion = '6.3.3',  # e.g.'5.10' '6.0.3' '2025-01-10-a'
   [String]$Arch = 'x64',            #
   [String]$WinSDK = ''              # e.g. '', '10.0.26100.0'
 )
@@ -101,17 +101,8 @@ Write-Output $Env:UniversalCRTSdkDir
 Write-Output $Env:UCRTVersion
 Write-Output $Env:VCToolsInstallDir
 
-
-# Add supporting files.
-Copy-Item -Path "$Env:SDKROOT\usr\share\ucrt.modulemap" -Destination "$Env:UniversalCRTSdkDir\Include\$Env:UCRTVersion\ucrt\module.modulemap" -Force
-if (Test-Path -Path "$env:SDKROOT\usr\share\vcruntime.modulemap") {
-  Copy-Item -Path "$env:SDKROOT\usr\share\vcruntime.modulemap" -Destination "$env:VCToolsInstallDir\include\module.modulemap" -Force
-  Copy-Item -Path "$env:SDKROOT\usr\share\vcruntime.apinotes" -Destination "$env:VCToolsInstallDir\include\vcruntime.apinotes" -Force
-} else {
-  Copy-Item -Path "$Env:SDKROOT\usr\share\visualc.modulemap" -Destination "$Env:VCToolsInstallDir\include\module.modulemap" -Force
-  Copy-Item -Path "$Env:SDKROOT\usr\share\visualc.apinotes" -Destination "$Env:VCToolsInstallDir\include\visualc.apinotes" -Force
-}
-Copy-Item -Path "$Env:SDKROOT\usr\share\winsdk.modulemap" -Destination "$Env:UniversalCRTSdkDir\Include\$Env:UCRTVersion\um\module.modulemap" -Force
+Get-ChildItem "$Env:LOCALAPPDATA\Programs\Swift\Platforms\$SwiftVersion\Windows.platform\Developer\SDKs\Windows.sdk\usr\share"
+(Get-Command swift).Path
 
 # Output Swift version.
 swift --version

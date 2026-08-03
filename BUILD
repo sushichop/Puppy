@@ -15,6 +15,7 @@ swift_library(
     srcs = glob(["Sources/Puppy/**/*.swift"]),
     deps = [":c_puppy", "@com_github_apple_swift_log//:logging"],
     module_name = "Puppy",
+    package_name = "Puppy",
     visibility = ["//visibility:public"],
 )
 
