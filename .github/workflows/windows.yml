@@ -20,7 +20,7 @@ jobs:
         swift-version: ['6.3.3', '6.2.4']
       fail-fast: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Set up Swift ${{ matrix.swift-version }}
         shell: pwsh
         run: ./actions/GHASwiftWindows.ps1 -SwiftVersion ${{ matrix.swift-version }}
@@ -40,7 +40,7 @@ jobs:
         swift-version: ['6.3.3', '6.2.4']
       fail-fast: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Set up Swift ${{ matrix.swift-version }}
         shell: pwsh
         run: ./actions/GHASwiftWindows.ps1 -SwiftVersion ${{ matrix.swift-version }}
