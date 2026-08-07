@@ -12,22 +12,22 @@ on:
 
 jobs:
   swiftpm:
-    name: SwiftPM - Xcode ${{ matrix.xcode }}
-    runs-on: macos-26
+    name: SwiftPM on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        xcode: ['26.6']
+        os: ['xcode-27', 'macos-latest']
       fail-fast: false
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
     steps:
       - uses: actions/checkout@v7
+      - name: Show xcodebuild version
+        run: xcodebuild -version
       - name: Show Swift version
         run: swift --version
       - name: Build Swift package
         run: swift build -v -c release
       - name: Test Swift package
-        run: swift test -v
+        run: swift test -v -Xswiftc -warnings-as-errors
 
   codecov:
     name: codecov - Xcode ${{ matrix.xcode }}
