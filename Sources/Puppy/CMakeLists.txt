@@ -1,5 +1,4 @@
 add_library(Puppy
-  Compatibility.swift
   ConsoleLogger.swift
   FileError.swift
   FileLogger.swift

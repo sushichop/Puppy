@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "Puppy", targets: ["Puppy"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-log.git", .upToNextMajor(from: "1.9.1")),
+        .package(url: "https://github.com/apple/swift-log.git", .upToNextMajor(from: "1.14.0")),
     ],
     targets: [
         .target(

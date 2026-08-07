@@ -24,6 +24,10 @@ public struct PuppyLogHandler: LogHandler, Sendable {
         self.metadata = metadata
     }
 
+    public func log(event: LogEvent) {
+        log(level: event.level, message: event.message, metadata: event.metadata, source: event.source, file: event.file, function: event.function, line: event.line)
+    }
+
     public func log(level: Logger.Level, message: Logger.Message, metadata: Logger.Metadata?, source: String, file: String, function: String, line: UInt) {
 
         let metadata = !mergedMetadata(metadata).isEmpty ? "\(mergedMetadata(metadata))" : ""
