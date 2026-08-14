@@ -133,7 +133,7 @@ coverage.lcov
 /MODULE.bazel.lock
 
 # CMake
-/build_cmake
+cmake-build/
 
 # VisualStudioCode
 .vscode/*

@@ -85,16 +85,16 @@ cmake --version
 ninja --version
 
 # Build with CMake and Ninja.
-rm -rf build_cmake
+rm -rf cmake-build
 case $(uname) in
   Darwin|Linux)
-    cmake -B ./build_cmake -D CMAKE_C_COMPILER=clang -D CMAKE_BUILD_TYPE=RelWithDebInfo -G Ninja -S .
-    ninja -C ./build_cmake -v   # or `cmake --build ./build_cmake -v`
+    cmake -B ./cmake-build -D CMAKE_C_COMPILER=clang -D CMAKE_BUILD_TYPE=RelWithDebInfo -G Ninja -S .
+    ninja -C ./cmake-build -v   # or `cmake --build ./cmake-build -v`
     ;;
   *) # Assume OS is Windows.
     export SWIFTFLAGS=$(echo "-sdk $SDKROOT" | sed 's/\\/\//g')
     echo "SWIFTFLAGS is ${SWIFTFLAGS}"
-    cmake -B ./build_cmake -D CMAKE_C_COMPILER=clang -D CMAKE_BUILD_TYPE=Release -D CMAKE_Swift_FLAGS="${SWIFTFLAGS}" -G Ninja -S .
-    ninja -C ./build_cmake -v   # or `cmake --build ./build_cmake -v`
+    cmake -B ./cmake-build -D CMAKE_C_COMPILER=clang -D CMAKE_BUILD_TYPE=Release -D CMAKE_Swift_FLAGS="${SWIFTFLAGS}" -G Ninja -S .
+    ninja -C ./cmake-build -v   # or `cmake --build ./cmake-build -v`
     ;;
 esac

@@ -15,6 +15,10 @@ if(CMAKE_VERSION VERSION_LESS 3.17)
   endif()
 endif()
 
+set(CMAKE_Swift_LANGUAGE_VERSION 6)
+message(STATUS "Swift compiler version:")
+message(STATUS "  ${CMAKE_Swift_COMPILER_VERSION}")
+
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
