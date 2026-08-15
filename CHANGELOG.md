@@ -1,3 +1,7 @@
+## [0.11.0](https://github.com/sushichop/Puppy/releases/tag/0.11.0) (2026-08-15)
+
+- Support swift-log `1.15.0 or later`. [#115](https://github.com/sushichop/Puppy/pull/115) [#116](https://github.com/sushichop/Puppy/pull/116)
+
 ## [0.10.0](https://github.com/sushichop/Puppy/releases/tag/0.10.0) (2026-08-03)
 
 - Update Swift `6.2 or later` and swift-log `1.9.1 or later`. [#112](https://github.com/sushichop/Puppy/pull/112)
