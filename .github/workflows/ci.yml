@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['xcode-27', 'macos-latest']
+        os: ['macos-latest']
       fail-fast: false
     steps:
       - uses: actions/checkout@v7
@@ -30,14 +30,12 @@ jobs:
         run: swift test -v -Xswiftc -warnings-as-errors
 
   codecov:
-    name: codecov - Xcode ${{ matrix.xcode }}
-    runs-on: macos-26
+    name: codecov on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        xcode: ['26.6']
+        os: ['macos-latest']
       fail-fast: false
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
     steps:
       - uses: actions/checkout@v7
       - name: export-codecov
@@ -50,20 +48,18 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   xcode:
-    name: ${{ matrix.make-target }} - Xcode ${{ matrix.xcode }}
-    runs-on: macos-26
+    name: ${{ matrix.make-target }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: ['macos-latest']
         make-target:
           [
             xcode-test,
             pod-lib-lint,
             bazel-test,
           ]
-        xcode: ['26.6']
       fail-fast: false
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
     steps:
       - uses: actions/checkout@v7
       - run: make ${{ matrix.make-target }}
