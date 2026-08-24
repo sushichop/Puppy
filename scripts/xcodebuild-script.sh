@@ -3,7 +3,7 @@
 set -euo pipefail
 
 MODULE_NAME="Puppy"
-SCRIPT_TYPE="${SCRIPT_TYPE:-build}"
+SCRIPT_TYPE=${SCRIPT_TYPE:-build}
 PLATFORMS=(macOS macCatalyst iOS watchOS tvOS visionOS)
 
 echo "===== Xcode SDKs ====="
