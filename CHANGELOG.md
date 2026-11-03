@@ -1,3 +1,9 @@
+## [0.12.0](https://github.com/sushichop/Puppy/releases/tag/0.12.0) (2026-11-03)
+
+- Update to Xcode `27.2`. [#123](https://github.com/sushichop/Puppy/pull/123)
+- Ensure to catch up simulator devices’ changing. [#118](https://github.com/sushichop/Puppy/pull/118)
+- Set Swift version to `6.0` and visionOS deployment target to `2.0`. [#117](https://github.com/sushichop/Puppy/pull/117) [#119](https://github.com/sushichop/Puppy/pull/119)
+
 ## [0.11.0](https://github.com/sushichop/Puppy/releases/tag/0.11.0) (2026-08-15)
 
 - Support swift-log `1.15.0 or later`. [#115](https://github.com/sushichop/Puppy/pull/115) [#116](https://github.com/sushichop/Puppy/pull/116)
