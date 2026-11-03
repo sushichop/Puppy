@@ -3,7 +3,7 @@ include(FetchContent)
 FetchContent_Populate(
   swift-log
   GIT_REPOSITORY https://github.com/apple/swift-log.git
-  GIT_TAG 1.15.0
+  GIT_TAG 1.16.2
 )
 
 set(SWIFT_LOG_SOURCE_DIR "${swift-log_SOURCE_DIR}")

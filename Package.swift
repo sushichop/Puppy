@@ -6,7 +6,11 @@ import PackageDescription
 let package = Package(
     name: "Puppy",
     platforms: [
-        .macOS(.v10_15), .macCatalyst(.v13), .iOS(.v13), .tvOS(.v13), .watchOS(.v6), .visionOS(.v2),
+        .macOS(.v12),
+        .iOS(.v15),
+        .tvOS(.v15),
+        .watchOS(.v9),
+        .visionOS(.v2),
     ],
     products: [
         .library(name: "Puppy", targets: ["Puppy"]),
