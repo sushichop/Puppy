@@ -35,7 +35,6 @@ let package = Package(
             dependencies: ["Puppy"],
             path: "Tests/PuppyTests"
         ),
-        .target(name: "NewTarget"),
     ],
     swiftLanguageModes: [.v6]
 )
