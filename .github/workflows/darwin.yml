@@ -16,8 +16,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['macos-26']
-        swift-version: ['6.3.3', '6.2.4']
+        include:
+          - os: macos-27
+            swift-version: 6.4.2
+          - os: macos-26
+            swift-version: 6.3.3
+          - os: macos-26
+            swift-version: 6.2.4
       fail-fast: false
     steps:
       - uses: actions/checkout@v7
@@ -25,6 +30,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           ls -al /Applications | grep Xcode
+          if [ '${{ matrix.swift-version }}' = '6.4.2' ]; then echo DEVELOPER_DIR=/Applications/Xcode_27.2.app >> $GITHUB_ENV; fi
           if [ '${{ matrix.swift-version }}' = '6.3.3' ]; then echo DEVELOPER_DIR=/Applications/Xcode_26.6.app >> $GITHUB_ENV; fi
           if [ '${{ matrix.swift-version }}' = '6.2.4' ]; then echo DEVELOPER_DIR=/Applications/Xcode_26.3.app >> $GITHUB_ENV; fi
       - name: Set up Swift ${{ matrix.swift-version }}
@@ -42,8 +48,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['macos-26']
-        swift-version: ['6.3.3', '6.2.4']
+        include:
+          - os: macos-27
+            swift-version: 6.4.2
+          - os: macos-26
+            swift-version: 6.3.3
+          - os: macos-26
+            swift-version: 6.2.4
       fail-fast: false
     steps:
       - uses: actions/checkout@v7
@@ -51,6 +62,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           ls -al /Applications | grep Xcode
+          if [ '${{ matrix.swift-version }}' = '6.4.2' ]; then echo DEVELOPER_DIR=/Applications/Xcode_27.2.app >> $GITHUB_ENV; fi
           if [ '${{ matrix.swift-version }}' = '6.3.3' ]; then echo DEVELOPER_DIR=/Applications/Xcode_26.6.app >> $GITHUB_ENV; fi
           if [ '${{ matrix.swift-version }}' = '6.2.4' ]; then echo DEVELOPER_DIR=/Applications/Xcode_26.3.app >> $GITHUB_ENV; fi
       - name: Set up Swift ${{ matrix.swift-version }}
